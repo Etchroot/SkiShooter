@@ -1,18 +1,36 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(BombItem))]
-public class ItemManager : Editor
+namespace ItemManager
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(BombItem))]
+    public class BombItemEditor : Editor
     {
-        DrawDefaultInspector();
-
-        BombItem bomb = (BombItem)target;
-
-        if (GUILayout.Button("폭탄 활성화"))
+        public override void OnInspectorGUI()
         {
-            bomb.ActivateEffect();
+            DrawDefaultInspector();
+
+            BombItem bomb = (BombItem)target;
+
+            if (GUILayout.Button("폭탄 활성화"))
+            {
+                bomb.ActivateEffect();
+            }
+        }
+    }
+
+    [CustomEditor(typeof(SpeedUpItem))]
+    public class SpeedUpItemEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+            SpeedUpItem speedUpItem = (SpeedUpItem)target;
+            if (GUILayout.Button("가속 활성화"))
+            {
+                speedUpItem.ActivateEffect();
+            }
         }
     }
 }
+
