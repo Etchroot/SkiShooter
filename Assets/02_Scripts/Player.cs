@@ -1,16 +1,16 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public delegate void DamageEvent(ref float damage);
+    public event DamageEvent OnDamageTaken;
     public static Player Instance { get; private set; }
     public float moveSpeed = 5f; // 기본 이동속도
-    private float originalSpeed; // 원래 이동속도 (SpeedUp 후 복구용)
+    public float maxHp = 100f;
+    private float currentHp;
 
-    // void Start()
-    // {
-    //     // 원래 이동속도 저장
-    //     originalSpeed = moveSpeed;
-    // }
+
     void Awake()
     {
         // 싱글턴 인스턴스 설정
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject); // 이미 인스턴스가 있다면 중복 생성 방지
         }
+        currentHp = maxHp;
     }
 
     void Update()
@@ -33,6 +34,33 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         transform.Translate(direction * moveSpeed * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            TakeDamage(10f);
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        // 데미지를 받을 때 이벤트 발생
+        OnDamageTaken?.Invoke(ref damage);
+
+        // 이벤트 구독자가 데미지를 막았는지 확인
+        if (damage > 0)
+        {
+            Debug.Log(damage);
+            currentHp -= damage;
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp); // 체력 0이하로 감소하지 않게 고정
+            Debug.Log($"현재 Hp: {currentHp}");
+        }
+        else
+        {
+            Debug.Log("데미지가 보호막에 의해 차단되었습니다.");
+        }
+
+
+
     }
 
     // 이동속도를 설정하는 메서드
@@ -40,12 +68,6 @@ public class Player : MonoBehaviour
     {
         moveSpeed = newSpeed;
     }
-
-    // // 원래 속도로 복구하는 메서드
-    // public void ResetMoveSpeed()
-    // {
-    //     moveSpeed = originalSpeed;
-    // }
 
     // 게임 뷰에서 실시간으로 속도를 표시
     void OnGUI()

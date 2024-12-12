@@ -32,5 +32,20 @@ namespace ItemManager
             }
         }
     }
+
+    [CustomEditor(typeof(ShieldItem))]
+    public class ShieldItemEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+
+            ShieldItem shieldItem = (ShieldItem)target;
+            if (GUILayout.Button("보호막 활성화"))
+            {
+                shieldItem.ActivateEffect();
+            }
+        }
+    }
 }
 
