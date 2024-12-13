@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5f; // 기본 이동속도
     public float maxHp = 100f;
     private float currentHp;
+    private CharacterController cc;
 
 
     void Awake()
@@ -25,6 +26,11 @@ public class Player : MonoBehaviour
         }
         currentHp = maxHp;
     }
+    void Start()
+    {
+        cc = GetComponent<CharacterController>();
+    }
+
 
     void Update()
     {
@@ -33,7 +39,25 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        //direction.y -= 10f * Time.deltaTime;
+        //transform.Translate(direction * moveSpeed * Time.deltaTime);
+
+        Debug.DrawRay(transform.position, Vector3.down * 0.2f, Color.green);
+
+        if (Physics.Raycast(transform.position + Vector3.down * 1f, Vector3.down, out var hit, 0.2f))
+        {
+            if (hit.collider.CompareTag("Road"))
+            {
+                direction.y = 0.0f;
+            }
+        }
+        else
+        {
+            direction.y -= 100.0f * Time.deltaTime;
+        }
+
+        cc.Move(direction * moveSpeed * Time.deltaTime);
+        Debug.Log(cc.isGrounded);
 
         if (Input.GetKeyDown(KeyCode.H))
         {
