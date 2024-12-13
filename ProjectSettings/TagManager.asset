@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - ENEMY
-  - OBSTACLE
-  - Road
+  - LAND
+  - PLAYER
+  - BULLET
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
-  - 
+  - PLAYER
+  - BULLET
+  - ENEMY
+  - LAND
   - 
   - 
   - 
