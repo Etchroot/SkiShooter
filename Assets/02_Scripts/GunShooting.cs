@@ -17,6 +17,9 @@ public class GunShooting : MonoBehaviour
     public AudioSource source; // 오디오 소스 컴포넌트그
     public AudioClip fireSound; //오디오 클립 컴포넌트
 
+    public int MaxBullet = 100; //최대 총알 개수
+    public int CurruntBullet = 100; //현재 총알 개수
+
     void Update()
     {
         var leftContTrigger = inputActions.actionMaps[2].actions[2].ReadValue<float>();
