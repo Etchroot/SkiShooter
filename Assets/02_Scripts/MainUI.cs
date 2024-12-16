@@ -28,8 +28,8 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LeftBulletText.text = $"{gunShooting.LeftCurruntBullet}";
-        RightBulletText.text = $"{gunShooting.RightCurruntBullet}";
+        LeftBulletText.text = $"{gunShooting.leftCurrentBullet}";
+        RightBulletText.text = $"{gunShooting.rightCurrentBullet}";
     }
 
     private bool isReloadAcive = false; // 현재 리로드 텍스트 상태
