@@ -266,11 +266,13 @@ MonoBehaviour:
   fireRate: 0.2
   source: {fileID: 440273425}
   fireSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
+  reloadingSound: {fileID: 8300000, guid: 2dc35d77cfe164a2eab57d08500740e2, type: 3}
   reloadSound: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
   emptyGunSound: {fileID: 8300000, guid: e7632c6401c09437e83de45d33c5858e, type: 3}
   maxBullet: 10
   leftCurrentBullet: 10
   rightCurrentBullet: 10
+  ReloadIng: 2
 --- !u!4 &440273424
 Transform:
   m_ObjectHideFlags: 0
