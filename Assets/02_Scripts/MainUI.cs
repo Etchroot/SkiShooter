@@ -26,7 +26,7 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LeftBulletText.text = $"{gunShooting.LeftCurruntBullet}";
-        RightBulletText.text = $"{gunShooting.RightCurruntBullet}";
+        LeftBulletText.text = $"{gunShooting.leftCurrentBullet}";
+        RightBulletText.text = $"{gunShooting.rightCurrentBullet}";
     }
 }
