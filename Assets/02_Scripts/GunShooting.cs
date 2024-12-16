@@ -6,33 +6,33 @@ public class GunShooting : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions;
 
-    public GameObject BulletPrefab; //ÃÑ¾Ë ÇÁ¸®ÆÕ
-    public Transform FirePointLeft; //¿ÞÂÊ ÃÑ±¸
-    public Transform FirePointRight; //¿À¸¥ÂÊ ÃÑ±¸
+    public GameObject BulletPrefab; //ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public Transform FirePointLeft; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½
+    public Transform FirePointRight; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½
 
-    [SerializeField] private float fireRate = 0.03f; //¹ß»ç µô·¹ÀÌ
-    private bool LBullet = false; //¿ÞÂÊ ÃÑ¾Ë Áßº¹¹æÁö
-    private bool RBullet = false; //¿À¸¥ÂÊ ÃÑ¾Ë Áßº¹¹æÁö
+    [SerializeField] private float fireRate = 0.03f; //ï¿½ß»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    private bool LBullet = false; //ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½
+    private bool RBullet = false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½
 
-    public AudioSource source; //¿Àµð¿À
-    public AudioClip fireSound; //¹ß»ç
-    public AudioClip reloadSound; //ÀçÀåÀü
-    public AudioClip emptyGunSound; //ÃÑ¾Ë ¾øÀ½
+    public AudioSource source; //ï¿½ï¿½ï¿½ï¿½ï¿½
+    public AudioClip fireSound; //ï¿½ß»ï¿½
+    public AudioClip reloadSound; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public AudioClip emptyGunSound; //ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    [SerializeField] private int maxBullet = 100; //ÃÖ´ë ÃÑ¾Ë¼ö
-    public int leftCurrentBullet = 100; //¿ÞÂÊ ÇöÀç ÃÑ¾Ë ¼ö
-    public int rightCurrentBullet = 100; //¿À¸¥ÂÊ ÇöÀç ÃÑ¾Ë ¼ö
+    [SerializeField] private int maxBullet = 100; //ï¿½Ö´ï¿½ ï¿½Ñ¾Ë¼ï¿½
+    public int leftCurrentBullet = 100; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½
+    public int rightCurrentBullet = 100; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½
 
-    private float previousLeftGrips = 0; // Grips 0 > 1 > 0 È®ÀÎ¿ë º¯¼ö
+    private float previousLeftGrips = 0; // Grips 0 > 1 > 0 È®ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float previousRightGrips = 0;
 
     void Update()
     {
-        // Trigger(0: ±âº» , 1: ´­¸²)
+        // Trigger(0: ï¿½âº» , 1: ï¿½ï¿½ï¿½ï¿½)
         var leftContTrigger = inputActions.actionMaps[2].actions[2].ReadValue<float>();
         var rightContTrigger = inputActions.actionMaps[5].actions[2].ReadValue<float>();
 
-        //¹ß»ç
+        //ï¿½ß»ï¿½
         if (leftContTrigger == 1 && !LBullet)
         {
             LBullet = true;
@@ -45,23 +45,23 @@ public class GunShooting : MonoBehaviour
             FireBullet(FirePointRight, false);
         }
 
-        // Grips(0: ±âº» , 1: ´­¸²)
+        // Grips(0: ï¿½âº» , 1: ï¿½ï¿½ï¿½ï¿½)
         float leftGrips = inputActions.actionMaps[2].actions[0].ReadValue<float>();
         float rightGrips = inputActions.actionMaps[5].actions[0].ReadValue<float>();
 
-        // ¿ÞÂÊ Grips: 1 -> 0À¸·Î ÀüÈ¯µÉ ¶§ ÀåÀü
+        // ï¿½ï¿½ï¿½ï¿½ Grips: 1 -> 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (previousLeftGrips == 1 && leftGrips == 0)
         {
             Reload(true);
         }
 
-        // ¿À¸¥ÂÊ Grips: 1 -> 0À¸·Î ÀüÈ¯µÉ ¶§ ÀåÀü
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Grips: 1 -> 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (previousRightGrips == 1 && rightGrips == 0)
         {
             Reload(false);
         }
 
-        // Grips »óÅÂ ¾÷µ¥ÀÌÆ®
+        // Grips ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         previousLeftGrips = leftGrips;
         previousRightGrips = rightGrips;
     }
@@ -74,18 +74,18 @@ public class GunShooting : MonoBehaviour
             Instantiate(BulletPrefab, firePoint.position, firePoint.rotation);
             leftCurrentBullet--;
             StartCoroutine(FireSound(isLeft));
-            Debug.Log($"¿ÞÂÊ ÃÑ¾Ë °³¼ö: {leftCurrentBullet}");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½: {leftCurrentBullet}");
         }
         else if (!isLeft && rightCurrentBullet > 0)
         {
             Instantiate(BulletPrefab, firePoint.position, firePoint.rotation);
             rightCurrentBullet--;
             StartCoroutine(FireSound(isLeft));
-            Debug.Log($"¿À¸¥ÂÊ ÃÑ¾Ë °³¼ö: {rightCurrentBullet}");
+            Debug.Log($"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½: {rightCurrentBullet}");
         }
         else
         {
-            Debug.Log("ÃÑ¾ËÀÌ ¾ø½À´Ï´Ù!");
+            Debug.Log("ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½!");
             StartCoroutine(FireSound(isLeft, true));
         }
     }
@@ -122,13 +122,13 @@ public class GunShooting : MonoBehaviour
         {
             leftCurrentBullet = maxBullet;
             source.PlayOneShot(reloadSound);
-            Debug.Log("¿ÞÂÊ ÃÑ¾Ë ÀçÀåÀü");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
         else if (!isLeft && rightCurrentBullet < maxBullet)
         {
             rightCurrentBullet = maxBullet;
             source.PlayOneShot(reloadSound);
-            Debug.Log("¿À¸¥ÂÊ ÃÑ¾Ë ÀçÀåÀü");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
     }
 }
