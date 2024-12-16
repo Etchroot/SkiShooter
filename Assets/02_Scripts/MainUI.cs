@@ -8,11 +8,11 @@ public class MainUI : MonoBehaviour
 
     void Start()
     {
-        GameObject gunManager = GameObject.FindWithTag("Manager");
+        GameObject GunManager = GameObject.FindWithTag("MANAGER");
 
-        if (gunManager != null)
+        if (GunManager != null)
         {
-            gunShooting = gunManager.GetComponent<GunShooting>();
+            gunShooting = GunManager.GetComponent<GunShooting>();
         }
         if (gunShooting == null)
         {
