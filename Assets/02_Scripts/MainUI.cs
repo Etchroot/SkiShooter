@@ -3,7 +3,8 @@ using TMPro;
 
 public class MainUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI BulletText;
+    [SerializeField] private TextMeshProUGUI LeftBulletText;
+    [SerializeField] private TextMeshProUGUI RightBulletText;
     private GunShooting gunShooting;
 
     void Start()
@@ -25,6 +26,7 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //BulletText.text = $"{gunShooting.CurruntBullet}";
+        LeftBulletText.text = $"{gunShooting.LeftCurruntBullet}";
+        RightBulletText.text = $"{gunShooting.RightCurruntBullet}";
     }
 }

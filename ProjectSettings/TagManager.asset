@@ -8,6 +8,8 @@ TagManager:
   - LAND
   - PLAYER
   - BULLET
+  - Road
+  - MANAGER
   layers:
   - Default
   - TransparentFX

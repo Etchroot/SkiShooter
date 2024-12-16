@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: db980a3e0e9c07246bb7a327cdd236b4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 269263
+  packageName: SCIENCE FICTION GAME UI ELEMENTS-INFOGRAPHICS PACK
+  packageVersion: 1.0
+  assetPath: Assets/SciFi_InfographicNew/HudAnimation/Animations/LoadingBar.controller
+  uploadId: 623634
