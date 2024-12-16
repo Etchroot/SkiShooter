@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2887143087336798688}
   - component: {fileID: 3291232338479921722}
   m_Layer: 5
-  m_Name: Text - Reload (1)
+  m_Name: Text - ReloadL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,8 +189,8 @@ RectTransform:
   - {fileID: 7015661867367962178}
   - {fileID: 7006206574030725684}
   - {fileID: 7889952287838537811}
-  - {fileID: 8481735786398428213}
   - {fileID: 6128510953434887094}
+  - {fileID: 8481735786398428213}
   - {fileID: 7735961234705154520}
   - {fileID: 9166538342361943636}
   m_Father: {fileID: 3749299188880913264}
@@ -296,6 +296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftBulletText: {fileID: 8236784416380602051}
   RightBulletText: {fileID: 8150299403538184245}
+  LeftReloadText: {fileID: 2887143087336798688}
+  RightReloadText: {fileID: 7538647788554010522}
 --- !u!1 &1388762857877665554
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,7 +2766,7 @@ GameObject:
   - component: {fileID: 7538647788554010522}
   - component: {fileID: 7471763934493812332}
   m_Layer: 5
-  m_Name: Text - Reload
+  m_Name: Text - ReloadR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

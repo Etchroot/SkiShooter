@@ -5,6 +5,8 @@ public class MainUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI LeftBulletText;
     [SerializeField] private TextMeshProUGUI RightBulletText;
+    [SerializeField] private TextMeshProUGUI LeftReloadText;
+    [SerializeField] private TextMeshProUGUI RightReloadText;
     private GunShooting gunShooting;
 
     void Start()
@@ -28,5 +30,19 @@ public class MainUI : MonoBehaviour
     {
         LeftBulletText.text = $"{gunShooting.LeftCurruntBullet}";
         RightBulletText.text = $"{gunShooting.RightCurruntBullet}";
+    }
+
+    private bool isReloadAcive = false; // 현재 리로드 텍스트 상태
+    void ReloadText()
+    {
+        int leftRemainBullet = gunShooting.LeftCurruntBullet;
+        int rightRemainBullet = gunShooting.RightCurruntBullet;
+
+        if (leftRemainBullet == 0 && !isReloadAcive)
+        {
+            // LeftReloadText.SetAcive(true);
+        }
+
+
     }
 }
