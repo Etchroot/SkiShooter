@@ -260,11 +260,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   BulletPrefab: {fileID: 9141731347740879559, guid: ac6a639df86f67247b42bdaba2a15414, type: 3}
-  FirePointL: {fileID: 634817918}
-  FirePointR: {fileID: 6566656365148664760}
+  FirePointLeft: {fileID: 634817918}
+  FirePointRight: {fileID: 6566656365148664760}
   fireRate: 0.2
   source: {fileID: 440273425}
   fireSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
+  MaxBullet: 100
+  LeftCurruntBullet: 100
+  RightCurruntBullet: 100
 --- !u!4 &440273424
 Transform:
   m_ObjectHideFlags: 0
