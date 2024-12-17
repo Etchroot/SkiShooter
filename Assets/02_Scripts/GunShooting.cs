@@ -30,6 +30,9 @@ public class GunShooting : MonoBehaviour
     public bool isReloading = false; // 재장전 중인지 확인
 
     private Haptic haptics;
+    public float hapticsAmplitude = 1.0f;
+    public float hapticsDuration = 0.2f;
+
 
     void Awake()
     {
@@ -82,7 +85,7 @@ public class GunShooting : MonoBehaviour
             StartCoroutine(FireSound()); // 발사 소리 재생
 
             // Haptics Trigger (진동 발생)
-            haptics?.TriggerHapticFeedback(isLeft, 0.5f, 0.1f);
+            haptics?.TriggerHapticFeedback(isLeft, hapticsAmplitude, hapticsDuration);
 
             Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 개수: {currentBullet}");
         }
