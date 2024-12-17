@@ -8,7 +8,9 @@ public class MainUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI RightBulletText;
     [SerializeField] private TextMeshProUGUI PlayerSpeedText;
     [SerializeField] private GameObject LeftReloadText;
+    [SerializeField] private GameObject LeftReloadImage;
     [SerializeField] private GameObject RightReloadText;
+    [SerializeField] private GameObject RightReloadImage;
     private GunShooting gunShooting;
     private Player player;
     private bool isLeftReloadAcive = false; // 현재 리로드 텍스트 상태
@@ -62,6 +64,8 @@ public class MainUI : MonoBehaviour
         {
             Debug.Log("왼손 재장전 중");
             LeftReloadText.SetActive(true);
+            LeftReloadImage.SetActive(true);
+            Invoke("DeacitveLeftReloadImage", 2f);
             isLeftReloadAcive = true;
         }
         else if (leftRemainBullet != 0 && isLeftReloadAcive)
@@ -70,6 +74,7 @@ public class MainUI : MonoBehaviour
             isLeftReloadAcive = false;
         }
     }
+
     void RightReload()
     {
         int rightRemainBullet = gunShooting.rightCurrentBullet;
@@ -77,6 +82,8 @@ public class MainUI : MonoBehaviour
         {
             Debug.Log("오른손 재장전 중");
             RightReloadText.SetActive(true);
+            RightReloadImage.SetActive(true);
+            Invoke("DeacitveRightReloadImage", 2f);
             isRightReloadAcive = true;
         }
         else if (rightRemainBullet != 0 && isRightReloadAcive)
@@ -87,5 +94,12 @@ public class MainUI : MonoBehaviour
 
 
     }
-
+    void DeacitveLeftReloadImage()
+    {
+        LeftReloadImage.SetActive(false);
+    }
+    void DeacitveRightReloadImage()
+    {
+        RightReloadImage.SetActive(false);
+    }
 }
