@@ -52,8 +52,8 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LeftBulletText.text = $"{leftgunShooting.leftCurrentBullet}";
-        RightBulletText.text = $"{rightgunShooting.rightCurrentBullet}";
+        LeftBulletText.text = $"{leftgunShooting.currentBullet}";
+        RightBulletText.text = $"{rightgunShooting.currentBullet}";
 
         if (Player.Instance != null)
         {
@@ -74,7 +74,7 @@ public class MainUI : MonoBehaviour
 
     void LeftReload()
     {
-        int leftRemainBullet = leftgunShooting.leftCurrentBullet;
+        int leftRemainBullet = leftgunShooting.currentBullet;
 
 
         if (leftRemainBullet == 0 && !isLeftReloadAcive)
@@ -93,7 +93,7 @@ public class MainUI : MonoBehaviour
 
     void RightReload()
     {
-        int rightRemainBullet = rightgunShooting.rightCurrentBullet;
+        int rightRemainBullet = rightgunShooting.currentBullet;
 
         if (rightRemainBullet == 0 && !isRightReloadAcive)
         {
@@ -113,7 +113,7 @@ public class MainUI : MonoBehaviour
 
     void LeftReloading()
     {
-        if (leftgunShooting.LeftReloadValue == true)
+        if (leftgunShooting.isReloading == true)
         {
             LeftReloadImage.SetActive(true);
             Invoke("DeacitveLeftReloadImage", 2f);
@@ -121,7 +121,7 @@ public class MainUI : MonoBehaviour
     }
     void RightReloading()
     {
-        if (rightgunShooting.RightReloadValue == true)
+        if (rightgunShooting.isReloading == true)
         {
             RightReloadImage.SetActive(true);
             Invoke("DeacitveRightReloadImage", 2f);
