@@ -10,6 +10,8 @@ TagManager:
   - BULLET
   - Road
   - MANAGER
+  - LCONT
+  - RCONT
   layers:
   - Default
   - TransparentFX

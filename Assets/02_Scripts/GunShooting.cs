@@ -29,8 +29,8 @@ public class GunShooting : MonoBehaviour
 
     [SerializeField] private float ReloadIng = 2f; //재장전 시간
     private bool isReloading = false;
-    //public bool LeftReloadValue = false;
-    //public bool RightReloadValue = false;
+    public bool LeftReloadValue = false;
+    public bool RightReloadValue = false;
 
     void Update()
     {
@@ -132,27 +132,27 @@ public class GunShooting : MonoBehaviour
         {
             // 재장전 딜레이
             source.PlayOneShot(reloadingSound);
-            //LeftReloadValue = true;
+            LeftReloadValue = true;
             yield return new WaitForSeconds(ReloadIng);
 
             // 재장전 완료
             leftCurrentBullet = maxBullet;
             source.PlayOneShot(reloadSound);
             Debug.Log("왼쪽 총알 재장전 완료");
-            //LeftReloadValue = false;
+            LeftReloadValue = false;
         }
         else if (!isLeft && rightCurrentBullet < maxBullet)
         {
             // 재장전 딜레이
             source.PlayOneShot(reloadingSound);
-            //RightReloadValue = true;
+            RightReloadValue = true;
             yield return new WaitForSeconds(ReloadIng);
 
             // 재장전 완료
             rightCurrentBullet = maxBullet;
             source.PlayOneShot(reloadSound);
             Debug.Log("오른쪽 총알 재장전 완료");
-            //RightReloadValue = false;
+            RightReloadValue = false;
         }
 
         isReloading = false;

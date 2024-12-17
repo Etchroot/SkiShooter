@@ -11,24 +11,38 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject LeftReloadImage;
     [SerializeField] private GameObject RightReloadText;
     [SerializeField] private GameObject RightReloadImage;
-    private GunShooting gunShooting;
+    [SerializeField] private GameObject LeftController;
+    [SerializeField] private GameObject RightController;
+    private GunShooting leftgunShooting;
+    private GunShooting rightgunShooting;
     private Player player;
     private bool isLeftReloadAcive = false; // 현재 리로드 텍스트 상태
     private bool isRightReloadAcive = false; // 현재 리로드 텍스트 상태
     void Start()
     {
 
-        GameObject GunManager = GameObject.FindWithTag("MANAGER");
+        //GameObject LeftController = GameObject.FindWithTag("LCONT");
 
-        if (GunManager != null)
+        if (LeftController != null)
         {
-            gunShooting = GunManager.GetComponent<GunShooting>();
+            Debug.Log("LCONT 태그를 가진 오브젝트르 찾았습니다.");
+            leftgunShooting = LeftController.GetComponent<GunShooting>();
         }
-        if (gunShooting == null)
+        if (leftgunShooting == null)
         {
-            Debug.Log("Manager 태그를 가진 오브젝트에서 gunshooting 스크립트를 찾을 수 없음");
+            Debug.Log("LCONT 태그를 가진 오브젝트에서 gunshooting 스크립트를 찾을 수 없음");
         }
 
+        //GameObject rightController = GameObject.FindWithTag("RCONT");
+
+        if (RightController != null)
+        {
+            rightgunShooting = RightController.GetComponent<GunShooting>();
+        }
+        if (rightgunShooting == null)
+        {
+            Debug.Log("RCONT 태그를 가진 오브젝트에서 gunshooting 스크립트를 찾을 수 없음");
+        }
 
 
     }
@@ -38,8 +52,8 @@ public class MainUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LeftBulletText.text = $"{gunShooting.leftCurrentBullet}";
-        RightBulletText.text = $"{gunShooting.rightCurrentBullet}";
+        LeftBulletText.text = $"{leftgunShooting.leftCurrentBullet}";
+        RightBulletText.text = $"{rightgunShooting.rightCurrentBullet}";
 
         if (Player.Instance != null)
         {
@@ -50,6 +64,9 @@ public class MainUI : MonoBehaviour
             Debug.LogWarning("Player 인스턴스를 찾을 수 없습니다.");
         }
 
+
+        LeftReloading();
+        RightReloading();
         LeftReload();
         RightReload();
     }
@@ -57,15 +74,14 @@ public class MainUI : MonoBehaviour
 
     void LeftReload()
     {
-        int leftRemainBullet = gunShooting.leftCurrentBullet;
+        int leftRemainBullet = leftgunShooting.leftCurrentBullet;
 
 
         if (leftRemainBullet == 0 && !isLeftReloadAcive)
         {
-            Debug.Log("왼손 재장전 중");
+            Debug.Log("왼손 재장전 필요");
             LeftReloadText.SetActive(true);
-            LeftReloadImage.SetActive(true);
-            Invoke("DeacitveLeftReloadImage", 2f);
+
             isLeftReloadAcive = true;
         }
         else if (leftRemainBullet != 0 && isLeftReloadAcive)
@@ -77,13 +93,14 @@ public class MainUI : MonoBehaviour
 
     void RightReload()
     {
-        int rightRemainBullet = gunShooting.rightCurrentBullet;
+        int rightRemainBullet = rightgunShooting.rightCurrentBullet;
+
         if (rightRemainBullet == 0 && !isRightReloadAcive)
         {
-            Debug.Log("오른손 재장전 중");
+            Debug.Log("오른손 재장전 필요");
             RightReloadText.SetActive(true);
-            RightReloadImage.SetActive(true);
-            Invoke("DeacitveRightReloadImage", 2f);
+            //RightReloadImage.SetActive(true);
+            //Invoke("DeacitveRightReloadImage", 2f);
             isRightReloadAcive = true;
         }
         else if (rightRemainBullet != 0 && isRightReloadAcive)
@@ -92,7 +109,23 @@ public class MainUI : MonoBehaviour
             isRightReloadAcive = false;
         }
 
+    }
 
+    void LeftReloading()
+    {
+        if (leftgunShooting.LeftReloadValue == true)
+        {
+            LeftReloadImage.SetActive(true);
+            Invoke("DeacitveLeftReloadImage", 2f);
+        }
+    }
+    void RightReloading()
+    {
+        if (rightgunShooting.RightReloadValue == true)
+        {
+            RightReloadImage.SetActive(true);
+            Invoke("DeacitveRightReloadImage", 2f);
+        }
     }
     void DeacitveLeftReloadImage()
     {
