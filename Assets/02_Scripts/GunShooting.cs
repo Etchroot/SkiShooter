@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.OpenXR.Features.Interactions;
 
 public class GunShooting : MonoBehaviour
 {
@@ -27,6 +28,13 @@ public class GunShooting : MonoBehaviour
 
     [SerializeField] private float reloadTime = 2f; // 재장전 시간
     public bool isReloading = false; // 재장전 중인지 확인
+
+    private Haptic haptics;
+
+    void Awake()
+    {
+        haptics = GetComponent<Haptic>();
+    }
 
     void Update()
     {
@@ -72,6 +80,10 @@ public class GunShooting : MonoBehaviour
             currentBullet--; // 발사 후 총알 감소
             canFire = false;
             StartCoroutine(FireSound()); // 발사 소리 재생
+
+            // Haptics Trigger (진동 발생)
+            haptics?.TriggerHapticFeedback(isLeft, 0.5f, 0.1f);
+
             Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 개수: {currentBullet}");
         }
         else
