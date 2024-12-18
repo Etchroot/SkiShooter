@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -7,9 +8,12 @@ public class Player : MonoBehaviour
     public event DamageEvent OnDamageTaken;
     public static Player Instance { get; private set; }
     public float moveSpeed = 5f; // 기본 이동속도
+    public float gravity = 9.8f;
+    public float groundOffset = 0.2f; //지면 오프셋
     public float maxHp = 100f;
     private float currentHp;
     private CharacterController cc;
+    private Vector3 velocity; //속도 변수
 
 
     void Awake()
@@ -42,23 +46,51 @@ public class Player : MonoBehaviour
         //direction.y -= 10f * Time.deltaTime;
         //transform.Translate(direction * moveSpeed * Time.deltaTime);
 
-        Debug.DrawRay(transform.position, Vector3.down * 0.2f, Color.green);
+        #region  강사님 이동로직
+        // Debug.DrawRay(transform.position, Vector3.down * 0.2f, Color.green);
 
-        if (Physics.Raycast(transform.position + Vector3.down * 1f, Vector3.down, out var hit, 0.2f))
-        {
-            if (hit.collider.CompareTag("Road"))
-            {
-                direction.y = 0.0f;
-            }
-        }
-        else
-        {
-            direction.y -= 100.0f * Time.deltaTime;
-        }
+        // if (Physics.Raycast(transform.position + Vector3.down * 1f, Vector3.down, out var hit, 0.2f))
+        // {
+        //     if (hit.collider.CompareTag("Road"))
+        //     {
+        //         direction.y = 0.0f;
+        //     }
+        // }
+        // else
+        // {
+        //     direction.y -= 100.0f * Time.deltaTime;
+        // }
 
-        cc.Move(direction * moveSpeed * Time.deltaTime);
+        // cc.Move(direction * moveSpeed * Time.deltaTime);
+        // Debug.Log(cc.isGrounded);
+        #endregion
+        #region  GPT 이동로직
+        // //이동 처리
+        // if (cc.isGrounded)
+        // {
+        velocity = direction * moveSpeed;
+        //}
+        // else
+        // {
+        //velocity.y -= gravity * Time.deltaTime;
+        velocity.y = 0; //y축 이동 막기
+        //}
+        cc.Move(velocity * Time.deltaTime);
         Debug.Log(cc.isGrounded);
 
+        // Terrain 높이 보정
+        float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
+
+        //캐릭터를 Terrain 위로 보정
+        Vector3 newPosition = transform.position;
+        newPosition.y = terrainHeight + groundOffset;
+        transform.position = newPosition;
+        // if (transform.position.y < terrainHeight + groundOffset)
+        // {
+        //     transform.position = new Vector3(transform.position.x, terrainHeight + groundOffset, transform.position.z);
+        // }
+        #endregion
+        // 데미지 받는 임시 메소드
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10f);
