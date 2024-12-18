@@ -63,7 +63,7 @@ public class AnonymousLogin : MonoBehaviour
         // 저장할 데이터
         var data = new Dictionary<string, object>
         {
-            {"player_name", nickname}
+            {"code_name", nickname}
         };
 
         //데이터 저장
