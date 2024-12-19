@@ -9,7 +9,7 @@ public class TypeWriteTMP : MonoBehaviour
     TMP_Text txt;
     string story;
     public float delay = 0.125f;
-    public bool _continue = false;
+    //public bool _continue = false;
     void Awake()
     {
         txt = GetComponent<TMP_Text>();
@@ -21,7 +21,7 @@ public class TypeWriteTMP : MonoBehaviour
 
     void StartAnimation()
     {
-
+        Debug.Log("할글자씩 가져오기 코루틴 시작");
         StartCoroutine("PlayText");
     }
     IEnumerator PlayText()
@@ -31,20 +31,20 @@ public class TypeWriteTMP : MonoBehaviour
             txt.text += c;
             yield return new WaitForSeconds(delay);
         }
-        if (_continue == true)
-        {
-            // Pause for a moment when the story is complete
-            yield return new WaitForSeconds(1.0f);
+        //     if (_continue == true)
+        //     {
+        //         // Pause for a moment when the story is complete
+        //         yield return new WaitForSeconds(1.0f);
 
-            // Remove the story
-            txt.text = "";
+        //         // Remove the story
+        //         txt.text = "";
 
-            // Pause for a moment before typing it again
-            yield return new WaitForSeconds(1.0f);
+        //         // Pause for a moment before typing it again
+        //         yield return new WaitForSeconds(1.0f);
 
-            // Start typing the story again
-            StartCoroutine("PlayText");
-        }
+        //         // Start typing the story again
+        //         StartCoroutine("PlayText");
+        //     }
 
     }
 }

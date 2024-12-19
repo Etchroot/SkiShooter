@@ -17,11 +17,30 @@ public class AnonymousLogin : MonoBehaviour
         await UnityServices.InitializeAsync();
         Debug.Log("Unity Services Initialized");
 
+        // 로그 아웃
+        // if (AuthenticationService.Instance.IsSignedIn)
+        // {
+
+        Debug.Log("데이터 초기화 중");
+        ClearSavedLoginData();
+
+        //}
         // 익명 로그인 시도
         await SignInAnonymously();
 
         // 버튼 클릭 이벤트 연결
         saveButton.onClick.AddListener(OnSaveButtonClicked);
+    }
+
+    // 로그인 데이터 초기화
+    private void ClearSavedLoginData()
+    {
+        // Unity가 저장한 익명 사용자 데이터를 내 디바이스에서 초기화
+        PlayerPrefs.DeleteKey("com.unity.services.authentication.instance.playerid");
+        PlayerPrefs.DeleteKey("com.unity.services.authentication.instance.sessiontoken");
+
+        // 혹시 모를 캐싱 데이터도 초기화
+        AuthenticationService.Instance.ClearSessionToken();
     }
 
     private async Task SignInAnonymously()
