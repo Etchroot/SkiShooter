@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 4fcbcf79223de3c44868c4b7e34e0757
+labels:
+- Floor
+- Architecture
+- Modular
+- Interior
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 03/floor-06.prefab
+  uploadId: 107573

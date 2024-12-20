@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 8d0d18b9b6abb20448cb0447055510c3
+labels:
+- Box
+- Modular
+- Prop
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 03/box-d-02.prefab
+  uploadId: 107573

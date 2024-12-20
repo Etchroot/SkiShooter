@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 16a6e605aa9e3b14ca0429b68cd109cc
+labels:
+- Prop
+- Technology
+- Gadget
+- Science
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 02/teleport
+    pad.prefab
+  uploadId: 107573

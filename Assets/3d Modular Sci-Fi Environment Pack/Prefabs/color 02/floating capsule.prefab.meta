@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: f2a3e517b17bcf542994d600f4578cf2
+labels:
+- Furniture
+- Bed
+- Lab
+- Capsule
+- Prop
+- Decoration
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 02/floating
+    capsule.prefab
+  uploadId: 107573

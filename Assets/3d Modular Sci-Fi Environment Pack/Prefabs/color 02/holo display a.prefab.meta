@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 315c1ec71a381e64090fd0f89b912bba
+labels:
+- Hologram
+- Prop
+- Decoration
+- Monitor
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 02/holo display
+    a.prefab
+  uploadId: 107573

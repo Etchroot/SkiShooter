@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: a385175456376174d8d83e0e0a26e00d
+labels:
+- CCTV
+- Small
+- Decoration
+- Misc
+- Prop
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/CCTV.prefab
+  uploadId: 107573

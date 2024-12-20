@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 5e9d9aaf760a0f54c9aae07f40ff031e
+labels:
+- Pillar
+- Modular
+- Architecture
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/pillar-02.prefab
+  uploadId: 107573

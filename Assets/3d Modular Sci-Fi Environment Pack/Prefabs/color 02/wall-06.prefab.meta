@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 37b066e5291eb7c4284657a1701cb078
+labels:
+- Architecture
+- Wall
+- Interior
+- Modular
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 02/wall-06.prefab
+  uploadId: 107573
