@@ -38,17 +38,31 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
         //terrain 높이 가져오기
         //float terrainHeight = GetTerrainHeight(transform.position);
         // 플레이어 이동 처리
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
+        Vector3 direction = transform.forward * vertical + transform.right * horizontal;
+        direction.y = 0;
         //direction.y -= 10f * Time.deltaTime;
         //transform.Translate(direction * moveSpeed * Time.deltaTime);
-        velocity = direction * moveSpeed;
+        velocity = direction.normalized * moveSpeed;
         cc.Move(velocity * Time.deltaTime);
+
+        //임시 좌우 회전 처리
+        float rotationSpeed = 100f;
+        if (Input.GetKey(KeyCode.Q))
+        {
+            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
+#endif
 
         AdjustToTerrain();
 
