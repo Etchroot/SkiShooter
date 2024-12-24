@@ -192,9 +192,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("데미지가 보호막에 의해 차단되었습니다.");
         }
-
-
-
     }
 
     // 이동속도를 설정하는 메서드
