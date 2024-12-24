@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 71291409c4debd442b4ffd7e14bcba22
+timeCreated: 1513114355
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 107583
+  packageName: Winter Zone Mini
+  packageVersion: 1.0
+  assetPath: Assets/Winter Zone Mini 1.0/demo scenes/meshTerrains_demo/LightingData.asset
+  uploadId: 220084

@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //terrain 높이 가져오기
+        //float terrainHeight = GetTerrainHeight(transform.position);
         // 플레이어 이동 처리
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -45,6 +47,10 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
         //direction.y -= 10f * Time.deltaTime;
         //transform.Translate(direction * moveSpeed * Time.deltaTime);
+        velocity = direction * moveSpeed;
+        cc.Move(velocity * Time.deltaTime);
+
+        AdjustToTerrain();
 
         #region  강사님 이동로직
         // Debug.DrawRay(transform.position, Vector3.down * 0.2f, Color.green);
@@ -65,36 +71,94 @@ public class Player : MonoBehaviour
         // Debug.Log(cc.isGrounded);
         #endregion
         #region  GPT 이동로직
-        // //이동 처리
-        // if (cc.isGrounded)
-        // {
-        velocity = direction * moveSpeed;
-        //}
-        // else
-        // {
-        //velocity.y -= gravity * Time.deltaTime;
-        velocity.y = 0; //y축 이동 막기
-        //}
-        cc.Move(velocity * Time.deltaTime);
-        Debug.Log(cc.isGrounded);
+        // // //이동 처리
+        // // if (cc.isGrounded)
+        // // {
+        // velocity = direction * moveSpeed;
+        // //}
+        // // else
+        // // {
+        // //velocity.y -= gravity * Time.deltaTime;
+        // velocity.y = 0; //y축 이동 막기
+        // //}
+        // cc.Move(velocity * Time.deltaTime);
+        // Debug.Log(cc.isGrounded);
 
-        // Terrain 높이 보정
-        float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
+        // // Terrain 높이 보정
+        // //float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
 
-        //캐릭터를 Terrain 위로 보정
-        Vector3 newPosition = transform.position;
-        newPosition.y = terrainHeight + groundOffset;
-        transform.position = newPosition;
         // if (transform.position.y < terrainHeight + groundOffset)
         // {
         //     transform.position = new Vector3(transform.position.x, terrainHeight + groundOffset, transform.position.z);
         // }
+
+        // //캐릭터를 Terrain 위로 보정
+        // // Vector3 newPosition = transform.position;
+        // // newPosition.y = terrainHeight + groundOffset;
+        // // transform.position = newPosition;
+        // // if (transform.position.y < terrainHeight + groundOffset)
+        // // {
+        // //     transform.position = new Vector3(transform.position.x, terrainHeight + groundOffset, transform.position.z);
+        // // }
+        #endregion
+        #region 새 이동로직
+        void AdjustToTerrain()
+        {
+            // Ray 설정
+            Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
+            RaycastHit hit;
+            Debug.DrawRay(transform.position + Vector3.up * 0.1f, Vector3.down * 10, Color.red);
+
+            // Raycast 실행
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                // 감지된 터레인인지 확인
+                TerrainCollider terrainCollider = hit.collider.GetComponent<TerrainCollider>();
+                if (terrainCollider != null)
+                {
+                    // terrain의 y값으로 위치 보정
+                    float terrainHeight = hit.point.y;
+                    Vector3 newPosition = transform.position;
+                    newPosition.y = terrainHeight + groundOffset;
+                    transform.position = newPosition;
+
+                    Debug.Log($"터레인 감지 : {hit.collider.name}, 위치보정완료");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("터레인 감지 실패");
+            }
+        }
         #endregion
         // 데미지 받는 임시 메소드
         if (Input.GetKeyDown(KeyCode.H))
         {
             TakeDamage(10f);
         }
+    }
+
+    float GetTerrainHeight(Vector3 position)
+    {
+        Terrain[] terrains = Terrain.activeTerrains;
+        if (terrains.Length == 0)
+        {
+            Debug.Log("씬에 터레인이 없습니다.");
+            return position.y;
+        }
+
+        foreach (Terrain terrain in terrains)
+        {
+            Vector3 terrainPosition = terrain.GetPosition();
+            Vector3 terrainSize = terrain.terrainData.size;
+
+            if (position.x >= terrainPosition.x && position.x <= terrainPosition.x + terrainSize.x && position.z >= terrainPosition.z && position.z <= terrainPosition.z + terrainSize.z)
+            {
+                return terrain.SampleHeight(position) + terrainPosition.y;
+            }
+        }
+        Debug.Log("캐릭터가 어떤 터레인에도 속하지 않습니다.");
+        return position.y;
     }
 
     public void TakeDamage(float damage)
