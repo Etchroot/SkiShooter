@@ -1150,7 +1150,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 500, y: 100}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0, y: 0.30859375, z: 0, w: 0}
+  savedTextUV0: {x: 0.40625, y: 0.08984375, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &1351821978596407535
 GameObject:
@@ -2106,7 +2106,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 160, y: 30}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.13671875, y: 0.22265625, z: 0, w: 0}
+  savedTextUV0: {x: 0.40625, y: 0.1484375, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &2473220240339795797
 GameObject:
@@ -2395,7 +2395,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 150, y: 20.012999}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.38671875, y: 0.078125, z: 0, w: 0}
+  savedTextUV0: {x: 0.05078125, y: 0, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &2684579369018517044
 GameObject:
@@ -4050,7 +4050,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 300, y: 60}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.7421875, y: 0.0390625, z: 0, w: 0}
+  savedTextUV0: {x: 0.05859375, y: 0.328125, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &4158355003144386416
 GameObject:
@@ -5167,7 +5167,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 500, y: 100}
   savedColor: {r: 0.66176474, g: 0.66176474, b: 0.66176474, a: 1}
-  savedTextUV0: {x: 0.09765625, y: 0.1171875, z: 0, w: 0}
+  savedTextUV0: {x: 0.15234375, y: 0.3046875, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &5762949976783459848
 GameObject:
@@ -6157,7 +6157,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 300, y: 100}
   savedColor: {r: 0, g: 0, b: 0, a: 1}
-  savedTextUV0: {x: 0, y: 0.3671875, z: 0, w: 0}
+  savedTextUV0: {x: 0.40234375, y: 0.203125, z: 0, w: 0}
   savedFill: 0
 --- !u!114 &2585630083941592225
 MonoBehaviour:
@@ -6847,7 +6847,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 500, y: 100}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.2265625, y: 0.09375, z: 0, w: 0}
+  savedTextUV0: {x: 0, y: 0.23828125, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &7437011242884636615
 GameObject:
@@ -6946,7 +6946,7 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 160, y: 30}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.13671875, y: 0.22265625, z: 0, w: 0}
+  savedTextUV0: {x: 0.40625, y: 0.1484375, z: 0, w: 0}
   savedFill: 0
 --- !u!1 &7463117950705170366
 GameObject:
@@ -8456,5 +8456,5 @@ MonoBehaviour:
   savedUp: {x: 0, y: 1, z: 0}
   savedRectSize: {x: 160, y: 30}
   savedColor: {r: 1, g: 1, b: 1, a: 1}
-  savedTextUV0: {x: 0.13671875, y: 0.22265625, z: 0, w: 0}
+  savedTextUV0: {x: 0.40625, y: 0.1484375, z: 0, w: 0}
   savedFill: 0
