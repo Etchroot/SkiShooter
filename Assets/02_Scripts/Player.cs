@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public delegate void DamageEvent(ref float damage);
+    private MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
     public event DamageEvent OnDamageTaken;
     public static Player Instance { get; private set; }
     public float moveSpeed = 5f; // 기본 이동속도
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 변경 시에도 파괴되지 않도록 설정
+            //DontDestroyOnLoad(gameObject); // 씬 변경 시에도 파괴되지 않도록 설정
         }
         else
         {
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        mainUI = GetComponentInChildren<MainUI>();
     }
 
 
@@ -203,15 +205,25 @@ public class Player : MonoBehaviour
         moveSpeed = newSpeed;
     }
 
-    // 게임 뷰에서 실시간으로 속도를 표시
-    void OnGUI()
-    {
-        // 스타일 설정
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 50; // 글자 크기 설정
-        style.normal.textColor = Color.red; // 글자 색상 설정
+    // // 게임 뷰에서 실시간으로 속도를 표시
+    // void OnGUI()
+    // {
+    //     // 스타일 설정
+    //     GUIStyle style = new GUIStyle();
+    //     style.fontSize = 50; // 글자 크기 설정
+    //     style.normal.textColor = Color.red; // 글자 색상 설정
 
-        // 화면에 속도 표시 (왼쪽 상단)
-        GUI.Label(new Rect(10, 10, 300, 80), "Move Speed: " + moveSpeed.ToString("F2"), style);
+    //     // 화면에 속도 표시 (왼쪽 상단)
+    //     GUI.Label(new Rect(10, 10, 300, 80), "Move Speed: " + moveSpeed.ToString("F2"), style);
+    // }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 충돌한 오브젝트의 태그가 "END"인지 확인
+        if (other.CompareTag("END"))
+        {
+            Debug.Log("END 태그 오브젝트와 충돌!");
+            mainUI.EndGame();
+        }
     }
 }

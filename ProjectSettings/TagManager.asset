@@ -12,6 +12,7 @@ TagManager:
   - MANAGER
   - LCONT
   - RCONT
+  - END
   layers:
   - Default
   - TransparentFX

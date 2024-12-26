@@ -48,7 +48,7 @@ public class TitleUI : MonoBehaviour
     }
     private void OnQuickStartButtonClicked()
     {
-        toMainScene = "SampleScene";
+        toMainScene = "03_Main";
         StartCoroutine(LoadSceneFadeOut(toMainScene));
     }
     private void OnExitButtonClicked()
