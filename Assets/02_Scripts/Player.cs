@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
         cc.Move(velocity * Time.deltaTime);
 
         //임시 좌우 회전 처리
-        float rotationSpeed = 100f;
+        float rotationSpeed = 50f;
         if (Input.GetKey(KeyCode.Q))
         {
             transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
