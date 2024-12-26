@@ -1,113 +1,99 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    /*
-     * 적군의 행동
-     * 플레이어와 일정거리를 두며 따라다님
-     * 5초에 한번씩 적군 공격
-     * 
-     * 
-     */
-
     public enum State
     {
         IDLE, MOVE, ATTACK, HIT, DIE
     }
+    
+    public Transform target;           // 플레이어 목표
+    public float speed = 4f;           // 이동 속도
+    public float attackDist = 5f;      // 공격 사정거리
+    public float attackCooldown = 5f; // 공격 쿨타임
+    public State state = State.IDLE;   // 적 상태
+    public bool isDie = false;         // 적 사망 여부
+    private int hp = 3;                // 적 체력
 
-    public Transform target;    // 목표
-    public float speed = 4f;    // 이동속도
-    public float attackDist = 5f; // 공격사정거리
-    public State state = State.IDLE; // 몬스터 현재 상태
-    public bool isDie = false;  // 몬스터 사망 여부
-    int hp = 3;
+    [Header("Attack Settings")]
+    public GameObject BulletPrefab;    // 총알 프리팹
+    public Transform FirePoint;        // 총구 위치
 
-    private NavMeshAgent agent;
-    //private Animator anim;
+    private NavMeshAgent agent;        // 네비게이션 에이전트
+    //private Animator anim;             // 애니메이터
+    private float lastAttackTime = 0f; // 마지막 공격 시간
 
     void Start()
     {
-        // NavMeshAgent 컴포넌트 할당
+        // NavMeshAgent 및 Animator 컴포넌트 할당
         agent = GetComponent<NavMeshAgent>();
-
-        // Animator 컴포넌트 할당
         //anim = GetComponentInChildren<Animator>();
 
-        // 몬스터의 상태를 체크하는 코루틴 함수 호출
-        StartCoroutine(CheckMonsterState());
-
-        // 상태에 따라 몬스터의 행동을 수행하는 코루틴 함수 호출
-        StartCoroutine(MonsterAction());
-
+        // 적 상태 체크 및 행동 코루틴 시작
+        StartCoroutine(CheckEnemyState());
+        StartCoroutine(EnemyAction());
     }
 
-    void Update()
-    {
-
-    }
-
-    IEnumerator CheckMonsterState()
+    IEnumerator CheckEnemyState()
     {
         while (!isDie)
         {
-            //대기
             yield return new WaitForSeconds(0.3f);
 
-            //거리측정
-            float distance = Vector3.Distance(target.position, this.transform.position);
-
+            // 플레이어와의 거리 측정
+            float distance = Vector3.Distance(target.position, transform.position);
 
             if (distance > attackDist)
             {
-                // 목표를 향해 이동
+                // 사정거리 밖: 이동 상태
                 state = State.MOVE;
             }
             else
             {
-                // 목표에 도달 시 공격
+                // 사정거리 안: 공격 상태
                 state = State.ATTACK;
             }
-
-
         }
     }
 
-    IEnumerator MonsterAction()
+    IEnumerator EnemyAction()
     {
         while (!isDie)
         {
             switch (state)
             {
-                //  대기
                 case State.IDLE:
                     agent.isStopped = true;
                     //anim.SetTrigger("IDLE");
                     break;
 
-                // 이동
                 case State.MOVE:
-                    agent.SetDestination(target.position);
                     agent.isStopped = false;
+                    agent.SetDestination(target.position);
                     //anim.SetTrigger("MOVE");
                     break;
 
-                //공격
                 case State.ATTACK:
+                    agent.isStopped = true;
+                    if (Time.time - lastAttackTime >= attackCooldown)
+                    {
+                        Attack(); // 공격 실행
+                        lastAttackTime = Time.time; // 공격 쿨타임 초기화
+                    }
                     //anim.SetTrigger("ATTACK");
                     break;
 
-                //피격
                 case State.HIT:
-                    agent.isStopped = true;
                     //anim.SetTrigger("HIT");
+                    agent.isStopped = true;
                     break;
 
-                //사망
                 case State.DIE:
                     //anim.SetTrigger("DIE");
+                    agent.isStopped = true;
+                    Destroy(gameObject, 2f); // 2초 후 오브젝트 삭제
                     break;
             }
             yield return new WaitForSeconds(0.3f);
@@ -118,16 +104,31 @@ public class Enemy : MonoBehaviour
     {
         if (collision.collider.CompareTag("BULLET"))
         {
-            Destroy(collision.gameObject);
-
-            //anim.SetTrigger("HIT");
+            Destroy(collision.gameObject); // 총알 파괴
+            TakeDamage(1); // 데미지 1 추가
         }
     }
 
+    void TakeDamage(int damage)
+    {
+        if (isDie) return;
 
+        hp -= damage;
+        state = State.HIT;
+
+        if (hp <= 0)
+        {
+            isDie = true;
+            state = State.DIE;
+        }
+    }
 
     void Attack()
     {
-
+        // 총알 생성
+        if (BulletPrefab != null && FirePoint != null)
+        {
+            Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+        }
     }
 }
