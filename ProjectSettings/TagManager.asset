@@ -12,7 +12,7 @@ TagManager:
   - MANAGER
   - LCONT
   - RCONT
-  - END
+  - PLAYERHEAD
   layers:
   - Default
   - TransparentFX
