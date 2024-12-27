@@ -81,7 +81,7 @@ public class MainUI : MonoBehaviour
             Debug.LogWarning("Player 인스턴스를 찾을 수 없습니다.");
         }
 
-
+        palytimetoscore += Time.deltaTime;
         Timer();
         LeftReloading();
         RightReloading();
@@ -205,7 +205,7 @@ public class MainUI : MonoBehaviour
     {
         isGameRunning = false;
 
-        palytimetoscore += Time.deltaTime;
+
         int minutes = Mathf.FloorToInt(palytimetoscore / 60); // 분 계산
         int seconds = Mathf.FloorToInt(palytimetoscore % 60); // 초 계산
         Debug.Log($"최종 플레이타임: {palytimetoscore}");
@@ -215,7 +215,6 @@ public class MainUI : MonoBehaviour
         // 플레이 타임과 최종 속력을 정수로 변환
         string finalTime = string.Format("{0:00}:{1:00}", minutes, seconds);
         int finalScore = Mathf.FloorToInt(finalSpeed); // 점수는 최종 속력으로
-
         string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
 
         // Leaderboard와 Cloud Save에 데이터 전송

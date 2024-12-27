@@ -31,7 +31,14 @@ public class TitleUI : MonoBehaviour
     {
         string codename = inputCodeName.text;
 
-        codenameText.text = codename;
+        if (codename != null)
+        {
+            codenameText.text = codename;
+        }
+        else
+        {
+            codenameText.text = "JamesBond";
+        }
 
         loginPanel.SetActive(false);
 

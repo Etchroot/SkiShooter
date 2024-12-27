@@ -595,14 +595,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 575128389618331910, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4620181625110561917, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_Name
       value: LoginCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199478001916082582, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557398239591787396, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
+      propertyPath: Dirty
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7809474448051727429, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: fadeCanvasGroup
       value: 
       objectReference: {fileID: 1143904102}
+    - target: {fileID: 7870419270266380070, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8168208439027104586, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1685,7 +1701,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -12220,7 +12236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6711287167537409523, guid: 236ad6a53ef1d0d4c845e796072f4a0c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12710,14 +12726,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9142150466939810974}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.008809633, y: 0.6700225, z: 0.002949323, w: 0.74228275}
-  m_LocalPosition: {x: 0.355, y: 3.401, z: 1.67}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalRotation: {x: 0.02555368, y: 0.7231352, z: -0.013505893, w: 0.6901016}
+  m_LocalPosition: {x: 0.355, y: 3.701, z: 1.966}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3654706382175530625}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.523, y: 84.146, z: 0.927}
+  m_LocalEulerAnglesHint: {x: 3.142, y: 92.707, z: 1.051}
 --- !u!114 &9106330009891733114
 MonoBehaviour:
   m_ObjectHideFlags: 0
