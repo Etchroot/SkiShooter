@@ -1,47 +1,59 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 public class Bullet : MonoBehaviour
 {
-    // ÃÑ¾Ë ½ºÅ©¸³Æ®
-    // »ı¼ºµÈ ¹æÇâÀÇ ¾ÕÀ¸·Î ³¯¾Æ°¡¸ç ¹°Ã¼¿Í ºÎ‹HÈ÷°Å³ª 5ÃÊÈÄ Destroy
-    
+    // ì´ì•Œ ìŠ¤í¬ë¦½íŠ¸
+    // ìƒì„±ëœ ë°©í–¥ì˜ ì•ìœ¼ë¡œ ë‚ ì•„ê°€ë©° ë¬¼ì²´ì™€ ë¶€ë”ªíˆê±°ë‚˜ 5ì´ˆ í›„ Destroy
+
     [SerializeField] private float BulletSpeed = 5f;
-        
+
     void Start()
     {
-        //»ı¼ºµÇ°í 5ÃÊÈÄ »èÁ¦
-        StartCoroutine(Destroy());
+        // ìƒì„±ë˜ê³  5ì´ˆ í›„ ì‚­ì œ
+        StartCoroutine(DestroyAfterTime());
     }
 
     void Update()
     {
-        //ÀÌµ¿
+        // ì´ë™
         transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
     }
 
-    //´Ù¸¥ °ÔÀÓ ¿ÀºêÁ§Æ®¿Í ´êÀ¸¸é »èÁ¦
-    public void OnTriggerEnter(Collider other)
+    // ë‹¤ë¥¸ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì™€ ë‹¿ìœ¼ë©´ ì‚­ì œ
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ENEMY"))
         {
-            Destroy(other.gameObject);
+            // ì êµ°: ì²´ë ¥ ê°ì†Œ ë˜ëŠ” ì œê±°
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                //enemy.TakeDamage(1); // ì êµ°ì— ë°ë¯¸ì§€ 1 ì ìš©
+            }
+            Destroy(this.gameObject); // ì´ì•Œ ì œê±°
+        }
+        else if (other.CompareTag("PLAYER"))
+        {
+            // í”Œë ˆì´ì–´: ì†ë„ ê°ì†Œ ë˜ëŠ” ì²´ë ¥ ê°ì†Œ
+            //PlayerMovement player = other.GetComponent<PlayerMovement>();
+            //if (player != null)
+            //{
+            //    player.ReduceSpeed(0.5f); // í”Œë ˆì´ì–´ ì†ë„ë¥¼ 50% ê°ì†Œ
+            //}
+            //Destroy(this.gameObject); // ì´ì•Œ ì œê±°
         }
         else
         {
-            //¹Ù´ÚÀÌ³ª ´Ù¸¥°÷ ºÎµúÇûÀ»‹š
+            // ë°”ë‹¥ì´ë‚˜ ë‹¤ë¥¸ ê³³ê³¼ ë¶€ë”ªí˜”ì„ ë•Œ
             Destroy(this.gameObject);
         }
-        
     }
 
-    IEnumerator Destroy()
+    IEnumerator DestroyAfterTime()
     {
-        //»ı¼ºµÇ°í 5ÃÊ Áö³ª¸é Á¦°Å
+        // ìƒì„±ë˜ê³  5ì´ˆ ì§€ë‚˜ë©´ ì œê±°
         yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
     }
-
 }

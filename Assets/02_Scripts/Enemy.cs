@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     public bool isDie = false;         // 적 사망 여부
     private int hp = 3;                // 적 체력
 
-    [Header("Attack Settings")]
     public GameObject BulletPrefab;    // 총알 프리팹
     public Transform FirePoint;        // 총구 위치
 

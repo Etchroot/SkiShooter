@@ -19,10 +19,6 @@ public class EnemySpawn : MonoBehaviour
     public void SpawnEnemy()
     {
         GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-        //MonsterController MonsterController = enemyPrefab.GetComponent<MonsterController>();
-        //if (MonsterController != null)
-        //{
-        //    MonsterController.target = target;
-        //}
+        
     }
 }
