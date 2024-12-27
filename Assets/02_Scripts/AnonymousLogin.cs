@@ -89,7 +89,7 @@ public class AnonymousLogin : MonoBehaviour
     //     // 저장할 데이터
     //     var data = new Dictionary<string, object>
     //     {
-    //         {"code_name", nickname}
+    //         {"codename", nickname}
     //     };
 
     //     //데이터 저장

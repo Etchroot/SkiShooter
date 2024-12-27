@@ -8,6 +8,8 @@ using Unity.Services.Leaderboards;
 using Unity.Services.Core;
 using System.Collections.Generic;
 using Unity.Services.CloudSave;
+using Unity.Services.CloudSave.Models;
+using Unity.Services.Authentication;
 
 public class MainUI : MonoBehaviour
 {
@@ -29,13 +31,11 @@ public class MainUI : MonoBehaviour
     private bool isRightReloadAcive = false; // 현재 리로드 텍스트 상태
     private bool isGameRunning = true; // 게임 진행 상태
     private float palytime = 0f; // 플레이타임
-    private float palytimetoscore = 0f; // 점수로 표현되는 플레이타임
     private float finalSpeed = 0f; // 최종 속력
     void Start()
     {
         // 게임 시작 시 초기화
         palytime = 0f;
-        palytimetoscore = 0f;
         isGameRunning = true;
         //GameObject LeftController = GameObject.FindWithTag("LCONT");
 
@@ -81,7 +81,8 @@ public class MainUI : MonoBehaviour
             Debug.LogWarning("Player 인스턴스를 찾을 수 없습니다.");
         }
 
-        palytimetoscore += Time.deltaTime;
+        palytime += Time.deltaTime;
+
         Timer();
         LeftReloading();
         RightReloading();
@@ -107,23 +108,38 @@ public class MainUI : MonoBehaviour
     }
 
     // Cloud Save에 부가 데이터 저장
-    private async Task SaveAdditionalDataToCloud(string nickname, string time, int score)
+    private async Task SaveAdditionalDataToCloud(string playerId, string nickname, string time, int score)
     {
-        var data = new Dictionary<string, object>
+        var playerData = new PlayerData
         {
-            {"codename", nickname},
-            {"playtime", time},
-            {"final_speed", score}
+            codename = nickname,
+            playtime = time,
+            final_speed = score
         };
         try
         {
-            await CloudSaveService.Instance.Data.Player.SaveAsync(data);
+            string jsonData = JsonUtility.ToJson(playerData);
+
+            // Saveitem 객체로 감싸서 전달
+            var saveData = new Dictionary<string, SaveItem>
+            {
+                {playerId, new SaveItem(jsonData,"")} // writeLock을 빈 문자열로 설정
+            };
+            await CloudSaveService.Instance.Data.Player.SaveAsync(saveData);
             Debug.Log("Cloud Save에 추가 데이터 저장 완료");
         }
         catch (CloudSaveException e)
         {
             Debug.LogError($"Cloud Save 저장 실패: {e.Message}");
         }
+    }
+
+    [System.Serializable]
+    public class PlayerData
+    {
+        public string codename;
+        public int final_speed;
+        public string playtime;
     }
 
     void LeftReload()
@@ -192,7 +208,7 @@ public class MainUI : MonoBehaviour
 
     void Timer()
     {
-        palytime += Time.deltaTime;
+
 
         int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
@@ -205,10 +221,9 @@ public class MainUI : MonoBehaviour
     {
         isGameRunning = false;
 
-
-        int minutes = Mathf.FloorToInt(palytimetoscore / 60); // 분 계산
-        int seconds = Mathf.FloorToInt(palytimetoscore % 60); // 초 계산
-        Debug.Log($"최종 플레이타임: {palytimetoscore}");
+        int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
+        int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
+        Debug.Log($"최종 플레이타임: {palytime}");
 
         finalSpeed = Player.Instance.moveSpeed;
 
@@ -216,9 +231,10 @@ public class MainUI : MonoBehaviour
         string finalTime = string.Format("{0:00}:{1:00}", minutes, seconds);
         int finalScore = Mathf.FloorToInt(finalSpeed); // 점수는 최종 속력으로
         string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
+        string playerId = AuthenticationService.Instance.PlayerId;
 
         // Leaderboard와 Cloud Save에 데이터 전송
         await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
-        await SaveAdditionalDataToCloud(nickname, finalTime, finalScore);
+        await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
     }
 }
