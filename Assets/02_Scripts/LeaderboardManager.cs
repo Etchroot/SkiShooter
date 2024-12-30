@@ -71,6 +71,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
+                logincheck = true;
                 Debug.Log("이미 로그인되었습니다.");
             }
         }
@@ -147,8 +148,6 @@ public class LeaderboardManager : MonoBehaviour
                 {
                     textComponent.text = $"{rank}등/ 코드네임: {codename}/  최종속도: {score}/  클리어시간: {playtime}";
                 }
-                //playerData.GetComponentInChildren<TextMeshProUGUI>().text = $"Rank: {rank}, Player: {codename}, Score: {score}, Playtime: {playtime}";
-                //MakeRankList(rank, codename, score, playtime);
             }
         }
         catch (Exception e)
@@ -163,7 +162,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         try
         {
-            var myScore = await LeaderboardsService.Instance.GetPlayerScoreAsync("Ranking");
+            var myScore = await LeaderboardsService.Instance.GetPlayerScoreAsync("Ranking", new GetPlayerScoreOptions { IncludeMetadata = true });
 
             string _codename = myScore.PlayerName;
             double _score = myScore.Score;
