@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Services.CloudSave;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
@@ -10,41 +11,51 @@ using System;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Models;
 using Newtonsoft.Json;
+using UnityEditor.PackageManager;
+using UnityEngine.Analytics;
+using Unity.VisualScripting;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LeaderboardManager : MonoBehaviour
 {
     [SerializeField] private GameObject scrollViewContent; // ScrollView의 Content
-    [SerializeField] private GameObject playerDataPrefab; // UI에 사용할 Player Data 항목 프리팹
+    [SerializeField] private GameObject myDataViewContent; // 내 기록의 Content
+    [SerializeField] Button backtoTitleButton;
+    [SerializeField] Button exitGameButton;
+    [SerializeField] private CanvasGroup fadeCanvasGroup; // fadeout용 canvas
+    private GameObject playerDataPrefab; // UI에 사용할 Player Data 항목 프리팹
+    private GameObject myDataPrefab; // UI에 사용할 Player Data 항목 프리팹
     private bool logincheck = false;
-
-    public class PlayerDataUI
-    {
-        [SerializeField] private TextMeshProUGUI codenameText;
-        [SerializeField] private TextMeshProUGUI speedText;
-        [SerializeField] private TextMeshProUGUI playtimeText;
-
-        public void SetData(string codename, int speed, string playtime)
-        {
-            codenameText.text = codename;
-            speedText.text = $"{speed} 점";
-            playtimeText.text = playtime;
-        }
-    }
-
-    [System.Serializable]
-    public class PlayerData
-    {
-        public string codename = "Unknown";    // 플레이어 코드네임
-        public int final_speed = 0;    // 플레이어 최종 점수
-        public string playtime = "00:00";    // 플레이어 플레이타임
-    }
 
     void Awake()
     {
-        login();
+        playerDataPrefab = Resources.Load<GameObject>("Text_Ranklist");
+        if (playerDataPrefab == null)
+        {
+            Debug.Log("playerDataPrefab이 null입니다.");
+        }
+        myDataPrefab = Resources.Load<GameObject>("Text_MyRanklist");
+        if (myDataPrefab == null)
+        {
+            Debug.Log("myDataPrefab이 null입니다.");
+        }
+        if (scrollViewContent == null)
+        {
+            Debug.Log("scrollviewcontent가 null입니다.");
+        }
+        if (myDataViewContent == null)
+        {
+            Debug.Log("mydataviewcontent가 null입니다.");
+        }
+
+        backtoTitleButton.onClick.AddListener(onBackTitleButtonClick);
+        exitGameButton.onClick.AddListener(onExitGameButtononClick);
+
+        Login();
     }
 
-    async void login()
+    async void Login()
     {
         try
         {
@@ -56,17 +67,41 @@ public class LeaderboardManager : MonoBehaviour
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 logincheck = true;
+                Debug.Log("로그인 성공: " + AuthenticationService.Instance.PlayerId);
             }
-            Debug.Log("로그인 성공: " + AuthenticationService.Instance.PlayerId);
-
-            if (logincheck == true)
+            else
             {
-                await FetchAndSortPlayerData();
+                Debug.Log("이미 로그인되었습니다.");
             }
         }
         catch (Exception e)
         {
             Debug.LogError("로그인 실패: " + e.Message);
+        }
+    }
+
+    async void Start()
+    {
+        try
+        {
+            // 로그인 체크 완료 후 실행
+            await WaitForLogin();
+            await FetchAndSortPlayerData();
+            await ViewMyPlayerData();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"로그인 체크 안됨 :{e.Message}");
+            return;
+        }
+    }
+
+    // 로그인 완료 대기
+    async Task WaitForLogin()
+    {
+        while (!logincheck)
+        {
+            await Task.Delay(100); // 로그인 완료를 기다리는 동안 대기
         }
     }
 
@@ -77,81 +112,120 @@ public class LeaderboardManager : MonoBehaviour
         try
         {
             // 모든 리더보드 데이터를 가져옵니다
-            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync("Ranking");
+            var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync("Ranking", new GetScoresOptions { IncludeMetadata = true });
             Debug.Log(JsonConvert.SerializeObject(leaderboardEntries));
-            // Debug.Log($"총 {ldeaderboardID.Count}개의 데이터 항목을 가져왔습니다.");  // 데이터 개수 확인
-
-            // 데이터 리스트를 정리합니다
-            //List<PlayerData> playerDataList = new List<PlayerData>();
 
             foreach (var entry in leaderboardEntries.Results)
             {
                 // 플레이어의 점수와 ID 가져오기
-                string playerId = entry.PlayerId;
-                int score = (int)entry.Score;
-                Debug.Log($"플레이어 ID :{playerId}, 점수 :{score}");
+                string codename = entry.PlayerName;
+                double score = entry.Score;
+                int rank = entry.Rank + 1;
+                string playtime = "기록없음";
 
-                // Cloud Save에서 추가 데이터를 가져옵니다 (nickname, playtime)
-                var playerData = await CloudSaveService.Instance.Data.Player.LoadAllAsync();
+                // 메타데이터를 파싱하고 "playtime" 값 추출
+                if (!string.IsNullOrEmpty(entry.Metadata))
+                {
+                    var metadata = JsonConvert.DeserializeObject<Dictionary<string, string>>(entry.Metadata);
+                    if (metadata != null && metadata.TryGetValue("playtime", out string extractedPlaytime))
+                        playtime = extractedPlaytime; // 0:00으로 표현되는 숫자만 추출
+                }
 
-                // ScrollView에 데이터 표시
-                // DisplayPlayerData(playerData.codename, score, playerData.playtime);
+                Debug.Log($"랭킹 :{rank}, 플레이어 ID :{codename}, 점수 :{score}, 플레이타임 : {playtime}");
+
+                TMP_Text playerData = Instantiate(playerDataPrefab, scrollViewContent.transform).GetComponent<TMP_Text>();
+                if (playerData == null)
+                {
+                    Debug.LogError("playerDataPrefab이 null입니다.");
+                }
+                var textComponent = playerData.GetComponentInChildren<TextMeshProUGUI>();
+                if (textComponent == null)
+                {
+                    Debug.LogError("TextMeshProUGUI 컴포넌트를 찾을 수 없습니다.");
+                }
+                else
+                {
+                    textComponent.text = $"{rank}등/ 코드네임: {codename}/  최종속도: {score}/  클리어시간: {playtime}";
+                }
+                //playerData.GetComponentInChildren<TextMeshProUGUI>().text = $"Rank: {rank}, Player: {codename}, Score: {score}, Playtime: {playtime}";
+                //MakeRankList(rank, codename, score, playtime);
             }
-
-
-            // // final_speed 기준으로 내림차순 정렬
-            // var sortedList = playerDataList.OrderByDescending(player => player.final_speed).ToList();
-            // Debug.Log($"정렬된 데이터 항목 수: {sortedList.Count}");  // 정렬 후 데이터 개수 확인
-
-            // // ScrollView에 데이터 표시
-            // DisplayDataInScrollView(sortedList);
         }
         catch (Exception e)
         {
             Debug.LogError($"데이터 가져오기 실패: {e.Message}");
+
         }
     }
 
-    // private async Task<PlayerData> LoadPlayerData(string playerId)
-    // {
-    //     try
-    //     {
-    //         var options = new Unity.Services.CloudSave.Models.Data.Player.LoadAllOptions();
-    //         // playerId에 해당하는 데이터를 비동기적으로 불러옴.
-    //         var playerDataJson = await CloudSaveService.Instance.Data.Player.LoadAllAsync(options);
-
-    //         // playerId에 해당하는 데이터를 추출
-    //         if (playerDataJson.ContainsKey(plyaerId))
-    //         {
-    //             var jsonData = playerDataJson[playerId].Value; // SaveItem의 Value가 실제 Json 데이터
-    //         // Json 데이터를 playerData 객체로 변환하여 반환
-    //         return JsonUtility.FromJson<PlayerData>(jsonData);
-
-    //         }
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         Debug.LogError($"Cloud save에서 데이터를 가져오는데 실패했습니다: {e.Message}");
-    //         return null;
-    //     }
-    // }
-
-    private void DisplayPlayerData(string nickname, int score, string playtime)
+    // 리더보드에서 내 데이터 받아오기
+    private async Task ViewMyPlayerData()
     {
-        var newItem = Instantiate(playerDataPrefab, scrollViewContent.transform);
-        newItem.GetComponent<PlayerDataUI>().SetData(nickname, score, playtime);
-        // Debug.Log($"Displaying data: {sortedData.Count} items");  // 데이터 수 확인
-        // foreach (Transform child in scrollViewContent.transform)
-        // {
-        //     Destroy(child.gameObject); // 이전 데이터 삭제
-        // }
+        try
+        {
+            var myScore = await LeaderboardsService.Instance.GetPlayerScoreAsync("Ranking");
 
-        // foreach (var player in sortedData)
-        // {
-        //     Debug.Log($"Displaying player: {player.codename}, {player.final_speed}, {player.playtime}");
-        //     var newItem = Instantiate(playerDataPrefab, scrollViewContent.transform);
-        //     newItem.GetComponent<PlayerDataUI>().SetData(player.codename, player.final_speed, player.playtime);
-        // }
+            string _codename = myScore.PlayerName;
+            double _score = myScore.Score;
+            int _rank = myScore.Rank + 1;
+            var _metadata = JsonConvert.DeserializeObject<Dictionary<string, string>>(myScore.Metadata);
+            string _playtime = _metadata?["playtime"] ?? "기록없음";
+
+            // 캔버스에 내 데이터 표시
+            TMP_Text myData = Instantiate(myDataPrefab, myDataViewContent.transform).GetComponent<TMP_Text>();
+            myData.text = $"[나의 기록]  순위 : {_rank}/  코드네임 : {_codename}/  최종속도 : {_score}/  클리어시간 : {_playtime}";
+        }
+        catch (Exception e)
+        {
+            TMP_Text myData = Instantiate(myDataPrefab, myDataViewContent.transform).GetComponent<TMP_Text>();
+            myData.text = "불러올 수 있는 데이터가 존재하지 않습니다.";
+            Debug.LogError($"내 데이터 가져오기 실패: {e.Message}");
+        }
     }
 
+    void onBackTitleButtonClick()
+    {
+        StartCoroutine(LoadSceneFadeOut("01_Title"));
+    }
+
+    void onExitGameButtononClick()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    private IEnumerator LoadSceneFadeOut(String scenename)
+    {
+        // Fade out 시작
+        yield return StartCoroutine(FadeOut());
+
+        // 씬 비동기 로드
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
+        asyncLoad.allowSceneActivation = false;
+
+        // 로딩이 완료될 떄까지 대기
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f) // 로딩이 완료되면
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            elapsedTime += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Clamp01(elapsedTime / 1f); // 서서히 어두워짐
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f; // 완전히 어두워짐
+    }
 }
