@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -147,6 +145,7 @@ public class Player : MonoBehaviour
             }
         }
         #endregion
+
         // 데미지 받는 임시 메소드
         if (Input.GetKeyDown(KeyCode.H))
         {

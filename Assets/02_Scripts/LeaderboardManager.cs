@@ -76,7 +76,7 @@ public class LeaderboardManager : MonoBehaviour
         Debug.Log("데이터를 가져오는 중입니다.");
         try
         {
-            // 모든 플레이어 데이터를 가져옵니다
+            // 모든 리더보드 데이터를 가져옵니다
             var leaderboardEntries = await LeaderboardsService.Instance.GetScoresAsync("Ranking");
             Debug.Log(JsonConvert.SerializeObject(leaderboardEntries));
             // Debug.Log($"총 {ldeaderboardID.Count}개의 데이터 항목을 가져왔습니다.");  // 데이터 개수 확인
@@ -89,6 +89,7 @@ public class LeaderboardManager : MonoBehaviour
                 // 플레이어의 점수와 ID 가져오기
                 string playerId = entry.PlayerId;
                 int score = (int)entry.Score;
+                Debug.Log($"플레이어 ID :{playerId}, 점수 :{score}");
 
                 // Cloud Save에서 추가 데이터를 가져옵니다 (nickname, playtime)
                 var playerData = await CloudSaveService.Instance.Data.Player.LoadAllAsync();

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Unity.Services.CloudSave;
 using Unity.Services.CloudSave.Models;
 using Unity.Services.Authentication;
+using UnityEngine.SceneManagement;
 
 public class MainUI : MonoBehaviour
 {
@@ -23,13 +24,14 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject RightReloadImage;
     [SerializeField] private GameObject LeftController;
     [SerializeField] private GameObject RightController;
+    [SerializeField] private CanvasGroup fadeCanvasGroup; // fadeout 캔버스
     private GunShooting leftgunShooting;
     private GunShooting rightgunShooting;
     private Player player;
     private string leaderboardID = "Ranking"; // LeaderBoard ID 설정
     private bool isLeftReloadAcive = false; // 현재 리로드 텍스트 상태
     private bool isRightReloadAcive = false; // 현재 리로드 텍스트 상태
-    private bool isGameRunning = true; // 게임 진행 상태
+    [HideInInspector] public bool isGameRunning = true; // 게임 진행 상태
     private float palytime = 0f; // 플레이타임
     private float finalSpeed = 0f; // 최종 속력
     void Start()
@@ -41,7 +43,6 @@ public class MainUI : MonoBehaviour
 
         if (LeftController != null)
         {
-            Debug.Log("LCONT 태그를 가진 오브젝트르 찾았습니다.");
             leftgunShooting = LeftController.GetComponent<GunShooting>();
         }
         if (leftgunShooting == null)
@@ -95,16 +96,39 @@ public class MainUI : MonoBehaviour
     // 리더보드에 점수 제출
     private async Task SubmitScoreToLeaderboard(string nickname, int score, string Time)
     {
+        // Leaderboard에 Score 제출
         try
         {
-            // Leaderboard에 점수 제출
-            await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardID, score);
-            Debug.Log("리더보드에 닉네임과 점수 저장 완료");
+            var metadata = new Dictionary<string, string>
+            {
+                {"playtime", Time} // Metadata에 finalTime 저장
+            };
+
+            var options = new AddPlayerScoreOptions
+            {
+                // AddPlayerScoreOptions 객체로 저장해야 하므로 타입을 변경
+                Metadata = metadata
+            };
+            await LeaderboardsService.Instance.AddPlayerScoreAsync("Ranking", score, options);
+            Debug.Log($"리더보드에 점수와 플레이타임 저장 완료 :{score}, {options}");
         }
         catch (RequestFailedException e)
         {
             Debug.LogError($"리더보드 점수 저장 실패: {e.Message}");
         }
+
+        // Leaderboard에 Name 제출
+        try
+        {
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(nickname);
+            Debug.Log($"리더보드에 코드네임 저장 완료 :{nickname}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"플레이어 이름 설정 실패 :{e.Message}");
+        }
+
+        // Leaderboard에 Metadata 제출
     }
 
     // Cloud Save에 부가 데이터 저장
@@ -219,8 +243,6 @@ public class MainUI : MonoBehaviour
     // 게임 종료시 처리
     public async void EndGame()
     {
-        isGameRunning = false;
-
         int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
         Debug.Log($"최종 플레이타임: {palytime}");
@@ -228,13 +250,66 @@ public class MainUI : MonoBehaviour
         finalSpeed = Player.Instance.moveSpeed;
 
         // 플레이 타임과 최종 속력을 정수로 변환
-        string finalTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+        string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
         int finalScore = Mathf.FloorToInt(finalSpeed); // 점수는 최종 속력으로
         string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
         string playerId = AuthenticationService.Instance.PlayerId;
 
+
+
         // Leaderboard와 Cloud Save에 데이터 전송
         await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
         await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
+
+        isGameRunning = false;
+
+        ChangeScene();
+    }
+
+    // 게임 엔드시 씬 변경
+    public void ChangeScene()
+    {
+        Debug.Log("씬 변경 진입");
+        if (!isGameRunning)
+        {
+            StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
+            Debug.Log("씬을 변경합니다.");
+        }
+        else
+        {
+            Debug.LogError("씬이 변경되지 않았습니다.");
+        }
+    }
+
+    private IEnumerator LoadSceneFadeOut(String scenename)
+    {
+        // Fade out 시작
+        yield return StartCoroutine(FadeOut());
+
+        // 씬 비동기 로드
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
+        asyncLoad.allowSceneActivation = false;
+
+        // 로딩이 완료될 떄까지 대기
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.9f) // 로딩이 완료되면
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            elapsedTime += Time.deltaTime;
+            fadeCanvasGroup.alpha = Mathf.Clamp01(elapsedTime / 1f); // 서서히 어두워짐
+            yield return null;
+        }
+        fadeCanvasGroup.alpha = 1f; // 완전히 어두워짐
     }
 }
