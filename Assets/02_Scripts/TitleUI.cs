@@ -11,7 +11,11 @@ public class TitleUI : MonoBehaviour
     [SerializeField] Button gameStartButton;
     [SerializeField] Button quickStartButton;
     [SerializeField] Button exitButton;
+    [SerializeField] Button optionButton;
+    [SerializeField] Button backToTitleUIButton;
     [SerializeField] GameObject loginPanel;
+    [SerializeField] GameObject bottomElement;
+    [SerializeField] GameObject optionPanel;
     [SerializeField] GameObject[] uiToAcivate;
     [SerializeField] TMP_InputField inputCodeName;
     [SerializeField] TMP_Text codenameText;
@@ -25,6 +29,8 @@ public class TitleUI : MonoBehaviour
         gameStartButton.onClick.AddListener(OnGameStartButtonClicked);
         quickStartButton.onClick.AddListener(OnQuickStartButtonClicked);
         exitButton.onClick.AddListener(OnExitButtonClicked);
+        optionButton.onClick.AddListener(OnOptionButtonClicked);
+        backToTitleUIButton.onClick.AddListener(OnBackToTitleButtonClicked);
     }
 
     private void OnLoginButtonClicked()
@@ -57,6 +63,25 @@ public class TitleUI : MonoBehaviour
     {
         toMainScene = "03_Main";
         StartCoroutine(LoadSceneFadeOut(toMainScene));
+    }
+    private void OnOptionButtonClicked()
+    {
+        Debug.Log("옵션버튼 클릭됨");
+        foreach (var uiElement in uiToAcivate)
+        {
+            uiElement.SetActive(false);
+        }
+        bottomElement.SetActive(false);
+        optionPanel.SetActive(true);
+    }
+    private void OnBackToTitleButtonClicked()
+    {
+        foreach (var uiElement in uiToAcivate)
+        {
+            uiElement.SetActive(true);
+        }
+        bottomElement.SetActive(true);
+        optionPanel.SetActive(false);
     }
     private void OnExitButtonClicked()
     {
