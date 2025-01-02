@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 209080019}
   - component: {fileID: 209080018}
   - component: {fileID: 209080017}
+  - component: {fileID: 209080021}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -356,6 +357,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209080021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209080016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e4e6cca11330d4088d729ab4fc9d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartingHoverFilters: []
+  m_StartingSelectFilters: []
 --- !u!1001 &379587048
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -788,11 +803,39 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9019557100607950008, guid: a9310a018e364894db20f77655ca755c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4580327521040192689, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6568491027492189300}
   m_SourcePrefab: {fileID: 100100000, guid: a9310a018e364894db20f77655ca755c, type: 3}
+--- !u!1 &6568491027492189299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4580327521040192689, guid: a9310a018e364894db20f77655ca755c, type: 3}
+  m_PrefabInstance: {fileID: 6568491027492189298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6568491027492189300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568491027492189299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
