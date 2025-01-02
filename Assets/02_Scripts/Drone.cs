@@ -1,65 +1,64 @@
-using System.Collections;
 using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
-    /*
-     * 일정시간마다 아이템을 가져옴
-     * 적군 위치 브리핑(좌,우,앞)
-     * 플레이어 앞에서 길안내역
-     */
-
-    public GameObject target; // 플레이어
     public float followDistance = 2f; // 플레이어 앞 유지 거리
     public float followHeight = 1.5f; // 드론의 높이
-    public GameObject itemPrefab; // 아이템 프리팹
-    public Transform itemDropPoint; // 아이템 드랍 위치
-    public float itemPickupInterval = 5f; // 아이템 가져오는 간격
+    public float moveSpeed = 5f; // 드론의 이동 속도
 
     private Transform playerTransform;
+    private int currentCheckpointIndex = 0;
 
     void Start()
     {
-        if (target != null)
-        {
-            playerTransform = target.transform;
-        }
-
-        // 일정 시간마다 아이템을 가져오는 코루틴 시작
-        //StartCoroutine(PickupItemRoutine());
+        // 플레이어를 찾거나, 이미 지정된 플레이어 변수를 사용할 수 있습니다.
+        playerTransform = Player_New.Instance.transform;
     }
 
     void Update()
     {
-        if (playerTransform != null)
+        // 드론이 체크포인트를 따라가도록
+        MoveToCheckpoint();
+
+        // 플레이어 앞에 위치하도록
+        PositionInFrontOfPlayer();
+    }
+
+    // 드론이 체크포인트를 따라가는 로직
+    void MoveToCheckpoint()
+    {
+        if (CheckpointManager.Instance.AllCheckpointsCompleted)
+            return;
+
+        Vector3 targetCheckpointPosition = CheckpointManager.Instance.GetCurrentCheckpointPosition();
+
+        // 체크포인트까지의 방향 계산
+        Vector3 directionToCheckpoint = targetCheckpointPosition - transform.position;
+        directionToCheckpoint.y = 0; // Y축은 제외하고 이동 방향만 계산
+        Vector3 moveDirection = directionToCheckpoint.normalized * moveSpeed;
+
+        // 드론 이동
+        transform.position = Vector3.MoveTowards(transform.position, targetCheckpointPosition, moveSpeed * Time.deltaTime);
+
+        // 체크포인트에 도달한 경우
+        if (CheckpointManager.Instance.IsPlayerAtCheckpoint(transform.position))
         {
-            GuidePlayer();
+            CheckpointManager.Instance.MoveToNextCheckpoint();
         }
     }
 
-    // 플레이어 앞에서 길 안내
-    void GuidePlayer()
+    // 드론을 항상 플레이어 앞에 배치
+    void PositionInFrontOfPlayer()
     {
+        if (playerTransform == null)
+            return;
+
         Vector3 targetPosition = playerTransform.position + playerTransform.forward * followDistance;
         targetPosition.y = playerTransform.position.y + followHeight;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 5f);
-        transform.LookAt(playerTransform.position); // 플레이어를 바라봄
+
+        transform.position = targetPosition;
+        //transform.LookAt(playerTransform.position); // 플레이어를 바라봄
     }
-
-    // 일정 시간마다 아이템 가져오기
-    //IEnumerator PickupItemRoutine()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(itemPickupInterval);
-
-    //        if (itemPrefab != null && itemDropPoint != null)
-    //        {
-    //            Instantiate(itemPrefab, itemDropPoint.position, Quaternion.identity);
-    //            Debug.Log("아이템을 가져왔습니다!");
-    //        }
-    //    }
-    //}
 
     // 적군 위치 브리핑
     public void BriefEnemyPosition(Transform enemyTransform)
