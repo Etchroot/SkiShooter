@@ -13,6 +13,8 @@ TagManager:
   - LCONT
   - RCONT
   - PLAYERHEAD
+  - END
+  - CHECKPOINT
   layers:
   - Default
   - TransparentFX

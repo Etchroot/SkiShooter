@@ -33,7 +33,6 @@ public class GunShooting : MonoBehaviour
     public float hapticsAmplitude = 1.0f;
     public float hapticsDuration = 0.2f;
 
-
     void Awake()
     {
         haptics = GetComponent<Haptic>();

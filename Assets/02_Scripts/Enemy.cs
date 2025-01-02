@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     //private Animator anim;             // 애니메이터
     private float lastAttackTime = 0f; // 마지막 공격 시간
 
+    public float detectionRange = 10f; // 적군이 플레이어를 탐지할 수 있는 거리 (이 범위 내에서 이동 시작)
+
+
     void Start()
     {
         // NavMeshAgent 및 Animator 컴포넌트 할당
@@ -44,18 +47,24 @@ public class Enemy : MonoBehaviour
             // 플레이어와의 거리 측정
             float distance = Vector3.Distance(target.position, transform.position);
 
-            if (distance > attackDist)
+            if (distance > attackDist && distance < detectionRange)
             {
-                // 사정거리 밖: 이동 상태
+                // 사정거리 밖이지만 탐지 범위 안: 이동 상태
                 state = State.MOVE;
+            }
+            else if (distance <= attackDist)
+            {
+                // 공격 사정거리 안: 공격 상태
+                state = State.ATTACK;
             }
             else
             {
-                // 사정거리 안: 공격 상태
-                state = State.ATTACK;
+                // 탐지 범위 밖: 대기 상태
+                state = State.IDLE;
             }
         }
     }
+
 
     IEnumerator EnemyAction()
     {
@@ -130,4 +139,5 @@ public class Enemy : MonoBehaviour
             Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
         }
     }
+
 }
