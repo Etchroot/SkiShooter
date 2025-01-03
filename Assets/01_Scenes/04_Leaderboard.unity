@@ -251,7 +251,6 @@ GameObject:
   - component: {fileID: 209080020}
   - component: {fileID: 209080019}
   - component: {fileID: 209080018}
-  - component: {fileID: 209080017}
   - component: {fileID: 209080021}
   m_Layer: 0
   m_Name: EventSystem
@@ -260,34 +259,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &209080017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209080016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2e569dc832500047bf4350b4dae9b97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  controlMethod: 0
-  submitButtonName: Fire1
-  mainEventCamera: {fileID: 0}
-  raycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 32
-  gazeUseTimedClick: 0
-  gazeClickTimer: 2
-  gazeClickTimerDelay: 1
-  gazeTimedClickProgressImage: {fileID: 0}
-  worldSpaceMouseSensitivity: 1
-  usedHand: 1
-  pointerTransformOverride: {fileID: 0}
-  rightXRController: {fileID: 0}
-  leftXRController: {fileID: 0}
 --- !u!114 &209080018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209080016}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab68ce6587aab0146b8dabefbd806791, type: 3}
   m_Name: 
@@ -679,6 +650,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1730952311278470460, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730952311278470460, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730952311278470460, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.5137255
+      objectReference: {fileID: 0}
     - target: {fileID: 1884358963718064640, guid: a9310a018e364894db20f77655ca755c, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -787,6 +770,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7926557893963055651, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7926557893963055651, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.5486838
+      objectReference: {fileID: 0}
+    - target: {fileID: 7926557893963055651, guid: a9310a018e364894db20f77655ca755c, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.514151
+      objectReference: {fileID: 0}
     - target: {fileID: 8354595516964681907, guid: a9310a018e364894db20f77655ca755c, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -805,6 +800,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9019557100607950008, guid: a9310a018e364894db20f77655ca755c, type: 3}
+    - {fileID: 5110723098658530833, guid: a9310a018e364894db20f77655ca755c, type: 3}
+    - {fileID: 3807358875764404270, guid: a9310a018e364894db20f77655ca755c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
