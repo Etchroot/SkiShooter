@@ -70,7 +70,7 @@ public class CheckpointManager : MonoBehaviour
             float heightDifference = Mathf.Abs(playerPosition.y - checkpointPosition.y);
 
             //Debug.Log($"Player Position: {playerPosition}, Checkpoint Position: {checkpointPosition}, Distance: {distance}, Height Difference: {heightDifference}");
-            
+
             return distance < 1.0f && heightDifference < 1.0f;
         }
         return false;

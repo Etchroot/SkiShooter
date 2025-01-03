@@ -21,7 +21,7 @@ public class Drone : MonoBehaviour
         MoveToCheckpoint();
 
         // 플레이어 앞에 위치하도록
-        PositionInFrontOfPlayer();
+        //PositionInFrontOfPlayer();
     }
 
     // 드론이 체크포인트를 따라가는 로직

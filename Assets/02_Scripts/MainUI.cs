@@ -25,6 +25,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject LeftController;
     [SerializeField] private GameObject RightController;
     [SerializeField] private CanvasGroup fadeCanvasGroup; // fadeout 캔버스
+    private MeshCollider meshCollider; // 강제 종료 할 meshcollider
     private GunShooting leftgunShooting;
     private GunShooting rightgunShooting;
     private Player player;
@@ -61,6 +62,9 @@ public class MainUI : MonoBehaviour
             Debug.Log("RCONT 태그를 가진 오브젝트에서 gunshooting 스크립트를 찾을 수 없음");
         }
 
+        // meshCollider 강제로 끄기
+        InvokeRepeating("DisableMesh", 0f, 0.1f);
+
 
     }
 
@@ -89,6 +93,14 @@ public class MainUI : MonoBehaviour
         RightReloading();
         LeftReload();
         RightReload();
+    }
+
+    // 메쉬 랜더러 강제 종료
+    void DisableMesh()
+    {
+        meshCollider = GetComponent<MeshCollider>();
+        if (meshCollider != null && meshCollider.enabled)
+            meshCollider.enabled = false;
     }
 
 
