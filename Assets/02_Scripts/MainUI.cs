@@ -78,7 +78,7 @@ public class MainUI : MonoBehaviour
 
         if (Player_New.Instance != null)
         {
-            PlayerSpeedText.text = $"{Player_New.Instance.moveSpeed} km/h";
+            PlayerSpeedText.text = $"{Player_New.Instance.currentSpeed} km/h";
 
         }
         else
@@ -259,7 +259,7 @@ public class MainUI : MonoBehaviour
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
         Debug.Log($"최종 플레이타임: {palytime}");
 
-        finalSpeed = Player_New.Instance.moveSpeed;
+        finalSpeed = Player_New.Instance.currentSpeed;
 
         // 플레이 타임과 최종 속력을 정수로 변환
         string finalTime = string.Format("{0}:{1:00}", minutes, seconds);

@@ -8,29 +8,29 @@ public class Enemy : MonoBehaviour
     {
         IDLE, MOVE, ATTACK, HIT, DIE
     }
+
+    
     
     public Transform target;           // 플레이어 목표
     public float speed = 4f;           // 이동 속도
     public float attackDist = 5f;      // 공격 사정거리
     public float attackCooldown = 5f; // 공격 쿨타임
     public State state = State.IDLE;   // 적 상태
+
     public bool isDie = false;         // 적 사망 여부
     private int hp = 3;                // 적 체력
 
     public GameObject BulletPrefab;    // 총알 프리팹
     public Transform FirePoint;        // 총구 위치
 
-    private NavMeshAgent agent;        // 네비게이션 에이전트
     //private Animator anim;             // 애니메이터
     private float lastAttackTime = 0f; // 마지막 공격 시간
 
     public float detectionRange = 10f; // 적군이 플레이어를 탐지할 수 있는 거리 (이 범위 내에서 이동 시작)
 
-
     void Start()
     {
-        // NavMeshAgent 및 Animator 컴포넌트 할당
-        agent = GetComponent<NavMeshAgent>();
+
         //anim = GetComponentInChildren<Animator>();
 
         // 적 상태 체크 및 행동 코루틴 시작
@@ -73,18 +73,14 @@ public class Enemy : MonoBehaviour
             switch (state)
             {
                 case State.IDLE:
-                    agent.isStopped = true;
                     //anim.SetTrigger("IDLE");
                     break;
 
                 case State.MOVE:
-                    agent.isStopped = false;
-                    agent.SetDestination(target.position);
                     //anim.SetTrigger("MOVE");
                     break;
 
                 case State.ATTACK:
-                    agent.isStopped = true;
                     if (Time.time - lastAttackTime >= attackCooldown)
                     {
                         Attack(); // 공격 실행
@@ -95,12 +91,10 @@ public class Enemy : MonoBehaviour
 
                 case State.HIT:
                     //anim.SetTrigger("HIT");
-                    agent.isStopped = true;
                     break;
 
                 case State.DIE:
                     //anim.SetTrigger("DIE");
-                    agent.isStopped = true;
                     Destroy(gameObject, 2f); // 2초 후 오브젝트 삭제
                     break;
             }

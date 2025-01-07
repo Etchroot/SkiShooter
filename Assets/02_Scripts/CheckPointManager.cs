@@ -1,10 +1,13 @@
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
-public class CheckpointManager : MonoBehaviour
+public class CheckPointManager : MonoBehaviour
 {
-    public static CheckpointManager Instance { get; private set; }
+    public static CheckPointManager Instance { get; private set; }
 
-    public Transform[] checkpoints; // 체크포인트 배열
+    [SerializeField] GameObject checkpointPack;
+    [SerializeField] Transform[] checkpoints; // 체크포인트 배열
+
     private int currentCheckpointIndex = 0;
 
     public bool AllCheckpointsCompleted { get; private set; } = false;
@@ -19,27 +22,32 @@ public class CheckpointManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        InitializeCheckpoints();
     }
 
-    private void InitializeCheckpoints()
+    private void Start()
     {
-        for (int i = 0; i < checkpoints.Length; i++)
+        // Null 체크
+        if (checkpointPack == null)
         {
-            Vector3 checkpointPos = checkpoints[i].position;
+            Debug.LogError("CheckpointPack이 설정되지 않았습니다.");
+            return;
+        }
 
-            // Raycast로 각 체크포인트의 Y축 위치 보정
-            Ray ray = new Ray(checkpointPos + Vector3.up * 10f, Vector3.down);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                checkpointPos.y = hit.point.y + 0.2f; // GroundOffset
-            }
+        // 자식의 수 가져오기
+        int childCount = checkpointPack.transform.childCount;
 
-            checkpoints[i].position = checkpointPos;
+        // 배열 초기화
+        checkpoints = new Transform[childCount];
+
+        // 자식 Transform을 배열에 추가
+        for (int i = 0; i < childCount; i++)
+        {
+            checkpoints[i] = checkpointPack.transform.GetChild(i);
+            //Debug.Log($"Checkpoint {i + 1}: 이름 = {checkpoints[i].name}, 위치 = {checkpoints[i].position}");
         }
     }
 
+    // 현재 체크포인트 위치
     public Vector3 GetCurrentCheckpointPosition()
     {
         if (currentCheckpointIndex < checkpoints.Length)
@@ -50,9 +58,12 @@ public class CheckpointManager : MonoBehaviour
         return Vector3.zero;
     }
 
+    // 다음 체크포인트로 이동
     public void MoveToNextCheckpoint()
     {
         currentCheckpointIndex++;
+        Debug.Log($"현재 체크포인트 : {currentCheckpointIndex}");
+
         if (currentCheckpointIndex >= checkpoints.Length)
         {
             Debug.Log("모든 체크포인트를 완료했습니다!");
@@ -66,14 +77,16 @@ public class CheckpointManager : MonoBehaviour
         if (currentCheckpointIndex < checkpoints.Length)
         {
             Vector3 checkpointPosition = checkpoints[currentCheckpointIndex].position;
-            float distance = Vector3.Distance(new Vector3(playerPosition.x, 0, playerPosition.z), new Vector3(checkpointPosition.x, 0, checkpointPosition.z));
-            float heightDifference = Mathf.Abs(playerPosition.y - checkpointPosition.y);
+            float distance = Vector3.Distance(
+                new Vector3(playerPosition.x, 0, playerPosition.z),
+                new Vector3(checkpointPosition.x, 0, checkpointPosition.z)); // 거리
 
-            //Debug.Log($"Player Position: {playerPosition}, Checkpoint Position: {checkpointPosition}, Distance: {distance}, Height Difference: {heightDifference}");
+            // 현재 체크포인트에 도달한 것을 확인
+            Debug.Log($"Distance to checkpoint: {distance}");
 
-            return distance < 1.0f && heightDifference < 1.0f;
+            // 체크포인트에 도달했다고 판단되는 최소 거리 조건 (1.0f는 플레이어와 체크포인트 간의 근접한 거리)
+            return distance < 1.0f;
         }
         return false;
     }
-
 }
