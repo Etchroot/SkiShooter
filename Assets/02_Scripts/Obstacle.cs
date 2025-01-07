@@ -12,6 +12,7 @@ public class Obstacle : MonoBehaviour
         Debug.Log($"{this.name} - 파괴 가능 여부: {Destructible}");
     }
 
+
     // 총알이나 공격을 받아 체력이 감소하는 로직
     public void TakeDamage(int damage)
     {
@@ -47,6 +48,13 @@ public class Obstacle : MonoBehaviour
             //{
             //    playerMovement.ReduceSpeed(playerSpeedReduction); // 속도 감소
             //}
+        }
+
+        // 총알과의 충돌 확인
+        if (other.CompareTag("BULLET"))
+        {
+            Debug.Log("장애물 총알 맞음");
+            TakeDamage(1);
         }
     }
 }

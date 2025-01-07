@@ -253,15 +253,15 @@ public class MainUI : MonoBehaviour
     }
 
     // 게임 종료시 처리
-    public async void EndGame()
+    public async void EndGame() // Player_New 스크립트에서 호출해서 씀
     {
         int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
-        Debug.Log($"최종 플레이타임: {palytime}");
+        Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
 
         finalSpeed = Player_New.Instance.moveSpeed;
 
-        // 플레이 타임과 최종 속력을 정수로 변환
+        // 플레이 타임과 최종 속력을 점수로 변환
         string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
         int finalScore = Mathf.FloorToInt(finalSpeed); // 점수는 최종 속력으로
         string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");

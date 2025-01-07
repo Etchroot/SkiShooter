@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
@@ -23,16 +20,19 @@ public class AudioManager : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
         Debug.Log($"초기 저장 사운드 값 : {bgmVolume},{sfxVolume}");
 
-        // 슬라이더 초기값 설정
-        bgmSlider.value = bgmVolume;
-        sfxSlider.value = sfxVolume;
+        if (bgmSlider != null && sfxSlider != null)
+        {
+            // 슬라이더 초기값 설정
+            bgmSlider.value = bgmVolume;
+            sfxSlider.value = sfxVolume;
+
+            // 슬라이더 이벤트리스너 추가
+            bgmSlider.onValueChanged.AddListener((value) => SetVolume(value, sfxSlider.value));
+            sfxSlider.onValueChanged.AddListener((value) => SetVolume(bgmSlider.value, value));
+        }
 
         // 오디오믹서 파라미터 설정
         SetVolume(bgmVolume, sfxVolume);
-
-        // 슬러이더 이벤트리스너 추가
-        bgmSlider.onValueChanged.AddListener((value) => SetVolume(value, sfxSlider.value));
-        sfxSlider.onValueChanged.AddListener((value) => SetVolume(bgmSlider.value, value));
     }
 
     public void SetVolume(float bgmVolume, float sfxVolume)

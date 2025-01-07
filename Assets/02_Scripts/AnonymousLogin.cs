@@ -14,7 +14,7 @@ public class AnonymousLogin : MonoBehaviour
     [SerializeField] Button saveButton;
 
     //private string leaderboardID = "Ranking"; // LeaderBoard ID 설정
-    private int score = 0; // 초기 점수 
+    //private int score = 0; // 초기 점수 
     private async void Start()
     {
         // Unity Services 초기화
