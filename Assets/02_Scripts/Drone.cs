@@ -12,7 +12,7 @@ public class Drone : MonoBehaviour
     void Start()
     {
         // 플레이어를 찾거나, 이미 지정된 플레이어 변수를 사용할 수 있습니다.
-        playerTransform = Player_New.Instance.transform;
+        //playerTransform = Player_New.Instance.transform;
     }
 
     void Update()
@@ -27,10 +27,10 @@ public class Drone : MonoBehaviour
     // 드론이 체크포인트를 따라가는 로직
     void MoveToCheckpoint()
     {
-        if (CheckpointManager.Instance.AllCheckpointsCompleted)
+        if (CheckPointManager.Instance.AllCheckpointsCompleted)
             return;
 
-        Vector3 targetCheckpointPosition = CheckpointManager.Instance.GetCurrentCheckpointPosition();
+        Vector3 targetCheckpointPosition = CheckPointManager.Instance.GetCurrentCheckpointPosition();
 
         // 체크포인트까지의 방향 계산
         Vector3 directionToCheckpoint = targetCheckpointPosition - transform.position;
@@ -41,9 +41,9 @@ public class Drone : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, targetCheckpointPosition, moveSpeed * Time.deltaTime);
 
         // 체크포인트에 도달한 경우
-        if (CheckpointManager.Instance.IsPlayerAtCheckpoint(transform.position))
+        if (CheckPointManager.Instance.IsPlayerAtCheckpoint(transform.position))
         {
-            CheckpointManager.Instance.MoveToNextCheckpoint();
+            CheckPointManager.Instance.MoveToNextCheckpoint();
         }
     }
 

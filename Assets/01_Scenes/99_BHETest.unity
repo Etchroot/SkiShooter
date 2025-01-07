@@ -725,6 +725,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 443884810701761307, guid: 897f57d52897df3489fa32031e655050, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 443884810701761307, guid: 897f57d52897df3489fa32031e655050, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 443884810701761307, guid: 897f57d52897df3489fa32031e655050, type: 3}
+      propertyPath: m_MinMoveDistance
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 483209424126668206, guid: 897f57d52897df3489fa32031e655050, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -975,10 +987,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  gravity: 9.8
-  groundOffset: 0.2
-  maxHp: 100
-  checkpoints: []
+  rotationSpeed: 10
+  raycastDistance: 100
 --- !u!1 &861726496
 GameObject:
   m_ObjectHideFlags: 0
