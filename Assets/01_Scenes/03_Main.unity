@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 8db8f2557d246634e99996c33fee4710, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 79435261}
   - component: {fileID: 79435260}
   - component: {fileID: 79435262}
+  - component: {fileID: 79435263}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -260,6 +261,23 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &79435263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79435259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 1b07f02a1f4a8274491dd74ff79de868, type: 2}
 --- !u!1 &242873485
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +608,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6679198452957451552, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
   m_PrefabInstance: {fileID: 8801204555721804201}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &660584129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 660584130}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &660584130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660584129}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.006392438, y: 0.04550171, z: 0.23551674}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8111467190659923742}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &669328964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1355,6 +1404,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6106147119063035721, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
   m_PrefabInstance: {fileID: 8801204555721804201}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1302350960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1302350961}
+  m_Layer: 7
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1302350961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302350960}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0064, y: 0.04549431, z: 0.2355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 497014380595024969}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1339667337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6581648000778690569, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
@@ -2016,7 +2096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   BulletPrefab: {fileID: 9141731347740879559, guid: ac6a639df86f67247b42bdaba2a15414, type: 3}
-  FirePoint: {fileID: 6624344692816803604}
+  FirePoint: {fileID: 660584130}
   isLeft: 1
   fireRate: 0.03
   source: {fileID: 7629156969322083524}
@@ -2858,6 +2938,7 @@ Transform:
   - {fileID: 3395536719715361470}
   - {fileID: 8405107291936938758}
   - {fileID: 6486334682286462114}
+  - {fileID: 1302350961}
   m_Father: {fileID: 1850917767970238701}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &504884423791895070
@@ -3963,7 +4044,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   BulletPrefab: {fileID: 9141731347740879559, guid: ac6a639df86f67247b42bdaba2a15414, type: 3}
-  FirePoint: {fileID: 8813633740066881504}
+  FirePoint: {fileID: 1302350961}
   isLeft: 0
   fireRate: 0.03
   source: {fileID: 496285859615475210}
@@ -12049,6 +12130,7 @@ Transform:
   - {fileID: 4717308117277897638}
   - {fileID: 8925955014968461310}
   - {fileID: 6601912441528141403}
+  - {fileID: 660584130}
   m_Father: {fileID: 3821591553120499890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8114036212181649235
@@ -13139,7 +13221,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
