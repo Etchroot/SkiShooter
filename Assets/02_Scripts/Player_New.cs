@@ -9,10 +9,11 @@ public class Player_New : MonoBehaviour
     [SerializeField] private float maxSpeed = 10f;  // 최대 속도
     [SerializeField] private float rotationSpeed = 5f;  //회전 속도
     [SerializeField] private float gravity = -9.81f;  // 중력 설정
-
+    [SerializeField] private float damage = 1f; // 적에게 피격시 받는 속도 감소량
     public MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
 
     public float currentSpeed = 0f; //현재 속도
+
 
     private Vector3 lastCheckpointPosition; //마지막 체크포인트
     private bool isRotating = false;    //회전중
@@ -65,6 +66,11 @@ public class Player_New : MonoBehaviour
     {
         //속도 증가
         currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
+    }
+
+    public void TakeDamage()
+    {
+        currentSpeed -= damage;
     }
 
     void MoveToCheckpoint()
