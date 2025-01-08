@@ -986,9 +986,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d25e7711ad38a941b483a0dd10219e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  baseSpeed: 5
+  acceleration: 0.01
+  maxSpeed: 10
   rotationSpeed: 10
-  raycastDistance: 100
+  gravity: -9.81
+  currentSpeed: 0
 --- !u!1 &861726496
 GameObject:
   m_ObjectHideFlags: 0
