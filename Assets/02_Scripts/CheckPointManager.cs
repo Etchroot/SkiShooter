@@ -62,11 +62,11 @@ public class CheckPointManager : MonoBehaviour
     public void MoveToNextCheckpoint()
     {
         currentCheckpointIndex++;
-        Debug.Log($"현재 체크포인트 : {currentCheckpointIndex}");
+        //Debug.Log($"현재 체크포인트 : {currentCheckpointIndex}");
 
         if (currentCheckpointIndex >= checkpoints.Length)
         {
-            Debug.Log("모든 체크포인트를 완료했습니다!");
+            //Debug.Log("모든 체크포인트를 완료했습니다!");
             AllCheckpointsCompleted = true;
         }
     }
@@ -82,7 +82,7 @@ public class CheckPointManager : MonoBehaviour
                 new Vector3(checkpointPosition.x, 0, checkpointPosition.z)); // 거리
 
             // 현재 체크포인트에 도달한 것을 확인
-            Debug.Log($"Distance to checkpoint: {distance}");
+            //Debug.Log($"Distance to checkpoint: {distance}");
 
             // 체크포인트에 도달했다고 판단되는 최소 거리 조건 (1.0f는 플레이어와 체크포인트 간의 근접한 거리)
             return distance < 1.0f;
