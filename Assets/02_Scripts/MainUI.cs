@@ -28,8 +28,6 @@ public class MainUI : MonoBehaviour
     private MeshCollider meshCollider; // 강제 종료 할 meshcollider
     private GunShooting leftgunShooting;
     private GunShooting rightgunShooting;
-    private Player player;
-    private string leaderboardID = "Ranking"; // LeaderBoard ID 설정
     private bool isLeftReloadAcive = false; // 현재 리로드 텍스트 상태
     private bool isRightReloadAcive = false; // 현재 리로드 텍스트 상태
     [HideInInspector] public bool isGameRunning = true; // 게임 진행 상태

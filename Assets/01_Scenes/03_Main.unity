@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 403989420}
   - component: {fileID: 403989419}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GloblaVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 441767829}
   - component: {fileID: 441767828}
   m_Layer: 0
-  m_Name: gameendwall
+  m_Name: GameEndWall
   m_TagString: END
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2054,6 +2054,7 @@ GameObject:
   - component: {fileID: 1956967253}
   - component: {fileID: 1956967252}
   - component: {fileID: 1956967251}
+  - component: {fileID: 1956967255}
   m_Layer: 0
   m_Name: CollisionCheckWall
   m_TagString: Untagged
@@ -2150,6 +2151,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1956967255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956967250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a60eeb0072e57498981fea274b8ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2060768874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,6 +2455,7 @@ MonoBehaviour:
   isReloading: 0
   hapticsAmplitude: 1
   hapticsDuration: 0.2
+  poolSize: 30
 --- !u!114 &11281077344624662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4370,6 +4384,7 @@ MonoBehaviour:
   isReloading: 0
   hapticsAmplitude: 1
   hapticsDuration: 0.2
+  poolSize: 30
 --- !u!222 &1402504651054652456
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14121,18 +14136,18 @@ SceneRoots:
   m_Roots:
   - {fileID: 79435261}
   - {fileID: 6631596280644341801}
-  - {fileID: 281910163}
-  - {fileID: 8458550450358757677}
+  - {fileID: 989137374}
+  - {fileID: 403989420}
+  - {fileID: 974850251}
   - {fileID: 671220328}
   - {fileID: 441767831}
-  - {fileID: 974850251}
-  - {fileID: 242873487}
+  - {fileID: 1956967254}
+  - {fileID: 281910163}
+  - {fileID: 8458550450358757677}
+  - {fileID: 858233158}
   - {fileID: 1586621917}
   - {fileID: 899062829}
-  - {fileID: 8770665510346044648}
-  - {fileID: 989137374}
-  - {fileID: 858233158}
-  - {fileID: 403989420}
-  - {fileID: 1486770289}
   - {fileID: 1857784777}
-  - {fileID: 1956967254}
+  - {fileID: 1486770289}
+  - {fileID: 8770665510346044648}
+  - {fileID: 242873487}
