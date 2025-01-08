@@ -10,16 +10,18 @@ public class Player_New : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5f;  //회전 속도
     [SerializeField] private float gravity = -9.81f;  // 중력 설정
 
+    public MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
+
     public float currentSpeed = 0f; //현재 속도
 
     private Vector3 lastCheckpointPosition; //마지막 체크포인트
     private bool isRotating = false;    //회전중
 
     private CharacterController characterController; // CharacterController 변수
-    
+
     /* 추가해야할 기능
      * 피격 (감속,피격보호)
-     * 마지막 체크포인트 도달시 화면전환
+     * 
      * 
      */
 
@@ -112,7 +114,7 @@ public class Player_New : MonoBehaviour
 
         // 회전
         Quaternion targetRotation = Quaternion.LookRotation(directionToCheckpoint);
-        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         // 회전 완료 체크
         if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
@@ -128,6 +130,16 @@ public class Player_New : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCurrentCheckpointPosition());
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // 충돌한 오브젝트의 태그가 "END"인지 확인
+        if (other.CompareTag("END"))
+        {
+            Debug.Log("END 태그 오브젝트와 충돌!");
+            mainUI.EndGame();
         }
     }
 }

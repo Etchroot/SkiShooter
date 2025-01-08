@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8595552086819530589}
   - component: {fileID: 3440649352749405463}
   - component: {fileID: 6409872705468260623}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: SM_ENV_TREE_trunk_north_snow_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 353510820466182434}
   - component: {fileID: 5756257382850240661}
   - component: {fileID: 5134100717969752442}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Trunk
   m_TagString: ENEMY
   m_Icon: {fileID: 0}
@@ -211,7 +211,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

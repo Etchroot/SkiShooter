@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public delegate void DamageEvent(ref float damage);
-    private MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
+    public MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
     public event DamageEvent OnDamageTaken;
     public static Player Instance { get; private set; }
     public float moveSpeed = 5f; // 기본 이동속도

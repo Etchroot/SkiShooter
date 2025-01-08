@@ -34,6 +34,7 @@ public class MainUI : MonoBehaviour
     private bool isRightReloadAcive = false; // 현재 리로드 텍스트 상태
     [HideInInspector] public bool isGameRunning = true; // 게임 진행 상태
     private float palytime = 0f; // 플레이타임
+    private float currentSpeedcal = 0f;
     private float finalSpeed = 0f; // 최종 속력
     void Start()
     {
@@ -75,11 +76,11 @@ public class MainUI : MonoBehaviour
     {
         LeftBulletText.text = $"{leftgunShooting.currentBullet}";
         RightBulletText.text = $"{rightgunShooting.currentBullet}";
+        currentSpeedcal = Player_New.Instance.currentSpeed * 10f;
 
         if (Player_New.Instance != null)
         {
-            PlayerSpeedText.text = $"{Player_New.Instance.currentSpeed} km/h";
-
+            PlayerSpeedText.text = $"{currentSpeedcal:F2} km/h";
         }
         else
         {
@@ -106,7 +107,7 @@ public class MainUI : MonoBehaviour
 
 
     // 리더보드에 점수 제출
-    private async Task SubmitScoreToLeaderboard(string nickname, int score, string Time)
+    private async Task SubmitScoreToLeaderboard(string nickname, float score, string Time)
     {
         // Leaderboard에 Score 제출
         try
@@ -144,7 +145,7 @@ public class MainUI : MonoBehaviour
     }
 
     // Cloud Save에 부가 데이터 저장
-    private async Task SaveAdditionalDataToCloud(string playerId, string nickname, string time, int score)
+    private async Task SaveAdditionalDataToCloud(string playerId, string nickname, string time, float score)
     {
         var playerData = new PlayerData
         {
@@ -174,7 +175,7 @@ public class MainUI : MonoBehaviour
     public class PlayerData
     {
         public string codename;
-        public int final_speed;
+        public float final_speed;
         public string playtime;
     }
 
@@ -252,6 +253,8 @@ public class MainUI : MonoBehaviour
         TimerText.text = $"{minutes:D1}:{seconds:D2}"; // 자릿수 포맷
     }
 
+    #region 게임 종료 및 씬 전환
+
     // 게임 종료시 처리
     public async void EndGame() // Player_New 스크립트에서 호출해서 씀
     {
@@ -259,11 +262,11 @@ public class MainUI : MonoBehaviour
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
         Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
 
-        finalSpeed = Player_New.Instance.currentSpeed;
+        finalSpeed = Mathf.Round(currentSpeedcal * 10 * 100f) / 100f;
 
         // 플레이 타임과 최종 속력을 점수로 변환
         string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
-        int finalScore = Mathf.FloorToInt(finalSpeed); // 점수는 최종 속력으로
+        float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
         string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
         string playerId = AuthenticationService.Instance.PlayerId;
 
@@ -324,4 +327,5 @@ public class MainUI : MonoBehaviour
         }
         fadeCanvasGroup.alpha = 1f; // 완전히 어두워짐
     }
+    #endregion
 }
