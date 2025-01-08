@@ -4,10 +4,24 @@ public class Player_New : MonoBehaviour
 {
     public static Player_New Instance { get; private set; }
 
-    [SerializeField] private float baseSpeed = 5f; // 기본 속도
-    [SerializeField] private float acceleration = 0.01f; // 매 프레임마다 속도가 증가하는 정도
-    [SerializeField] private float maxSpeed = 10f; // 최대 속도
-    public float currentSpeed = 0f; // 현재 속도
+    [SerializeField] private float baseSpeed = 5f;  // 기본 속도
+    [SerializeField] private float acceleration = 0.01f; // 증가 속도
+    [SerializeField] private float maxSpeed = 10f;  // 최대 속도
+    [SerializeField] private float rotationSpeed = 5f;  //회전 속도
+    [SerializeField] private float gravity = -9.81f;  // 중력 설정
+
+    public float currentSpeed = 0f; //현재 속도
+
+    private Vector3 lastCheckpointPosition; //마지막 체크포인트
+    private bool isRotating = false;    //회전중
+
+    private CharacterController characterController; // CharacterController 변수
+    
+    /* 추가해야할 기능
+     * 피격 (감속,피격보호)
+     * 마지막 체크포인트 도달시 화면전환
+     * 
+     */
 
     private void Awake()
     {
@@ -23,12 +37,32 @@ public class Player_New : MonoBehaviour
 
     void Start()
     {
+        characterController = GetComponent<CharacterController>(); // CharacterController 컴포넌트 참조
         currentSpeed = baseSpeed;
+        lastCheckpointPosition = Vector3.zero;
     }
 
     private void Update()
     {
+        if (CheckPointManager.Instance.AllCheckpointsCompleted)
+        {
+            // 모든 체크포인트 완료 시 멈춤
+            return;
+        }
+        else
+        {
+            // 속도 증가 처리
+            IncreaseSpeed();
+        }
+
+        // 체크포인트 이동
         MoveToCheckpoint();
+    }
+
+    void IncreaseSpeed()
+    {
+        //속도 증가
+        currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
     }
 
     void MoveToCheckpoint()
@@ -37,22 +71,32 @@ public class Player_New : MonoBehaviour
             return;
 
         Vector3 targetCheckpointPosition = CheckPointManager.Instance.GetCurrentCheckpointPosition();
-
-        // Y축을 무시하고 X, Z축만 이동하도록 설정
         Vector3 directionToCheckpoint = targetCheckpointPosition - transform.position;
-        directionToCheckpoint.y = 0; // Y축을 무시
+        directionToCheckpoint.y = 0; // y축 무시
 
-        // 현재 위치와 목표 위치 간의 거리 계산
+        // 체크포인트가 변경되었는지 확인
+        if (targetCheckpointPosition != lastCheckpointPosition)
+        {
+            isRotating = true;
+
+            lastCheckpointPosition = targetCheckpointPosition;
+        }
+
+        // 회전
+        if (isRotating)
+        {
+            Rotate(directionToCheckpoint);
+        }
+
         float distanceToCheckpoint = Vector3.Distance(transform.position, targetCheckpointPosition);
+        targetCheckpointPosition.y = transform.position.y; // y축 무시
 
-        // Y값을 0으로 설정하여 이동 중 Y값 영향을 받지 않도록 함
-        targetCheckpointPosition.y = transform.position.y;
-
-        // 이동 속도 계산
         float moveSpeed = Mathf.Min(currentSpeed * Time.deltaTime, distanceToCheckpoint);
 
-        // 이동
-        transform.position = Vector3.MoveTowards(transform.position, targetCheckpointPosition, moveSpeed);
+        Vector3 movement = directionToCheckpoint.normalized * moveSpeed;
+        movement.y = gravity * Time.deltaTime;  // 중력 적용
+
+        characterController.Move(movement);  // 이동
 
         // 체크포인트에 도달했는지 확인
         if (CheckPointManager.Instance.IsPlayerAtCheckpoint(transform.position))
@@ -61,14 +105,28 @@ public class Player_New : MonoBehaviour
         }
     }
 
+    void Rotate(Vector3 directionToCheckpoint)
+    {
+        if (directionToCheckpoint == Vector3.zero)
+            return;
+
+        // 회전
+        Quaternion targetRotation = Quaternion.LookRotation(directionToCheckpoint);
+        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation,rotationSpeed * Time.deltaTime);
+
+        // 회전 완료 체크
+        if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+        {
+            transform.rotation = targetRotation;
+            isRotating = false;
+        }
+    }
 
     private void OnDrawGizmos()
     {
         if (CheckPointManager.Instance != null && !CheckPointManager.Instance.AllCheckpointsCompleted)
         {
             Gizmos.color = Color.red;
-
-            // 현재 위치에서 다음 체크포인트까지의 경로를 그립니다.
             Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCurrentCheckpointPosition());
         }
     }
