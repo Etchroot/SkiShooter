@@ -10,6 +10,7 @@ public class Player_New : MonoBehaviour
     [SerializeField] private float rotationSpeed = 5f;  //회전 속도
     [SerializeField] private float gravity = -9.81f;  // 중력 설정
     [SerializeField] private float damage; // 적에게 피격시 받는 속도 감소량
+    public CollisionCheck collisionCheck;
     public MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
 
     public float currentSpeed = 0f; //현재 속도
@@ -21,7 +22,7 @@ public class Player_New : MonoBehaviour
     private CharacterController characterController; // CharacterController 변수
 
     /* 추가해야할 기능
-     * 피격 (감속,피격보호)
+     * 피격 (피격보호)
      * 
      * 
      */
@@ -68,9 +69,10 @@ public class Player_New : MonoBehaviour
         currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.deltaTime, maxSpeed);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage()
     {
-        currentSpeed -= damage;
+        collisionCheck.onObstacleEnemyCollision?.Invoke();
+        Debug.Log("적 총알 맞음");
     }
 
     void MoveToCheckpoint()

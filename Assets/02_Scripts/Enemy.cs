@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour
     {
         isOnCooldown = true; // 쿨다운 활성화
 
-        Player_New.Instance.TakeDamage(1.0f);
+        Player_New.Instance.TakeDamage();
 
         // 공격 행동 (발사체 생성)
         //GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
