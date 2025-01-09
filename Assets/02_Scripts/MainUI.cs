@@ -260,7 +260,7 @@ public class MainUI : MonoBehaviour
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
         Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
 
-        finalSpeed = Mathf.Round(currentSpeedcal * 10 * 100f) / 100f;
+        finalSpeed = Mathf.Round(currentSpeedcal * 100f) / 100f;
 
         // 플레이 타임과 최종 속력을 점수로 변환
         string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
