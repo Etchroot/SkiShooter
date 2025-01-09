@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class CollisionCheck : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onObstacleEnemyCollision; // 유니티 이벤트 연결
+    [SerializeField] public UnityEvent onObstacleEnemyCollision; // 유니티 이벤트 연결
 
     public GameObject player;
     public float distance = 10f; // Wall과 player사이의 거리

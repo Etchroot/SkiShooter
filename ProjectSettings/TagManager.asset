@@ -15,6 +15,7 @@ TagManager:
   - PLAYERHEAD
   - END
   - CHECKPOINT
+  - TRUNK
   layers:
   - Default
   - TransparentFX

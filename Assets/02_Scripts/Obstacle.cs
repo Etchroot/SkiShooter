@@ -38,17 +38,17 @@ public class Obstacle : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 플레이어와 충돌 확인
-        if (other.CompareTag("PlayerHead"))
-        {
-            Debug.Log("플레이어와 충돌 발생!");
+        //if (other.CompareTag("PlayerHead"))
+        // {
+        // Debug.Log("플레이어와 충돌 발생!");
 
-            // 플레이어의 속도를 감소시키는 로직
-            //PlayerMovement playerMovement = other.GetComponentInParent<PlayerMovement>(); // 부모 객체에서 속도 관리 스크립트 찾기
-            //if (playerMovement != null)
-            //{
-            //    playerMovement.ReduceSpeed(playerSpeedReduction); // 속도 감소
-            //}
-        }
+        // 플레이어의 속도를 감소시키는 로직
+        //PlayerMovement playerMovement = other.GetComponentInParent<PlayerMovement>(); // 부모 객체에서 속도 관리 스크립트 찾기
+        //if (playerMovement != null)
+        //{
+        //    playerMovement.ReduceSpeed(playerSpeedReduction); // 속도 감소
+        //}
+        //}
 
         // 총알과의 충돌 확인
         if (other.CompareTag("BULLET"))
