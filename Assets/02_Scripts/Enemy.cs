@@ -4,134 +4,63 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public enum State
+    public Transform player; // 플레이어의 Transform
+    //public GameObject projectilePrefab; // 발사체 프리팹
+    public Transform firePoint; // 발사 위치
+    public float attackRange = 10f; // 공격 범위
+    public float attackCooldown = 2f; // 공격 대기 시간
+
+    private bool isOnCooldown = false; // 공격 쿨다운 여부
+
+    void Update()
     {
-        IDLE, MOVE, ATTACK, HIT, DIE
-    }
+        // 플레이어와 적 사이의 거리 계산
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-    
-    
-    public Transform target;           // 플레이어 목표
-    public float speed = 4f;           // 이동 속도
-    public float attackDist = 5f;      // 공격 사정거리
-    public float attackCooldown = 5f; // 공격 쿨타임
-    public State state = State.IDLE;   // 적 상태
-
-    public bool isDie = false;         // 적 사망 여부
-    private int hp = 3;                // 적 체력
-
-    public GameObject BulletPrefab;    // 총알 프리팹
-    public Transform FirePoint;        // 총구 위치
-
-    //private Animator anim;             // 애니메이터
-    private float lastAttackTime = 0f; // 마지막 공격 시간
-
-    public float detectionRange = 10f; // 적군이 플레이어를 탐지할 수 있는 거리 (이 범위 내에서 이동 시작)
-
-    void Start()
-    {
-
-        //anim = GetComponentInChildren<Animator>();
-
-        // 적 상태 체크 및 행동 코루틴 시작
-        StartCoroutine(CheckEnemyState());
-        StartCoroutine(EnemyAction());
-    }
-
-    IEnumerator CheckEnemyState()
-    {
-        while (!isDie)
+        // 플레이어가 공격 범위 안에 있는지 확인
+        if (distanceToPlayer <= attackRange)
         {
-            yield return new WaitForSeconds(0.3f);
+            LookAtPlayer(); // 플레이어를 바라봄
 
-            // 플레이어와의 거리 측정
-            float distance = Vector3.Distance(target.position, transform.position);
-
-            if (distance > attackDist && distance < detectionRange)
+            if (!isOnCooldown)
             {
-                // 사정거리 밖이지만 탐지 범위 안: 이동 상태
-                state = State.MOVE;
-            }
-            else if (distance <= attackDist)
-            {
-                // 공격 사정거리 안: 공격 상태
-                state = State.ATTACK;
-            }
-            else
-            {
-                // 탐지 범위 밖: 대기 상태
-                state = State.IDLE;
+                StartCoroutine(Attack());
             }
         }
     }
 
-
-    IEnumerator EnemyAction()
+    void LookAtPlayer()
     {
-        while (!isDie)
+        Vector3 direction = (player.position - transform.position).normalized;
+        direction.y = 0; // y축 고정
+
+        if (direction != Vector3.zero)
         {
-            switch (state)
-            {
-                case State.IDLE:
-                    //anim.SetTrigger("IDLE");
-                    break;
-
-                case State.MOVE:
-                    //anim.SetTrigger("MOVE");
-                    break;
-
-                case State.ATTACK:
-                    if (Time.time - lastAttackTime >= attackCooldown)
-                    {
-                        Attack(); // 공격 실행
-                        lastAttackTime = Time.time; // 공격 쿨타임 초기화
-                    }
-                    //anim.SetTrigger("ATTACK");
-                    break;
-
-                case State.HIT:
-                    //anim.SetTrigger("HIT");
-                    break;
-
-                case State.DIE:
-                    //anim.SetTrigger("DIE");
-                    Destroy(gameObject, 2f); // 2초 후 오브젝트 삭제
-                    break;
-            }
-            yield return new WaitForSeconds(0.3f);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    IEnumerator Attack()
     {
-        if (collision.collider.CompareTag("BULLET"))
-        {
-            Destroy(collision.gameObject); // 총알 파괴
-            TakeDamage(1); // 데미지 1 추가
-        }
+        isOnCooldown = true; // 쿨다운 활성화
+
+        Player_New.Instance.TakeDamage(1.0f);
+
+        // 공격 행동 (발사체 생성)
+        //GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+        // 대기 시간 동안 대기
+        yield return new WaitForSeconds(attackCooldown);
+
+        isOnCooldown = false; // 쿨다운 해제
     }
 
-    void TakeDamage(int damage)
+    // 디버그용: 공격 범위 시각화
+    private void OnDrawGizmosSelected()
     {
-        if (isDie) return;
-
-        hp -= damage;
-        state = State.HIT;
-
-        if (hp <= 0)
-        {
-            isDie = true;
-            state = State.DIE;
-        }
-    }
-
-    void Attack()
-    {
-        // 총알 생성
-        if (BulletPrefab != null && FirePoint != null)
-        {
-            Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
 }
