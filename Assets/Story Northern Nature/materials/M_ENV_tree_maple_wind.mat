@@ -75,8 +75,8 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ShadowRecievedStrength: 0.857
-    - _WindScale: 0.4
-    - _WindStrength: 0.4
+    - _WindScale: 0
+    - _WindStrength: 0
     - _WindTintContrast: 1
     - _WindTintOpacity: 0
     - _WindTintScale: 0

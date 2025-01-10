@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 89bda3936dbca7b418a0399f086dfd64
+labels:
+- Cylinder
+- Modular
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 04/cylinder-03.prefab
+  uploadId: 107573

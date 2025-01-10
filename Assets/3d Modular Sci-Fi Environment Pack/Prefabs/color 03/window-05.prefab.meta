@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 2a71341b3d2b9514b8e495a3474c0331
+labels:
+- Window
+- Architecture
+- Interior
+- Modular
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 03/window-05.prefab
+  uploadId: 107573

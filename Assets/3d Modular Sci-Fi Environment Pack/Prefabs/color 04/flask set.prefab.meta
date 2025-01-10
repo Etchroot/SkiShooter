@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 77f05a1c1565c49989b46a14368d983a
+labels:
+- Decoration
+- Misc
+- Prop
+- Small
+- Flask
+- Lab
+- Science
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 04/flask set.prefab
+  uploadId: 107573

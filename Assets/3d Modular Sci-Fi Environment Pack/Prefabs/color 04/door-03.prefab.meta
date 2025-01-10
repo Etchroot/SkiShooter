@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c5e1f50a340c14d1a9d511b12f80dccd
+labels:
+- Door
+- Modular
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 04/door-03.prefab
+  uploadId: 107573

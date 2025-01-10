@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: fb2407316b02442479c7b7bbfd3d08ec
+labels:
+- Architecture
+- Modular
+- Ladder
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/ladder-02.prefab
+  uploadId: 107573

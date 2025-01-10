@@ -159,5 +159,6 @@ Assets/Plugins/**       linguist-vendored
 
 # Exceptions for .asset files such as lightning pre-baking
 LightingData.asset     binary
-terrain.asset          binary
+*terrain*.asset          binary
 Lightmap.asset         binary
+*Terrain*.asset          binary

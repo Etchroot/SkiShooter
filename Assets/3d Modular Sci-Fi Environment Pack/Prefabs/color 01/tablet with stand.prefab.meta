@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: ac409d5ebcc7dba44bf52b860d8b4abd
+labels:
+- Small
+- Prop
+- Misc
+- Decoration
+- Technology
+- Gadget
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/tablet with
+    stand.prefab
+  uploadId: 107573

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: d5b8a7f58322aa34fbe16193426228ae
+labels:
+- Box
+- Prop
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/treasure
+    box-02.prefab
+  uploadId: 107573

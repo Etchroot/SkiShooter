@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: eecedfb56c3ef49b0bd977d974077c97
+labels:
+- Architecture
+- Modular
+- Stairs
+- Interior
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 04/stairs-01.prefab
+  uploadId: 107573

@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: b62d495cb8236fe428dd21c9f9a555df
+labels:
+- Prop
+- Decoration
+- Small
+- Misc
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 03/papers.prefab
+  uploadId: 107573

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fb12646a8be7f7140aa20bfc2384f295
+timeCreated: 1513112416
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 107583
+  packageName: Winter Zone Mini
+  packageVersion: 1.0
+  assetPath: Assets/Winter Zone Mini 1.0/demo scenes/unityTerrain_1_fx_demo/LightingData.asset
+  uploadId: 220084

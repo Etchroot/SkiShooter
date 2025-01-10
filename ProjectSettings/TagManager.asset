@@ -12,6 +12,10 @@ TagManager:
   - MANAGER
   - LCONT
   - RCONT
+  - PLAYERHEAD
+  - END
+  - CHECKPOINT
+  - TRUNK
   layers:
   - Default
   - TransparentFX
@@ -24,8 +28,8 @@ TagManager:
   - BULLET
   - ENEMY
   - LAND
-  - 
-  - 
+  - HELMET
+  - OBSTACLE
   - 
   - 
   - 

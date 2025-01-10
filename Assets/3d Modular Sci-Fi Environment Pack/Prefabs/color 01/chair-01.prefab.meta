@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 5e87d1b85b0f7f24e85d4cbdbfac6708
+labels:
+- Prop
+- Chair
+- Furniture
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 01/chair-01.prefab
+  uploadId: 107573

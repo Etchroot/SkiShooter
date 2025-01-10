@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: df11c55aad0cf194c850479cef53d459
+labels:
+- Skin
+- Small
+- Prop
+- Electric
+- Electronic
+- Decoration
+- Misc
+- Machine
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 02/chip.prefab
+  uploadId: 107573

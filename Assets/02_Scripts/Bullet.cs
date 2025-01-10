@@ -1,47 +1,50 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 public class Bullet : MonoBehaviour
 {
-    // ÃÑ¾Ë ½ºÅ©¸³Æ®
-    // »ı¼ºµÈ ¹æÇâÀÇ ¾ÕÀ¸·Î ³¯¾Æ°¡¸ç ¹°Ã¼¿Í ºÎ‹HÈ÷°Å³ª 5ÃÊÈÄ Destroy
-    
     [SerializeField] private float BulletSpeed = 5f;
-        
-    void Start()
+    [SerializeField] private float BulletTime = 3f;
+    private GunShooting gunShooting; // GunShooting ì°¸ì¡°
+
+    public void Initialize(GunShooting gunShootingInstance)
     {
-        //»ı¼ºµÇ°í 5ÃÊÈÄ »èÁ¦
-        StartCoroutine(Destroy());
+        gunShooting = gunShootingInstance;
     }
 
     void Update()
     {
-        //ÀÌµ¿
         transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
     }
 
-    //´Ù¸¥ °ÔÀÓ ¿ÀºêÁ§Æ®¿Í ´êÀ¸¸é »èÁ¦
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ENEMY"))
         {
+            // ì  ì²˜ë¦¬ ë¡œì§ (ì˜ˆ: ë°ë¯¸ì§€)
             Destroy(other.gameObject);
         }
-        else
-        {
-            //¹Ù´ÚÀÌ³ª ´Ù¸¥°÷ ºÎµúÇûÀ»‹š
-            Destroy(this.gameObject);
-        }
-        
+
+        // í’€ì— ë°˜í™˜
+        gunShooting.ReturnBulletToPool(this.gameObject);
     }
 
-    IEnumerator Destroy()
+    private void OnEnable()
     {
-        //»ı¼ºµÇ°í 5ÃÊ Áö³ª¸é Á¦°Å
-        yield return new WaitForSeconds(5f);
-        Destroy(this.gameObject);
+        // ì¼ì • ì‹œê°„ì´ ì§€ë‚˜ë©´ í’€ë¡œ ë°˜í™˜
+        Invoke(nameof(ReturnToPool), BulletTime);
     }
 
+    private void OnDisable()
+    {
+        // ì˜¤ë¸Œì íŠ¸ê°€ ë¹„í™œì„±í™”ë  ë•Œ Invoke ì·¨ì†Œ
+        CancelInvoke();
+    }
+
+    private void ReturnToPool()
+    {
+        if (gunShooting != null)
+        {
+            gunShooting.ReturnBulletToPool(this.gameObject);
+        }
+    }
 }

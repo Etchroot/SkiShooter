@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 98f41a571af2d9541ab89a342a6b76c9
+labels:
+- Lamp
+- Light
+- Prop
+- Decoration
+- Furniture
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 03/lights 03/light-07.prefab
+  uploadId: 107573

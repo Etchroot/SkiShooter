@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 027e9351be9e140e492f9f643bedb3a7
+labels:
+- Plant
+- Architecture
+- Furniture
+- Decoration
+- Prop
+- 3d
+- Sci-fi
+- Environment
+- Futuristic
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 57957
+  packageName: 3D Modular Sci-Fi Environment Pack
+  packageVersion: 1.0
+  assetPath: Assets/3d Modular Sci-Fi Environment Pack/Prefabs/color 04/vase-03.prefab
+  uploadId: 107573
