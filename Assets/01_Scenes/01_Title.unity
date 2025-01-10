@@ -1368,11 +1368,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shape: 0
-  quality: 1
+  quality: 3
   interactable: 1
   blocksRaycasts: 1
   forceUseBoxCollider: 0
-  angle: 90
+  angle: 82
   preserveAspect: 1
   vertAngle: 90
   ringFill: 0.5
@@ -1741,7 +1741,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2059961062268112917, guid: d57ad6e83889e3f49a5a212ead5adbdd, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d57ad6e83889e3f49a5a212ead5adbdd, type: 3}

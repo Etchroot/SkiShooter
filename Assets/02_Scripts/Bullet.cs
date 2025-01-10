@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("ENEMY"))
         {
             // 적 처리 로직 (예: 데미지)
+            Destroy(other.gameObject);
         }
 
         // 풀에 반환

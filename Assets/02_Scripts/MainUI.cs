@@ -74,7 +74,7 @@ public class MainUI : MonoBehaviour
     {
         LeftBulletText.text = $"{leftgunShooting.currentBullet}";
         RightBulletText.text = $"{rightgunShooting.currentBullet}";
-        currentSpeedcal = Player_New.Instance.currentSpeed * 10f;
+        currentSpeedcal = Player_New.Instance.currentSpeed * 5f;
 
         if (Player_New.Instance != null)
         {

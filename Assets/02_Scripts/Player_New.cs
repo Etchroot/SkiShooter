@@ -71,7 +71,8 @@ public class Player_New : MonoBehaviour
 
     public void TakeDamage()
     {
-        collisionCheck.onObstacleEnemyCollision?.Invoke();
+        currentSpeed -= damage;
+        //collisionCheck.onObstacleEnemyCollision?.Invoke();
         Debug.Log("적 총알 맞음");
     }
 
