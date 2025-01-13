@@ -306,7 +306,7 @@ public class MainUI : MonoBehaviour
         // 로딩이 완료될 떄까지 대기
         while (!asyncLoad.isDone)
         {
-            if (asyncLoad.progress >= 0.5f) // 로딩이 완료되면
+            if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
             {
                 asyncLoad.allowSceneActivation = true;
             }
