@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.Services.CloudSave;
 using TMPro;
 using Unity.Services.Leaderboards;
+using System.Net;
 
 public class AnonymousLogin : MonoBehaviour
 {
@@ -20,8 +21,6 @@ public class AnonymousLogin : MonoBehaviour
         // Unity Services 초기화
         await UnityServices.InitializeAsync();
         Debug.Log("Unity Services Initialized");
-
-
 
         Debug.Log("데이터 초기화 중");
         ClearSavedLoginData();

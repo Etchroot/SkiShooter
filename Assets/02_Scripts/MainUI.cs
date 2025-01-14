@@ -25,6 +25,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject LeftController;
     [SerializeField] private GameObject RightController;
     [SerializeField] private CanvasGroup fadeCanvasGroup; // fadeout 캔버스
+    [SerializeField] private PlayerManager playerManager; // 플레이어 매니저 스크립트
     private MeshCollider meshCollider; // 강제 종료 할 meshcollider
     private GunShooting leftgunShooting;
     private GunShooting rightgunShooting;
@@ -74,7 +75,7 @@ public class MainUI : MonoBehaviour
     {
         LeftBulletText.text = $"{leftgunShooting.currentBullet}";
         RightBulletText.text = $"{rightgunShooting.currentBullet}";
-        currentSpeedcal = Player_New.Instance.currentSpeed * 5f;
+        currentSpeedcal = Player_New.Instance.currentSpeed * 3f;
 
         if (Player_New.Instance != null)
         {
@@ -276,43 +277,52 @@ public class MainUI : MonoBehaviour
 
         isGameRunning = false;
 
-        ChangeScene();
+        ChangeLeaderBoard();
     }
 
-    // 게임 엔드시 씬 변경
-    public void ChangeScene()
+    // 게임 엔드시 리더보드로 장면 전환 및 플레이어 변경
+    public void ChangeLeaderBoard()
     {
-        Debug.Log("씬 변경 진입");
-        if (!isGameRunning)
-        {
-            StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
-            Debug.Log("씬을 변경합니다.");
-        }
-        else
-        {
-            Debug.LogError("씬이 변경되지 않았습니다.");
-        }
+        // Debug.Log("씬 변경 진입");
+        // if (!isGameRunning)
+        // {
+        //     StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
+        //     Debug.Log("씬을 변경합니다.");
+        // }
+        // else
+        // {
+        //     Debug.LogError("씬이 변경되지 않았습니다.");
+        // }
+        StartCoroutine(FadeOut());
+        StartCoroutine(DelayedSwitchToXR(2f));
+
     }
 
-    private IEnumerator LoadSceneFadeOut(String scenename)
+    private IEnumerator DelayedSwitchToXR(float delay)
     {
-        // Fade out 시작
-        yield return StartCoroutine(FadeOut());
-
-        // 씬 비동기 로드
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
-        asyncLoad.allowSceneActivation = false;
-
-        // 로딩이 완료될 떄까지 대기
-        while (!asyncLoad.isDone)
-        {
-            if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
-            {
-                asyncLoad.allowSceneActivation = true;
-            }
-            yield return null;
-        }
+        yield return new WaitForSeconds(delay);
+        playerManager.SwitchToXR();
     }
+
+    // private IEnumerator LoadSceneFadeOut(String scenename)
+    // {
+    //     // Fade out 시작
+    //     yield return StartCoroutine(FadeOut());
+
+    //     // 씬 비동기 로드
+    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
+    //     asyncLoad.allowSceneActivation = false;
+
+    //     // 로딩이 완료될 떄까지 대기
+    //     while (!asyncLoad.isDone)
+    //     {
+    //         if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
+    //         {
+    //             asyncLoad.allowSceneActivation = true;
+    //         }
+    //         yield return null;
+    //     }
+    // }
 
     private IEnumerator FadeOut()
     {
