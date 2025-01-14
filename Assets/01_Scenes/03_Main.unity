@@ -778,6 +778,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4819545672038064151, guid: 580b851f8bb3dad4e80219274f169133, type: 3}
   m_PrefabInstance: {fileID: 2078243027}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &215092385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1936316461280698754, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+  m_PrefabInstance: {fileID: 3551584467942370076}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &239129886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4599,6 +4604,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1020215339556714115, guid: 2f258d5826be9694ab289248cb079004, type: 3}
   m_PrefabInstance: {fileID: 319185271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1137291779 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8692775874722483139, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+  m_PrefabInstance: {fileID: 3551584467942370076}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1172316914
 PrefabInstance:
@@ -11613,31 +11623,31 @@ PrefabInstance:
       objectReference: {fileID: 1956967255}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3848.1023
+      value: 3848.7715
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1162.4283
+      value: 1163.9615
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -659.01904
+      value: -656.10443
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.89377517
+      value: -0.16924922
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.21021439
+      value: -0.07076125
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.38567778
+      value: 0.90695465
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.090710774
+      value: -0.3791845
       objectReference: {fileID: 0}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11671,6 +11681,18 @@ PrefabInstance:
       propertyPath: collisionCheck
       value: 
       objectReference: {fileID: 1956967255}
+    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: handGun
+      value: 
+      objectReference: {fileID: 215092385}
+    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: reloadTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: isReloading
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5655607989418614228, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -11678,6 +11700,14 @@ PrefabInstance:
     - target: {fileID: 7698356004519277475, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_CurrentTrackingState
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: handGun
+      value: 
+      objectReference: {fileID: 1137291779}
+    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: reloadTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8882365080543270715, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_Volume

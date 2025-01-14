@@ -9,6 +9,7 @@ public class GunShooting : MonoBehaviour
 
     public GameObject BulletPrefab; // 총알 프리팹
     public Transform FirePoint; // 총구 위치
+    public GameObject handGun; // 총 프리펩
 
     public bool isLeft = true; // true: 왼쪽, false: 오른쪽
 
@@ -54,7 +55,7 @@ public class GunShooting : MonoBehaviour
 
             //totalBulletsCreated++; // 초기 생성 카운트 증가
         }
-            //Debug.Log($"초기 총알 풀 생성 완료. 생성된 총알 수: {totalBulletsCreated}");
+        //Debug.Log($"초기 총알 풀 생성 완료. 생성된 총알 수: {totalBulletsCreated}");
     }
 
     void Update()
@@ -86,6 +87,7 @@ public class GunShooting : MonoBehaviour
         if (previousGrips == 0 && gripPressed == 1 && currentBullet < maxBullet && !isReloading)
         {
             StartCoroutine(Reload());
+            StartCoroutine(GunSpin());
         }
 
         // 이전 그립 버튼 상태 업데이트
@@ -119,6 +121,22 @@ public class GunShooting : MonoBehaviour
         }
     }
 
+    IEnumerator GunSpin()
+    {
+        float duration = 2f; // 회전 시간
+        float angle = 1080f; // 회전 각도
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float step = (angle / duration) * Time.deltaTime;
+            handGun.transform.Rotate(Vector3.right * step);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
     IEnumerator FireSound(bool isEmpty = false)
     {
         if (!isEmpty)
@@ -147,6 +165,7 @@ public class GunShooting : MonoBehaviour
         source.PlayOneShot(reloadSound);
         Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 재장전 완료");
 
+
         isReloading = false;
     }
 
@@ -161,7 +180,7 @@ public class GunShooting : MonoBehaviour
             // 풀에 남은 총알이 없을 경우 새로운 총알 생성
             GameObject bullet = Instantiate(BulletPrefab);
             bullet.GetComponent<Bullet>().Initialize(this); // GunShooting 참조 전달
-            
+
             //totalBulletsCreated++; // 생성된 총알 카운트 증가
             //Debug.Log($"새로운 총알 생성. 총 생성된 총알 수: {totalBulletsCreated}");
 
