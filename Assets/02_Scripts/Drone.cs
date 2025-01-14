@@ -2,67 +2,91 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
-    public float followDistance = 2f; // 플레이어 앞 유지 거리
-    public float followHeight = 1.5f; // 드론의 높이
-    public float moveSpeed = 5f; // 드론의 이동 속도
+    public Transform playerTransform;
 
-    private Transform playerTransform;
-    private int currentCheckpointIndex = 0;
+    private float targetHeight; // 목표 높이
+    private float heightSmoothSpeed = 100f; // 높이 변화 속도
+    private float raycastDistance = 20f; // Raycast 거리
 
     void Start()
     {
-        // 플레이어를 찾거나, 이미 지정된 플레이어 변수를 사용할 수 있습니다.
-        //playerTransform = Player_New.Instance.transform;
+        
     }
 
     void Update()
     {
-        // 드론이 체크포인트를 따라가도록
-        MoveToCheckpoint();
+        if (CheckPointManager.Instance == null || CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
+        {
+            // 플레이어 체크포인트 도달시 멈춤
+            return;
+        }
 
-        // 플레이어 앞에 위치하도록
-        //PositionInFrontOfPlayer();
+        // 드론 이동 로직
+        MoveToCheckpoint();
     }
 
-    // 드론이 체크포인트를 따라가는 로직
-    void MoveToCheckpoint()
+    private void UpdateHeightWithRaycast()
     {
-        if (CheckPointManager.Instance.AllCheckpointsCompleted)
-            return;
+        RaycastHit hit;
 
-        Vector3 targetCheckpointPosition = CheckPointManager.Instance.GetCurrentCheckpointPosition();
-
-        // 체크포인트까지의 방향 계산
-        Vector3 directionToCheckpoint = targetCheckpointPosition - transform.position;
-        directionToCheckpoint.y = 0; // Y축은 제외하고 이동 방향만 계산
-        Vector3 moveDirection = directionToCheckpoint.normalized * moveSpeed;
-
-        // 드론 이동
-        transform.position = Vector3.MoveTowards(transform.position, targetCheckpointPosition, moveSpeed * Time.deltaTime);
-
-        // 체크포인트에 도달한 경우
-        if (CheckPointManager.Instance.IsPlayerAtCheckpoint(transform.position))
+        // 드론 아래로 Raycast를 발사
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance))
         {
-            CheckPointManager.Instance.MoveToNextCheckpoint();
+            float groundHeight = hit.point.y; // 바닥의 Y 좌표
+            targetHeight = groundHeight + 5.0f; // 바닥에서 5 유닛 위로 목표 높이 설정
+        }
+        else
+        {
+            Debug.LogWarning("Raycast가 바닥을 감지하지 못했습니다.");
         }
     }
 
-    // 드론을 항상 플레이어 앞에 배치
-    void PositionInFrontOfPlayer()
+    void MoveToCheckpoint()
     {
-        if (playerTransform == null)
+        if (CheckPointManager.Instance == null)
             return;
 
-        Vector3 targetPosition = playerTransform.position + playerTransform.forward * followDistance;
-        targetPosition.y = playerTransform.position.y + followHeight;
+        // 체크포인트 위치 가져오기
+        Vector3 targetCheckpointPosition = CheckPointManager.Instance.GetCheckpointPosition(false);
 
-        transform.position = targetPosition;
-        //transform.LookAt(playerTransform.position); // 플레이어를 바라봄
+        // 수평 이동만 처리
+        Vector3 horizontalPosition = new Vector3(targetCheckpointPosition.x, transform.position.y, targetCheckpointPosition.z);
+
+        // 이동 거리 계산
+        float moveDistance = Player_New.Instance.currentSpeed * Time.deltaTime;
+
+        // 드론 수평 이동
+        transform.position = Vector3.MoveTowards(transform.position, horizontalPosition, moveDistance);
+
+        // 높이 업데이트 (Raycast 사용)
+        UpdateHeightWithRaycast();
+
+        // 드론 높이 보정 적용
+        Vector3 correctedPosition = new Vector3(transform.position.x, targetHeight, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, correctedPosition, Time.deltaTime * heightSmoothSpeed);
+
+        // 체크포인트 도달 확인
+        if (CheckPointManager.Instance.IsAtCheckpoint(transform.position, false))
+        {
+            CheckPointManager.Instance.MoveToNextCheckpoint(false);
+        }
     }
+
+
+    private void OnDrawGizmos()
+    {
+        // Raycast 시각화 (디버깅용)
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(transform.position, Vector3.down * raycastDistance);
+    }
+
 
     // 적군 위치 브리핑
     public void BriefEnemyPosition(Transform enemyTransform)
     {
+        if (playerTransform == null)
+            return;
+
         Vector3 directionToEnemy = enemyTransform.position - playerTransform.position;
         float angle = Vector3.SignedAngle(playerTransform.forward, directionToEnemy, Vector3.up);
 
@@ -83,4 +107,5 @@ public class Drone : MonoBehaviour
             Debug.Log("적군 위치: 뒤");
         }
     }
+
 }
