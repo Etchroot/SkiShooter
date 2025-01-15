@@ -1,8 +1,13 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player_New : MonoBehaviour
 {
     public static Player_New Instance { get; private set; }
+
+    [SerializeField] private bool tutorial = false; //튜토리얼
+    [SerializeField] private float tutorialDelay = 30f; // 튜토리얼 대기 시간
+    public bool tutorialInProgress = false;
 
     [SerializeField] private float baseSpeed = 5f;  // 기본 속도
     [SerializeField] private float acceleration = 0.01f; // 증가 속도
@@ -18,7 +23,6 @@ public class Player_New : MonoBehaviour
 
     public GameObject Drone; //드론
     private Vector3 DronPositon;
-
 
     private CharacterController characterController; // CharacterController 변수
 
@@ -37,7 +41,18 @@ public class Player_New : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>(); // CharacterController 컴포넌트 참조
-        currentSpeed = baseSpeed;
+
+        //튜토리얼 씬일때
+        if (tutorial)
+        {
+            StartCoroutine(TutorialSetting());
+
+        }
+        else
+        {
+            currentSpeed = baseSpeed;
+        }
+
     }
 
     private void Update()
@@ -48,13 +63,45 @@ public class Player_New : MonoBehaviour
             return;
         }
 
-        // 속도 증가 처리
-        IncreaseSpeed();
+        if (tutorial) //Tutorial 씬 여부 확인
+        {
+            //튜토 30초 대기 후 진행
+            if (!tutorialInProgress)
+            {
+                // 체크포인트 이동
+                MoveToCheckpoint();
+                // 회전
+                RotateTowardsDrone();
+            }
+        }
+        else // Main씬
+        {
+            // 속도 증가 처리
+            IncreaseSpeed();
 
-        // 체크포인트 이동
-        MoveToCheckpoint();
+            // 체크포인트 이동
+            MoveToCheckpoint();
 
-        RotateTowardsDrone();
+            RotateTowardsDrone();
+        }
+    }
+
+    //튜토리얼 세팅
+    IEnumerator TutorialSetting()
+    {
+        // 초기 속도 0
+        currentSpeed = 0f;
+        tutorialInProgress = true;
+
+        Debug.Log("코루틴 들어감");
+
+        //튜토리얼 대기
+        yield return new WaitForSeconds(tutorialDelay);
+
+        Debug.Log("코루틴 끝");
+        // 대기 완료 후 기본속도로 이동
+        currentSpeed = baseSpeed;
+        tutorialInProgress = false;
     }
 
     void IncreaseSpeed()
@@ -85,16 +132,11 @@ public class Player_New : MonoBehaviour
         }
     }
 
-
     void MoveToCheckpoint()
     {
         Vector3 targetCheckpointPosition = CheckPointManager.Instance.GetCheckpointPosition(true); // 플레이어 체크포인트 위치 가져오기
         Vector3 directionToCheckpoint = targetCheckpointPosition - transform.position;
         directionToCheckpoint.y = 0; // y축 무시
-
-        //회전
-        //DronPositon = new Vector3(Drone.transform.position.x, this.transform.position.y, Drone.transform.position.z);
-        //this.transform.LookAt(DronPositon);
 
         float distanceToCheckpoint = directionToCheckpoint.magnitude; // 거리 계산
         directionToCheckpoint.Normalize(); // 방향 정규화

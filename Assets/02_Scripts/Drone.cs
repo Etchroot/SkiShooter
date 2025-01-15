@@ -1,7 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class Drone : MonoBehaviour
 {
+    [SerializeField] private bool tutorial; //튜토리얼
+    private bool tutorialInProgress = false;
+
     public Transform playerTransform;
 
     private float targetHeight; // 목표 높이
@@ -17,6 +21,13 @@ public class Drone : MonoBehaviour
     void Start()
     {
         lastCheckpointPosition = Vector3.zero;
+
+        //튜토리얼 씬일 때
+        if (tutorial)
+        {
+            //플레이어를 바라봄
+            this.transform.LookAt(playerTransform);
+        }
     }
 
     void Update()
@@ -27,8 +38,24 @@ public class Drone : MonoBehaviour
             return;
         }
 
-        // 드론 이동 로직
-        MoveToCheckpoint();
+        //튜토리얼 씬일 때
+        if (tutorial)
+        {
+            //플레이어 대기 확인
+            tutorialInProgress = Player_New.Instance.tutorialInProgress;
+
+            // 플레이어 코루틴 완료 후
+            if (!tutorialInProgress)
+            {
+                // 체크포인트 이동
+                MoveToCheckpoint();
+            }
+        }
+        else // 메인 씬일 때
+        {
+            // 체크포인트 이동
+            MoveToCheckpoint();
+        }
     }
 
     private void UpdateHeightWithRaycast()
@@ -110,11 +137,9 @@ public class Drone : MonoBehaviour
         {
             transform.rotation = targetRotation;
             isRotating = false;
-            Debug.Log("회전 완료!");
+            //Debug.Log("회전 완료!");
         }
     }
-
-
 
     private void OnDrawGizmos()
     {
