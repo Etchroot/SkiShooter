@@ -56,11 +56,20 @@ public class Enemy : MonoBehaviour
         isOnCooldown = false; // 쿨다운 해제
     }
 
-    // 디버그용: 공격 범위 시각화
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //총알에 맞으면
+        if (other.CompareTag("BULLET"))
+        {
+            Destroy(gameObject);
+            //Die();
+        }
     }
 
 }
