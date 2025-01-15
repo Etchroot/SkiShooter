@@ -123,9 +123,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
-  Height: 5
+  Height: 15
   heightSmoothSpeed: 100
-  rotationSpeed: 5
+  rotationSpeed: 30
 --- !u!1001 &2314326385771781317
 PrefabInstance:
   m_ObjectHideFlags: 0

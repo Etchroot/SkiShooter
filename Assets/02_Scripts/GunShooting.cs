@@ -30,8 +30,8 @@ public class GunShooting : MonoBehaviour
     public bool isReloading = false; // 재장전 중인지 확인
 
     private Haptic haptics;
-    public float hapticsAmplitude = 1.0f;
-    public float hapticsDuration = 0.2f;
+    public float hapticsAmplitude = 0.2f;
+    public float hapticsDuration = 0.05f;
 
     // 오브젝트 풀링 관련 변수
     [SerializeField] private int poolSize = 30; // 풀 크기
