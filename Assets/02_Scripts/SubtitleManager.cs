@@ -87,7 +87,7 @@ public class SubtitleManager : MonoBehaviour
     }
     private IEnumerator DisplaySubtitle3()
     {
-        subtitleText.text = "먼저 사격과 재장전해보자.\n재장전은 원하는 만큼 할 수 있지만 재장전 시간이 걸리니까 주의해야 해."; // 자막 내용 설정
+        subtitleText.text = "먼저 사격과 재장전을 해보자.\n재장전은 원하는 만큼 할 수 있지만 재장전 시간이 걸리니까 주의해야 해."; // 자막 내용 설정
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(8f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
