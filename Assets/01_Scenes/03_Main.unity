@@ -4227,7 +4227,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1901386436663783560, guid: e26208007eaddd54a9fa16b8d0a561a2, type: 3}
       propertyPath: m_Name
-      value: EventSystem (1)
+      value: EventSystem
       objectReference: {fileID: 0}
     - target: {fileID: 4651830315461188086, guid: e26208007eaddd54a9fa16b8d0a561a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7646,7 +7646,7 @@ GameObject:
   - component: {fileID: 5884652854582299738}
   - component: {fileID: 7712860781914232341}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: EventSystem_curved
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
