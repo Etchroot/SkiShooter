@@ -18,12 +18,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ENEMY"))
-        {
-            // 적 처리 로직 (예: 데미지)
-            Destroy(other.gameObject);
-        }
-
         // 풀에 반환
         gunShooting.ReturnBulletToPool(this.gameObject);
     }
