@@ -10,7 +10,7 @@ public class Drone : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class Drone : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit, raycastDistance))
         {
             float groundHeight = hit.point.y; // 바닥의 Y 좌표
-            targetHeight = groundHeight + 5.0f; // 바닥에서 5 유닛 위로 목표 높이 설정
+            targetHeight = groundHeight + 10.0f; // 바닥에서 5 유닛 위로 목표 높이 설정
         }
         else
         {
