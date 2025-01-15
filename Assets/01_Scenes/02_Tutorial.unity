@@ -12335,7 +12335,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   BulletPrefab: {fileID: 4853834029268263431, guid: 93757a8e4c8c73141b654d077d5b0925, type: 3}
   FirePoint: {fileID: 7389437735092905282}
-  handGun: {fileID: 0}
+  handGun: {fileID: 7570162753361260240}
   isLeft: 1
   fireRate: 0.03
   source: {fileID: 7934744275961793497}
@@ -13902,6 +13902,10 @@ PrefabInstance:
     - target: {fileID: 2573717152476466379, guid: 9e2a6a225914fa14cbcade861e529d6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199803055590284535, guid: 9e2a6a225914fa14cbcade861e529d6a, type: 3}
+      propertyPath: tutorial
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8199803055590284535, guid: 9e2a6a225914fa14cbcade861e529d6a, type: 3}
       propertyPath: playerTransform
@@ -17745,7 +17749,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   BulletPrefab: {fileID: 4853834029268263431, guid: 93757a8e4c8c73141b654d077d5b0925, type: 3}
   FirePoint: {fileID: 2599982556559868172}
-  handGun: {fileID: 0}
+  handGun: {fileID: 3140960360113064606}
   isLeft: 0
   fireRate: 0.03
   source: {fileID: 3115566086872708623}
@@ -18096,6 +18100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d25e7711ad38a941b483a0dd10219e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: 1
+  tutorialDelay: 30
+  tutorialInProgress: 0
   baseSpeed: 5
   acceleration: 0.1
   maxSpeed: 30

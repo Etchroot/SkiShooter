@@ -10273,30 +10273,6 @@ PrefabInstance:
       propertyPath: collisionCheck
       value: 
       objectReference: {fileID: 1956967255}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: handGun
-      value: 
-      objectReference: {fileID: 3551584467942370077}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: hapticsDuration
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: hapticsAmplitude
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: handGun
-      value: 
-      objectReference: {fileID: 3551584467942370078}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: hapticsDuration
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: hapticsAmplitude
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 8971426413998879964, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_Name
       value: Player
@@ -10306,16 +10282,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
---- !u!1 &3551584467942370077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1936316461280698754, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-  m_PrefabInstance: {fileID: 3551584467942370076}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3551584467942370078 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6361155991001777612, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-  m_PrefabInstance: {fileID: 3551584467942370076}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3577330588366094388
 MonoBehaviour:
   m_ObjectHideFlags: 0
