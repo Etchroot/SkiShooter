@@ -12,6 +12,7 @@ using Unity.Services.CloudSave.Models;
 using Unity.Services.Authentication;
 using UnityEngine.SceneManagement;
 
+
 public class MainUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI LeftBulletText;
@@ -257,27 +258,35 @@ public class MainUI : MonoBehaviour
     // 게임 종료시 처리
     public async void EndGame() // Player_New 스크립트에서 호출해서 씀
     {
-        int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
-        int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
-        Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
+        if (SceneManager.GetActiveScene().name == "03_Main") // Main씬일때만 처리
+        {
+            int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
+            int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
+            Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
 
-        finalSpeed = Mathf.Round(currentSpeedcal * 100f) / 100f;
+            finalSpeed = Mathf.Round(currentSpeedcal * 100f) / 100f;
 
-        // 플레이 타임과 최종 속력을 점수로 변환
-        string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
-        float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
-        string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
-        string playerId = AuthenticationService.Instance.PlayerId;
+            // 플레이 타임과 최종 속력을 점수로 변환
+            string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
+            float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
+            string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
+            string playerId = AuthenticationService.Instance.PlayerId;
 
+            // Leaderboard와 Cloud Save에 데이터 전송
+            await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
+            await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
 
+            ChangeLeaderBoard();
+        }
+        if (SceneManager.GetActiveScene().name == "02_Tutorial")
+        {
+            StartCoroutine(LoadSceneFadeOut("03_Main"));
+        }
 
-        // Leaderboard와 Cloud Save에 데이터 전송
-        await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
-        await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
 
         isGameRunning = false;
 
-        ChangeLeaderBoard();
+
     }
 
     // 게임 엔드시 리더보드로 장면 전환 및 플레이어 변경
@@ -304,25 +313,25 @@ public class MainUI : MonoBehaviour
         playerManager.SwitchToXR();
     }
 
-    // private IEnumerator LoadSceneFadeOut(String scenename)
-    // {
-    //     // Fade out 시작
-    //     yield return StartCoroutine(FadeOut());
+    private IEnumerator LoadSceneFadeOut(String scenename)
+    {
+        // Fade out 시작
+        yield return StartCoroutine(FadeOut());
 
-    //     // 씬 비동기 로드
-    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
-    //     asyncLoad.allowSceneActivation = false;
+        // 씬 비동기 로드
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenename);
+        asyncLoad.allowSceneActivation = false;
 
-    //     // 로딩이 완료될 떄까지 대기
-    //     while (!asyncLoad.isDone)
-    //     {
-    //         if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
-    //         {
-    //             asyncLoad.allowSceneActivation = true;
-    //         }
-    //         yield return null;
-    //     }
-    // }
+        // 로딩이 완료될 떄까지 대기
+        while (!asyncLoad.isDone)
+        {
+            if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
 
     private IEnumerator FadeOut()
     {

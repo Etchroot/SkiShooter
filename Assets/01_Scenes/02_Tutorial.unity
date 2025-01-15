@@ -5232,7 +5232,7 @@ MonoBehaviour:
   onObstacleEnemyCollision:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9166235647878870729}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Player_Tuto, Assembly-CSharp
         m_MethodName: TakeDamage
         m_Mode: 1
@@ -17395,6 +17395,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1361379995588197939, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3783.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361379995588197939, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -609.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2572130131085180836, guid: cafd3bd586fea20409972b70e21da14c, type: 3}
       propertyPath: m_Name
       value: ChaekpointPack
@@ -18085,15 +18093,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5605059090990129088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 553eee8dd178100439a774770766edd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d25e7711ad38a941b483a0dd10219e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 15
-  acceleration: 0.8
-  maxSpeed: 60
+  baseSpeed: 5
+  acceleration: 0.1
+  maxSpeed: 30
   rotationSpeed: 3
   gravity: -60
-  damage: 2
+  damage: 0
   collisionCheck: {fileID: 1956967255}
   mainUI: {fileID: 9193856064627519286}
   currentSpeed: 0
@@ -18187,7 +18195,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9193856064627519284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d92f16197d854148abbdf6b54aa71ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 02cc10dbab7f8e443996c7eb86d8152e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   LeftBulletText: {fileID: 807229125}
