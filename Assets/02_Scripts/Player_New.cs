@@ -16,7 +16,7 @@ public class Player_New : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;  // 중력 설정
     [SerializeField] private float damage; // 적에게 피격 시 받는 속도 감소량
 
-    public CollisionCheck collisionCheck;
+    public RedScreen redScreen; // 피격시 나오는 스크린
     public MainUI mainUI; // EndGame() 함수를 호출할 스크립트 연결
 
     public float currentSpeed = 0f; // 현재 속도
@@ -113,6 +113,7 @@ public class Player_New : MonoBehaviour
     public void TakeDamage()
     {
         currentSpeed = Mathf.Max(currentSpeed - damage, 0); // 속도 감소, 음수 방지
+        redScreen.TriggerRedScreenEffect(); // 피격 스크린 띄우기
         Debug.Log("적 총알 맞음");
     }
 
