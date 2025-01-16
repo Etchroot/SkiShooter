@@ -87,7 +87,7 @@ public class GunShooting : MonoBehaviour
         if (previousGrips == 0 && gripPressed == 1 && currentBullet < maxBullet && !isReloading)
         {
             StartCoroutine(Reload());
-            StartCoroutine(GunSpin());
+            //StartCoroutine(GunSpin());
         }
 
         // 이전 그립 버튼 상태 업데이트
@@ -123,18 +123,25 @@ public class GunShooting : MonoBehaviour
 
     IEnumerator GunSpin()
     {
-        float duration = 2f; // 회전 시간
-        float angle = 1080f; // 회전 각도
+        float duration = 1f; // 회전 시간
+        float angle = 720f; // 회전 각도
         float elapsedTime = 0f;
+
+        Quaternion initalRotataion = handGun.transform.rotation; // 시작 회전상태
+        Quaternion targetRotataion = initalRotataion * Quaternion.Euler(Vector3.right * angle);
 
         while (elapsedTime < duration)
         {
-            float step = (angle / duration) * Time.deltaTime;
-            handGun.transform.Rotate(Vector3.right * step);
-            elapsedTime += Time.deltaTime;
+            // 시간의 경과에 따라 회전 보간
+            float t = elapsedTime / duration; // 0에서 1까지
+            handGun.transform.rotation = Quaternion.Lerp(initalRotataion, targetRotataion, t);
 
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        // 회전 정확도 봏정
+        handGun.transform.rotation = targetRotataion;
     }
 
     IEnumerator FireSound(bool isEmpty = false)

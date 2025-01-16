@@ -127,7 +127,7 @@ public class SubtitleManager : MonoBehaviour
     }
     private IEnumerator DisplaySubtitle7()
     {
-        subtitleText.text = "스키의 속도는 시간에 따라 증가해."; // 자막 내용 설정
+        subtitleText.text = "실전에선 스키의 속도가 시간에 따라 증가할거야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(3f); // 몇 초 대기
