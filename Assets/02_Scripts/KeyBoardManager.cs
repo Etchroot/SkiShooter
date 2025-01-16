@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class TargetPlate : MonoBehaviour
+public class KeyBoardManager : MonoBehaviour
 {
+    [SerializeField] private GameObject keyboardCanvas;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,13 +15,11 @@ public class TargetPlate : MonoBehaviour
     {
 
     }
-    private void OnTriggerEnter(Collider other)
+    public void ShowKeyboard()
     {
-        //총알에 맞으면
-        if (other.CompareTag("BULLET"))
+        if (!keyboardCanvas.activeSelf)
         {
-            Destroy(this.gameObject);
-            //Die();
+            keyboardCanvas.SetActive(true);
         }
     }
 }

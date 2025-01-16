@@ -1,26 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class KeyboardScript : MonoBehaviour
 {
 
-    public InputField TextField;
+    public TMP_InputField TextField;
     public GameObject RusLayoutSml, RusLayoutBig, EngLayoutSml, EngLayoutBig, SymbLayout;
 
     public void alphabetFunction(string alphabet)
     {
 
 
-        TextField.text=TextField.text + alphabet;
+        TextField.text = TextField.text + alphabet;
 
     }
 
     public void BackSpace()
     {
 
-        if(TextField.text.Length>0) TextField.text= TextField.text.Remove(TextField.text.Length-1);
+        if (TextField.text.Length > 0) TextField.text = TextField.text.Remove(TextField.text.Length - 1);
 
     }
 
