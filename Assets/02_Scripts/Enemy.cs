@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     {
         // Animator 컴포넌트 할당
         anim = GetComponentInChildren<Animator>();
-        
+
         anim.SetTrigger("IDLE");
     }
 
@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
     void LookAtPlayer()
     {
         Vector3 direction = (player.position - transform.position).normalized;
-        direction.y = 0; // y축 회전을 고정하여 부자연스러운 회전을 방지
+        direction.y = 0; // y축 회전을 고정
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
