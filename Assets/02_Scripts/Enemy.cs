@@ -12,6 +12,17 @@ public class Enemy : MonoBehaviour
 
     private bool isOnCooldown = false; // 공격 쿨다운 여부
 
+    private Animator anim;
+
+    private void Start()
+    {
+        // Animator 컴포넌트 할당
+        anim = GetComponentInChildren<Animator>();
+        
+        anim.SetTrigger("IDLE");
+    }
+
+
     void Update()
     {
         // 플레이어와 적 사이의 거리 계산
@@ -32,20 +43,19 @@ public class Enemy : MonoBehaviour
     void LookAtPlayer()
     {
         Vector3 direction = (player.position - transform.position).normalized;
-        direction.y = 0; // y축 고정
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-        }
+        direction.y = 0; // y축 회전을 고정하여 부자연스러운 회전을 방지
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
+
 
     IEnumerator Attack()
     {
         isOnCooldown = true; // 쿨다운 활성화
 
         Player_New.Instance.TakeDamage();
+
+        anim.SetTrigger("SHOOT");
 
         // 공격 행동 (발사체 생성)
         //GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
@@ -67,9 +77,18 @@ public class Enemy : MonoBehaviour
         //총알에 맞으면
         if (other.CompareTag("BULLET"))
         {
-            Destroy(gameObject);
-            //Die();
+            StartCoroutine(Die());
         }
     }
+
+    IEnumerator Die()
+    {
+        anim.SetTrigger("DIE");
+        GetComponent<Collider>().enabled = false; // 충돌 비활성화
+        yield return new WaitForSeconds(2f);
+        Destroy(this.gameObject);
+    }
+
+
 
 }
