@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -13,8 +14,28 @@ public class SubtitleManager : MonoBehaviour
     void Start()
     {
         ClearSubtitle(); // 처음에는 자막이 비어 있도록 초기화
-        ShowSubtitle(1);
+        //ShowSubtitle(1); 알파테스트 이후부터 사용
+        StartCoroutine(PlaySubtitlesSequentially());
+
     }
+
+
+    #region 임시 함수
+    public IEnumerator WaitForSecondsCoroutine(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
+    private IEnumerator PlaySubtitlesSequentially()
+    {
+        for (int i = 1; i <= 8; i++)
+        {
+            ShowSubtitle(i);
+            yield return currentCoroutine;
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    #endregion
 
     public void ClearSubtitle()
     {
@@ -100,6 +121,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(8f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
+        yield return new WaitForSeconds(5f); // 추가 대기
     }
     private IEnumerator DisplaySubtitle4()
     {
@@ -108,6 +130,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
+        yield return new WaitForSeconds(3f);
     }
     private IEnumerator DisplaySubtitle5()
     {
@@ -116,6 +139,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
+        yield return new WaitForSeconds(2f);
     }
     private IEnumerator DisplaySubtitle6()
     {
@@ -124,13 +148,14 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
+        yield return new WaitForSeconds(9f);
     }
     private IEnumerator DisplaySubtitle7()
     {
         subtitleText.text = "실전에선 스키의 속도가 시간에 따라 증가할거야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
-        yield return new WaitForSeconds(3f); // 몇 초 대기
+        yield return new WaitForSeconds(4f); // 몇 초 대기
 
         subtitleText.text = "하지만 적에게 공격당하거나 적군과 장애물을 제거하지 못하고 놓치게 되면 스키의 속도가 줄어들어."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
@@ -144,7 +169,7 @@ public class SubtitleManager : MonoBehaviour
 
     private IEnumerator DisplaySubtitle8()
     {
-        subtitleText.text = "이제 곧 연구실이 폭파해. 바로 출발하자."; // 자막 내용 설정
+        subtitleText.text = "이제 곧 연구실이 폭발해. 바로 출발하자."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(3f); // 몇 초 대기
