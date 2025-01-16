@@ -84,7 +84,6 @@ public class Enemy : MonoBehaviour
     IEnumerator Die()
     {
         anim.SetTrigger("DIE");
-        GetComponent<Collider>().enabled = false; // 충돌 비활성화
         yield return new WaitForSeconds(2f);
         Destroy(this.gameObject);
     }
