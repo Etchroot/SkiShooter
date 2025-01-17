@@ -18,7 +18,7 @@ public class TargetPlate : MonoBehaviour
         //총알에 맞으면
         if (other.CompareTag("BULLET"))
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             //Die();
         }
     }

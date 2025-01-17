@@ -223,7 +223,7 @@ public class MainUI : MonoBehaviour
         if (leftgunShooting.isReloading == true)
         {
             LeftReloadImage.SetActive(true);
-            Invoke("DeacitveLeftReloadImage", 2f);
+            Invoke("DeacitveLeftReloadImage", 1f);
         }
     }
     void RightReloading()
@@ -231,7 +231,7 @@ public class MainUI : MonoBehaviour
         if (rightgunShooting.isReloading == true)
         {
             RightReloadImage.SetActive(true);
-            Invoke("DeacitveRightReloadImage", 2f);
+            Invoke("DeacitveRightReloadImage", 1f);
         }
     }
     void DeacitveLeftReloadImage()
