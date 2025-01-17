@@ -8,8 +8,8 @@ public class CheckPointManager : MonoBehaviour
     [SerializeField] GameObject checkpointPack;
     [SerializeField] Transform[] checkpoints;
 
-    private int playerCheckpointIndex = 0;
-    private int droneCheckpointIndex = 0;
+    public int playerCheckpointIndex = 0;
+    public int droneCheckpointIndex = 0;
 
     public bool PlayerAllCheckpointsCompleted { get; private set; } = false;
     //public bool DroneAllCheckpointsCompleted { get; private set; } = false;
@@ -46,6 +46,9 @@ public class CheckPointManager : MonoBehaviour
         if (isPlayer)
         {
             playerCheckpointIndex++;
+
+            //Debug.Log($"{playerCheckpointIndex}");
+
             if (playerCheckpointIndex >= checkpoints.Length)
             {
                 PlayerAllCheckpointsCompleted = true;

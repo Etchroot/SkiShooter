@@ -10,16 +10,30 @@ public class SubtitleManager : MonoBehaviour
     [SerializeField] private AudioClip audioClip; // 효과음
     private Coroutine currentCoroutine;
 
+    private int chkNum = 1;
+    private int lastNum = 1;
+
     void Start()
     {
         ClearSubtitle(); // 처음에는 자막이 비어 있도록 초기화
-        ShowSubtitle(1);
+        ShowSubtitle(chkNum);
     }
 
     public void ClearSubtitle()
     {
         subtitleText.text = ""; // 텍스트 비우기
         subtitleText.gameObject.SetActive(false); // 비활성화
+    }
+
+    private void Update()
+    {
+        chkNum = CheckPointManager.Instance.playerCheckpointIndex + 1;
+
+        if (lastNum != chkNum)
+        {
+            lastNum = chkNum;
+            ShowSubtitle(chkNum);
+        }
     }
 
     public void ShowSubtitle(int num)
