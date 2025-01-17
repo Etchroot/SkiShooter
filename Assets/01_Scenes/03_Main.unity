@@ -1168,6 +1168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkpointPack: {fileID: 1094832346367267206}
   checkpoints: []
+  playerCheckpointIndex: 0
+  droneCheckpointIndex: 0
 --- !u!4 &242873487
 Transform:
   m_ObjectHideFlags: 0
@@ -11403,6 +11405,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1906559317036948755, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5119269396939693887, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: collisionCheck
       value: 
@@ -11423,6 +11429,10 @@ PrefabInstance:
       propertyPath: currentBullet
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 6869146808006451397, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: fireRate
       value: 0.02
@@ -11438,6 +11448,10 @@ PrefabInstance:
     - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: currentBullet
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882365080543270715, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: m_Volume
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 8971426413998879964, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_Name
