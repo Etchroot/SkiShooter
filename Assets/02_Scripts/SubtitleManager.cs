@@ -9,6 +9,8 @@ public class SubtitleManager : MonoBehaviour
     [SerializeField] TMP_Text subtitleText; // 텍스트 UI
     [SerializeField] private AudioSource audioSource; // 효과음 재생할 오디오소스
     [SerializeField] private AudioClip audioClip; // 효과음
+    private int chkNum = 1;
+    private int lastNum = 1;
     private Coroutine currentCoroutine;
 
     private int chkNum = 1;
@@ -21,28 +23,37 @@ public class SubtitleManager : MonoBehaviour
         ShowSubtitle(chkNum);
 =======
         //ShowSubtitle(1); 알파테스트 이후부터 사용
-        StartCoroutine(PlaySubtitlesSequentially());
+        ShowSubtitle(chkNum);
 
 >>>>>>> 102d8b0b357b9e3e3bfb4f1806cd55e218e84642
     }
-
-
-    #region 임시 함수
-    public IEnumerator WaitForSecondsCoroutine(float seconds)
+    private void Update()
     {
-        yield return new WaitForSeconds(seconds);
-    }
-    private IEnumerator PlaySubtitlesSequentially()
-    {
-        for (int i = 1; i <= 8; i++)
+        chkNum = CheckPointManager.Instance.playerCheckpointIndex + 1;
+        if (lastNum != chkNum)
         {
-            ShowSubtitle(i);
-            yield return currentCoroutine;
-            yield return new WaitForSeconds(1f);
+            lastNum = chkNum;
+            ShowSubtitle(chkNum);
         }
     }
 
-    #endregion
+
+    // #region 임시 함수
+    // public IEnumerator WaitForSecondsCoroutine(float seconds)
+    // {
+    //     yield return new WaitForSeconds(seconds);
+    // }
+    // private IEnumerator PlaySubtitlesSequentially()
+    // {
+    //     for (int i = 1; i <= 8; i++)
+    //     {
+    //         ShowSubtitle(i);
+    //         yield return currentCoroutine;
+    //         yield return new WaitForSeconds(1f);
+    //     }
+    // }
+
+    // #endregion
 
     public void ClearSubtitle()
     {
@@ -139,7 +150,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(8f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-        yield return new WaitForSeconds(5f); // 추가 대기
+        //yield return new WaitForSeconds(5f); // 추가 대기
     }
     private IEnumerator DisplaySubtitle4()
     {
@@ -148,7 +159,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-        yield return new WaitForSeconds(3f);
+                         // yield return new WaitForSeconds(3f);
     }
     private IEnumerator DisplaySubtitle5()
     {
@@ -157,7 +168,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-        yield return new WaitForSeconds(2f);
+                         // yield return new WaitForSeconds(2f);
     }
     private IEnumerator DisplaySubtitle6()
     {
@@ -166,7 +177,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(7f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-        yield return new WaitForSeconds(9f);
+                         // yield return new WaitForSeconds(9f);
     }
     private IEnumerator DisplaySubtitle7()
     {

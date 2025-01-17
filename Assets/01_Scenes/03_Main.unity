@@ -614,7 +614,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4819545672038064151, guid: 580b851f8bb3dad4e80219274f169133, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3023.5
+      value: 3025.83
       objectReference: {fileID: 0}
     - target: {fileID: 4819545672038064151, guid: 580b851f8bb3dad4e80219274f169133, type: 3}
       propertyPath: m_LocalPosition.y
@@ -622,7 +622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819545672038064151, guid: 580b851f8bb3dad4e80219274f169133, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -109.1
+      value: -104.83
       objectReference: {fileID: 0}
     - target: {fileID: 4819545672038064151, guid: 580b851f8bb3dad4e80219274f169133, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11333,7 +11333,7 @@ PrefabInstance:
       objectReference: {fileID: 2048294850}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: damage
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: mainUI
@@ -11341,7 +11341,7 @@ PrefabInstance:
       objectReference: {fileID: 5197677456252103332}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: maxSpeed
-      value: 70
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: baseSpeed
@@ -11353,7 +11353,7 @@ PrefabInstance:
       objectReference: {fileID: 153961046}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: acceleration
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: rotationSpeed

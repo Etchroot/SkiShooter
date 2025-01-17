@@ -9,10 +9,12 @@ public class Enemy : MonoBehaviour
     public Transform firePoint; // 발사 위치
     public float attackRange = 10f; // 공격 범위
     public float attackCooldown = 2f; // 공격 대기 시간
-
+    public float rotationSpeed = 10f; // 회전 시간
     private bool isOnCooldown = false; // 공격 쿨다운 여부
+    private bool isDead = false; // 적이 죽는 중인지 체크
 
     private Animator anim;
+
 
     private void Start()
     {
@@ -45,7 +47,7 @@ public class Enemy : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         direction.y = 0; // y축 회전을 고정
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
 
@@ -75,7 +77,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //총알에 맞으면
-        if (other.CompareTag("BULLET"))
+        if (!isDead && other.CompareTag("BULLET"))
         {
             StartCoroutine(Die());
         }
@@ -83,7 +85,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        isDead = true; // 죽는 중으로 설정
         anim.SetTrigger("DIE");
+        this.gameObject.tag = "Untagged";
         yield return new WaitForSeconds(2f);
         Destroy(this.gameObject);
     }
