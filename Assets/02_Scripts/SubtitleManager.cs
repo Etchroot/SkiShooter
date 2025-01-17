@@ -13,19 +13,11 @@ public class SubtitleManager : MonoBehaviour
     private int lastNum = 1;
     private Coroutine currentCoroutine;
 
-    private int chkNum = 1;
-    private int lastNum = 1;
-
     void Start()
     {
         ClearSubtitle(); // 처음에는 자막이 비어 있도록 초기화
-<<<<<<< HEAD
-        ShowSubtitle(chkNum);
-=======
-        //ShowSubtitle(1); 알파테스트 이후부터 사용
-        ShowSubtitle(chkNum);
 
->>>>>>> 102d8b0b357b9e3e3bfb4f1806cd55e218e84642
+        ShowSubtitle(chkNum);
     }
     private void Update()
     {
@@ -59,17 +51,6 @@ public class SubtitleManager : MonoBehaviour
     {
         subtitleText.text = ""; // 텍스트 비우기
         subtitleText.gameObject.SetActive(false); // 비활성화
-    }
-
-    private void Update()
-    {
-        chkNum = CheckPointManager.Instance.playerCheckpointIndex + 1;
-
-        if (lastNum != chkNum)
-        {
-            lastNum = chkNum;
-            ShowSubtitle(chkNum);
-        }
     }
 
     public void ShowSubtitle(int num)
