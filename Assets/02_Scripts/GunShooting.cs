@@ -40,9 +40,20 @@ public class GunShooting : MonoBehaviour
 
     //private int totalBulletsCreated = 0; //생성된 총알수 (각각 27발씩 생성됨)
 
+    // 탄창 재장전 모션 관련 변수
+    [SerializeField] private string gunclipPrefabPath = "GunClip"; // Resources 내 경로
+    [SerializeField] private Transform gunclipPosition; // 탄창이 결합될 위치
+    [SerializeField] private float fallSpeed = 10f; // 탄창 떨어지는 속도
+
+    private GameObject gunclipPrefab; // 새로운 탄창 프리펩
+    public GameObject currentGunclip; // 현재 결합된 탄창
+
     void Awake()
     {
         haptics = GetComponent<Haptic>();
+
+        // Resources 폴더에서 프리펩 로드
+        gunclipPrefab = Resources.Load<GameObject>(gunclipPrefabPath);
 
         // 오브젝트 풀 초기화
         bulletPool = new Queue<GameObject>();
@@ -164,6 +175,7 @@ public class GunShooting : MonoBehaviour
     {
         // 장전 중
         isReloading = true;
+        ReloadMotion();
         source.PlayOneShot(reloadingSound);
         yield return new WaitForSeconds(reloadTime);
 
@@ -200,4 +212,58 @@ public class GunShooting : MonoBehaviour
         bullet.SetActive(false);
         bulletPool.Enqueue(bullet);
     }
+
+    #region 탄창 재장전 모션
+
+
+    public void ReloadMotion()
+    {
+        // 기존 탄창 배출
+        EjectCurrentGunclip();
+
+        // 딜레이 추가
+        StartCoroutine(DelayReloadMotion());
+
+        IEnumerator DelayReloadMotion()
+        {
+            yield return new WaitForSeconds(reloadTime);
+            // 새로운 탄창 생성 및 결합
+            AttachNewGunclip();
+        }
+
+    }
+
+    private void EjectCurrentGunclip()
+    {
+        if (currentGunclip != null)
+        {
+            // 탄창 배출 로직
+            currentGunclip.transform.SetParent(null); // 결합 해체
+
+            // Rigidbody 추가 및 Y축 방향으로 힘 가하기
+            Rigidbody rb = currentGunclip.GetComponent<Rigidbody>();
+            if (rb == null) rb = currentGunclip.AddComponent<Rigidbody>();
+
+            rb.AddForce(gunclipPosition.up * -fallSpeed, ForceMode.VelocityChange);
+
+
+            // 배출된 탄창 파괴
+            Destroy(currentGunclip, 2f);
+
+            // 탄창 참조 해제
+            currentGunclip = null;
+        }
+    }
+
+    private void AttachNewGunclip()
+    {
+        // 새로운 탄창 생성
+        GameObject newGunclip = Instantiate(gunclipPrefab, gunclipPosition.position, gunclipPosition.rotation);
+
+        // 결합
+        newGunclip.transform.SetParent(gunclipPosition);
+        currentGunclip = newGunclip;
+    }
+
+    #endregion
 }

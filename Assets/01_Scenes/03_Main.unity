@@ -10970,46 +10970,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 121428446807433193, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: Drone
       value: 
       objectReference: {fileID: 2048294850}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: damage
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: mainUI
       value: 
       objectReference: {fileID: 5197677456252103332}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: maxSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: baseSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: redScreen
       value: 
       objectReference: {fileID: 153961046}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: acceleration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: rotationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: collisionCheck
-      value: 
-      objectReference: {fileID: 1956967255}
     - target: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3862.9
@@ -11050,77 +11022,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1906559317036948755, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: m_Volume
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1906559317036948755, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
     - target: {fileID: 5119269396939693887, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: collisionCheck
       value: 
       objectReference: {fileID: 1956967255}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: fireRate
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: fireSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 3f6b0db61acd6b04ab5772a2a7cf130c, type: 3}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: maxBullet
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: reloadTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: currentBullet
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6869146808006451397, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: m_Volume
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6869146808006451397, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: fireRate
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: fireSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 3f6b0db61acd6b04ab5772a2a7cf130c, type: 3}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: maxBullet
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: reloadTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: currentBullet
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8882365080543270715, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: m_Volume
-      value: 0.35
-      objectReference: {fileID: 0}
     - target: {fileID: 8971426413998879964, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8971426413998879964, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

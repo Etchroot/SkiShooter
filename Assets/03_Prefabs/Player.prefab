@@ -148,11 +148,11 @@ AudioSource:
   m_GameObject: {fileID: 851754287513445599}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -253,19 +253,23 @@ MonoBehaviour:
   FirePoint: {fileID: 1539453844684630544}
   handGun: {fileID: 1936316461280698754}
   isLeft: 0
-  fireRate: 0.03
+  fireRate: 0.05
   source: {fileID: 1906559317036948755}
-  fireSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
+  fireSound: {fileID: 8300000, guid: 3f6b0db61acd6b04ab5772a2a7cf130c, type: 3}
   reloadingSound: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
   reloadSound: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
   emptyGunSound: {fileID: 8300000, guid: e7632c6401c09437e83de45d33c5858e, type: 3}
-  maxBullet: 100
-  currentBullet: 100
-  reloadTime: 2
+  maxBullet: 50
+  currentBullet: 50
+  reloadTime: 1
   isReloading: 0
   hapticsAmplitude: 0.2
   hapticsDuration: 0.05
   poolSize: 30
+  gunclipPrefabPath: GunClip
+  gunclipPosition: {fileID: 8228616546120866707}
+  fallSpeed: 10
+  currentGunclip: {fileID: 2103184680268093140}
 --- !u!114 &754494842618520469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -766,11 +770,11 @@ AudioSource:
   m_GameObject: {fileID: 5517532027675635983}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -871,19 +875,23 @@ MonoBehaviour:
   FirePoint: {fileID: 6324546161930374750}
   handGun: {fileID: 6361155991001777612}
   isLeft: 1
-  fireRate: 0.03
+  fireRate: 0.05
   source: {fileID: 6869146808006451397}
-  fireSound: {fileID: 8300000, guid: 65201ddabb4144f6a8fb9480120b7656, type: 3}
+  fireSound: {fileID: 8300000, guid: 3f6b0db61acd6b04ab5772a2a7cf130c, type: 3}
   reloadingSound: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
   reloadSound: {fileID: 8300000, guid: cef0fa03af5b747f0abe82cde0b2bccc, type: 3}
   emptyGunSound: {fileID: 8300000, guid: e7632c6401c09437e83de45d33c5858e, type: 3}
-  maxBullet: 100
-  currentBullet: 100
-  reloadTime: 2
+  maxBullet: 50
+  currentBullet: 50
+  reloadTime: 1
   isReloading: 0
   hapticsAmplitude: 0.2
   hapticsDuration: 0.05
   poolSize: 30
+  gunclipPrefabPath: GunClip
+  gunclipPosition: {fileID: 138705852234140273}
+  fallSpeed: 10
+  currentGunclip: {fileID: 6892886184352985754}
 --- !u!114 &4704770890578839213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,7 +934,7 @@ Transform:
   m_GameObject: {fileID: 6705770103260632445}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.38268343, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -0.44000244, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1046,6 +1054,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionCheck: {fileID: 0}
+--- !u!1 &7947531036220235483
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138705852234140273}
+  m_Layer: 7
+  m_Name: GunClipPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &138705852234140273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7947531036220235483}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0911}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7266913564284397296}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7978845576047062157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8228616546120866707}
+  m_Layer: 7
+  m_Name: GunClipPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8228616546120866707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978845576047062157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0911}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2756540825742688958}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8971426413998879964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,13 +1244,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d25e7711ad38a941b483a0dd10219e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 15
-  acceleration: 0.8
-  maxSpeed: 60
-  rotationSpeed: 3
+  tutorial: 0
+  tutorialDelay: 15
+  tutorialInProgress: 0
+  baseSpeed: 10
+  acceleration: 1
+  maxSpeed: 50
+  rotationSpeed: 1
   gravity: -60
   damage: 2
-  collisionCheck: {fileID: 0}
+  redScreen: {fileID: 0}
   mainUI: {fileID: 0}
   currentSpeed: 0
   Drone: {fileID: 0}
@@ -1319,7 +1392,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 2e7363bf1168d8249ad0aa7ac13681a4, type: 3}
   m_Resource: {fileID: 8300000, guid: 2e7363bf1168d8249ad0aa7ac13681a4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.18
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1471,7 +1544,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8766957836608595198, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 138705852234140273}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
 --- !u!4 &6324546161930374750 stripped
@@ -1482,6 +1558,11 @@ Transform:
 --- !u!1 &6361155991001777612 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4986720066058848194, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+  m_PrefabInstance: {fileID: 2122108918791553550}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6892886184352985754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4817529608621322388, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
   m_PrefabInstance: {fileID: 2122108918791553550}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7266913564284397296 stripped
@@ -1543,7 +1624,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8766957836608595198, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8228616546120866707}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
 --- !u!4 &1539453844684630544 stripped
@@ -1554,6 +1638,11 @@ Transform:
 --- !u!1 &1936316461280698754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4986720066058848194, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+  m_PrefabInstance: {fileID: 6911704868589708864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2103184680268093140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4817529608621322388, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
   m_PrefabInstance: {fileID: 6911704868589708864}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2756540825742688958 stripped
