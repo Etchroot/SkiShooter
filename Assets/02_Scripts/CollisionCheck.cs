@@ -8,10 +8,7 @@ public class CollisionCheck : MonoBehaviour
 
     public GameObject player;
     public float distance = 10f; // Wall과 player사이의 거리
-    void Start()
-    {
 
-    }
 
     // Update is called once per frame
     void Update()
@@ -39,7 +36,7 @@ public class CollisionCheck : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ENEMY"))
+        if (other.CompareTag("OBSTACLE"))
         {
             Debug.Log("장애물 및 적과 충돌!");
             onObstacleEnemyCollision?.Invoke(); //이벤트 호출

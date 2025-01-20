@@ -16,6 +16,7 @@ TagManager:
   - END
   - CHECKPOINT
   - TRUNK
+  - OBSTACLE
   layers:
   - Default
   - TransparentFX

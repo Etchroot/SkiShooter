@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: -5229667458872518617}
   m_Layer: 12
   m_Name: Icicle
-  m_TagString: ENEMY
+  m_TagString: OBSTACLE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,5 +232,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destructible: 1
-  hp: 1
   playerSpeedReduction: 0.5

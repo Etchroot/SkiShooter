@@ -32,7 +32,7 @@ public class RedScreen : MonoBehaviour
     public void TriggerRedScreenEffect()
     {
         redScreenImage.enabled = true;
-        Invoke(nameof(HideRedScreen), 0.5f);
+        Invoke(nameof(HideRedScreen), 0.4f);
     }
 
     private void HideRedScreen()

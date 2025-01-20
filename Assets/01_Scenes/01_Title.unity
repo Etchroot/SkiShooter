@@ -913,7 +913,7 @@ MonoBehaviour:
   audioSource: {fileID: 997968077}
   playDuration: 0.5
   pauseDuration: 0.5
-  totalDuration: 5
+  totalDuration: 2
   initialWaitTime: 2
 --- !u!1 &1086285848
 GameObject:
@@ -1063,7 +1063,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 266087218417244234, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: delay
-      value: 0.075
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 390181376325964036, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_IsActive
@@ -1315,10 +1315,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782568593971757814, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_Text
-      value: "\uAC74\uBB3C \uD3ED\uD30C \uD6C4 \uC0B0\uC0AC\uD0DC \uC8FC\uC758. \uCD5C\uC810\uB2E8
-        \uC2A4\uD0A4\uC640 \uD578\uB4DC\uAC74 \uC900\uBE44\uB428. Joy\uC694\uC6D0\uC774
-        \uB4DC\uB860\uC73C\uB85C \uC9C0\uC6D0. \uC0B0 \uC544\uB798 \uC900\uBE44\uB41C
-        \uD5EC\uAE30\uAE4C\uC9C0 \uBB34\uC0AC\uD788 \uD0C8\uCD9C\uD560 \uAC83."
+      value: "\uAC74\uBB3C\uC744 \uD3ED\uD30C\uC2DC\uD0A8 \uD6C4 \uD0C8\uCD9C\uD558\uB77C.
+        \uC0B0\uC0AC\uD0DC \uC8FC\uC758. \uCD5C\uC810\uB2E8 \uC2A4\uD0A4\uC640 \uD578\uB4DC\uAC74
+        \uC900\uBE44\uB428. Joy\uC694\uC6D0\uC774 \uB4DC\uB860\uC73C\uB85C \uC9C0\uC6D0.
+        \uC0B0 \uC544\uB798 \uC900\uBE44\uB41C \uD5EC\uAE30\uAE4C\uC9C0 \uBB34\uC0AC\uD788
+        \uD0C8\uCD9C\uD560 \uAC83."
       objectReference: {fileID: 0}
     - target: {fileID: 5888122577273847447, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_AnchorMax.x

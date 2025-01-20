@@ -96,29 +96,29 @@ public class SubtitleManager : MonoBehaviour
 
     private IEnumerator DisplaySubtitle1()
     {
-        subtitleText.text = "안녕! 난 요원 Joy야.\n이 드론으로 탈출을 지원할게."; // 자막 내용 설정
+        subtitleText.text = "안녕! 난 널 지원하러 온 요원 Joy야.\n이 드론으로 탈출을 도와줄게."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
-        yield return new WaitForSeconds(5f); // 몇 초 대기
+        yield return new WaitForSeconds(6f); // 몇 초 대기
 
-        subtitleText.text = "방해하는 적들을 제거하고 산 아래 지원 헬기까지 도착해야 해."; // 자막 내용 설정
+        subtitleText.text = "우리를 방해하는 적들을 제거하고 산 아래 지원 헬기까지 도착해야 해."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         yield return new WaitForSeconds(5f); // 몇 초 대기
 
-        subtitleText.text = "연구실 폭파까지 시간이 얼마 없으니까 빠르게 시뮬레이션해보자."; // 자막 내용 설정
+        subtitleText.text = "연구실 폭파까지 시간이 얼마 없으니까 빠르게 탈출 과정을 시뮬레이션해보자."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
-        yield return new WaitForSeconds(5f); // 몇 초 대기
+        yield return new WaitForSeconds(6f); // 몇 초 대기
 
         ClearSubtitle(); // 자막 초기화
     }
     private IEnumerator DisplaySubtitle2()
     {
-        subtitleText.text = "최첨단 스키랑 핸드건 두 자루를 준비해 뒀어."; // 자막 내용 설정
+        subtitleText.text = "산을 내려갈 최첨단 스키랑 핸드건 두 자루를 준비해 뒀어."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
-        yield return new WaitForSeconds(4f); // 몇 초 대기
+        yield return new WaitForSeconds(5f); // 몇 초 대기
 
-        subtitleText.text = "스키는 나를 따라오게 설정해 두었으니까 주변 적과 장애물에만 집중해!"; // 자막 내용 설정
+        subtitleText.text = "스키는 자동으로 날 따라 오니까 이동은 나한테 맡기고 주변 적과 장애물에만 집중해!"; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         yield return new WaitForSeconds(6f); // 몇 초 대기
 
@@ -179,10 +179,10 @@ public class SubtitleManager : MonoBehaviour
 
     private IEnumerator DisplaySubtitle8()
     {
-        subtitleText.text = "이제 곧 연구실이 폭발해. 바로 출발하자."; // 자막 내용 설정
+        subtitleText.text = "곧 연구실이 폭발해.\n가상 시뮬레이션에서 빠져나갈게. 이제 실전이야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
-        yield return new WaitForSeconds(3f); // 몇 초 대기
+        yield return new WaitForSeconds(6f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
     }
 

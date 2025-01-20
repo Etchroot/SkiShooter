@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6aa04537e3cd96f4bae78410acdfec3b
+timeCreated: 1515322679
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 108702
+  packageName: Free PBR Barrel
+  packageVersion: 1.0
+  assetPath: Assets/Free_Barrel/Demo_scene.unity
+  uploadId: 222640

@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public float attackCooldown = 2f; // 공격 대기 시간
     public float rotationSpeed = 10f; // 회전 시간
     private bool isOnCooldown = false; // 공격 쿨다운 여부
-    private bool isDead = false; // 적이 죽는 중인지 체크
+    public bool isDead = false; // 적이 죽는 중인지 체크
 
     private Animator anim;
 
@@ -83,12 +83,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator Die()
+    public IEnumerator Die()
     {
         isDead = true; // 죽는 중으로 설정
         anim.SetTrigger("DIE");
         this.gameObject.tag = "Untagged";
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         Destroy(this.gameObject);
     }
 
