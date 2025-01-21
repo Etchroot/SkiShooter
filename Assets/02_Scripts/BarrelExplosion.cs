@@ -12,7 +12,8 @@ public class BarrelExplosion : MonoBehaviour
     [SerializeField] private float explosionForce = 300f; // 폭발력
     [SerializeField] private float explosionRadius = 10f; // 폭발 반경
     [SerializeField] private float upwardModifier = 1f; // 위쪽으로 밀어내는 효과 (0이면 순수한 방향)
-
+    [SerializeField] private AudioClip explosionSound; // 폭발 효과음
+    [SerializeField] private AudioSource audioSource; // 효과음 재생할 오디오 소스
     private bool hasExploded = false; // 폭발한 상태인지 확인하는 플래그
     public GameObject explosionEffect = null; // 폭발 이펙트 프리펩
 
@@ -31,7 +32,10 @@ public class BarrelExplosion : MonoBehaviour
 
         // 폭발 이펙트 생성
         if (explosionEffect != null)
+        {
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            audioSource.PlayOneShot(explosionSound);
+        }
         else
         {
             Debug.LogError("폭발 프리펩이 없음");
@@ -114,7 +118,7 @@ public class BarrelExplosion : MonoBehaviour
             // 버튼 추가
             if (GUILayout.Button("폭발"))
             {
-                barrelExplosion.TakeDamage(); // 버튼 클릭 시 Explode() 실행
+                barrelExplosion.TakeDamage(); // 버튼 클릭 시 TakeDamage() 실행
             }
         }
     }
