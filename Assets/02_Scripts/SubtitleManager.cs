@@ -135,14 +135,26 @@ public class SubtitleManager : MonoBehaviour
     }
     private IEnumerator DisplaySubtitle4()
     {
-        subtitleText.text = "이제 매복해 있는 적군을 제거해 보자.\n적이 우리에게 공격하기 전에 먼저 제거해야 해."; // 자막 내용 설정
+        subtitleText.text = "이제 매복해 있는 적군을 제거해 보자.\n적이 우리에게 공격하기 전에 먼저 제거해야 해.\n만약 놓치면 뒤에서 우릴 공격할거야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
-        yield return new WaitForSeconds(7f); // 몇 초 대기
+        yield return new WaitForSeconds(10f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
                          // yield return new WaitForSeconds(3f);
     }
+
     private IEnumerator DisplaySubtitle5()
+    {
+        subtitleText.text = "전방에 보이는 노란색 드럼통을 터트리면 주변 적들을 한 번에 처리할 수 있어."; // 자막 내용 설정
+        PlaySound(audioClip); // 효과음 재생
+        subtitleText.gameObject.SetActive(true); // 자막 활성화
+        yield return new WaitForSeconds(6f); // 몇 초 대기
+        ClearSubtitle(); // 자막 초기화
+                         // yield return new WaitForSeconds(3f);
+    }
+
+
+    private IEnumerator DisplaySubtitle6()
     {
         subtitleText.text = "길을 가다 보면 얼음으로 된 장애물이 있을 거야.\n부딪히기 전에 미리 파괴하자."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
@@ -151,7 +163,7 @@ public class SubtitleManager : MonoBehaviour
         ClearSubtitle(); // 자막 초기화
                          // yield return new WaitForSeconds(2f);
     }
-    private IEnumerator DisplaySubtitle6()
+    private IEnumerator DisplaySubtitle7()
     {
         subtitleText.text = "조심해! 전방에 나무가 쓰러져 있어.\n미리 경고를 해 줄 테니까 고개를 숙여서 피해."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
@@ -160,16 +172,16 @@ public class SubtitleManager : MonoBehaviour
         ClearSubtitle(); // 자막 초기화
                          // yield return new WaitForSeconds(9f);
     }
-    private IEnumerator DisplaySubtitle7()
+    private IEnumerator DisplaySubtitle8()
     {
         subtitleText.text = "실전에선 스키의 속도가 시간에 따라 증가할거야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4f); // 몇 초 대기
 
-        subtitleText.text = "하지만 적에게 공격당하거나 적군과 장애물을 제거하지 못하고 놓치게 되면 스키의 속도가 줄어들어."; // 자막 내용 설정
+        subtitleText.text = "하지만 적에게 공격당하거나 장애물을 제거하지 부딪히게 되면 스키의 속도가 줄어들어."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
-        yield return new WaitForSeconds(8f); // 몇 초 대기
+        yield return new WaitForSeconds(7f); // 몇 초 대기
 
         subtitleText.text = "일정 속도 이하로 떨어지면 눈사태에 휩쓸리게 되니까 조심해."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
@@ -177,7 +189,7 @@ public class SubtitleManager : MonoBehaviour
         ClearSubtitle(); // 자막 초기화
     }
 
-    private IEnumerator DisplaySubtitle8()
+    private IEnumerator DisplaySubtitle9()
     {
         subtitleText.text = "곧 연구실이 폭발해.\n가상 시뮬레이션에서 빠져나갈게. 이제 실전이야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생

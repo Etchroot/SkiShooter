@@ -38,7 +38,7 @@ public class CollisionCheck : MonoBehaviour
     {
         if (other.CompareTag("OBSTACLE"))
         {
-            Debug.Log("장애물 및 적과 충돌!");
+            Debug.Log("장애물과 충돌!");
             onObstacleEnemyCollision?.Invoke(); //이벤트 호출
         }
     }
