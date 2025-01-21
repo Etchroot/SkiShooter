@@ -135,7 +135,7 @@ public class SubtitleManager : MonoBehaviour
     }
     private IEnumerator DisplaySubtitle4()
     {
-        subtitleText.text = "이제 매복해 있는 적군을 제거해 보자.\n적이 우리에게 공격하기 전에 먼저 제거해야 해.\n만약 놓치면 뒤에서 우릴 공격할거야."; // 자막 내용 설정
+        subtitleText.text = "이제 매복해 있는 적군을 제거해 보자.\n적이 우리를 공격하기 전에 먼저 제거해야 해.\n만약 놓치면 뒤에서 우릴 공격할거야."; // 자막 내용 설정
         PlaySound(audioClip); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(10f); // 몇 초 대기
