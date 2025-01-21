@@ -55,15 +55,15 @@ public class Enemy : MonoBehaviour
     {
         isOnCooldown = true; // 쿨다운 활성화
 
+        // 대기
+        yield return new WaitForSeconds(attackCooldown);
+
         Player_New.Instance.TakeDamage();
 
         anim.SetTrigger("SHOOT");
 
         // 공격 행동 (발사체 생성)
         //GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-        // 대기 시간 동안 대기
-        yield return new WaitForSeconds(attackCooldown);
 
         isOnCooldown = false; // 쿨다운 해제
     }
@@ -74,14 +74,19 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (!isDead && collision.collider.CompareTag("BULLET"))
+    //    {
+    //        StartCoroutine(Die());
+    //    }
+    //}
+
+    public void TakeDamage()
     {
-        //총알에 맞으면
-        if (!isDead && other.CompareTag("BULLET"))
-        {
-            StartCoroutine(Die());
-        }
+        StartCoroutine(Die());
     }
+
 
     public IEnumerator Die()
     {

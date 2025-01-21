@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2596543926321574085}
   - component: {fileID: 3495144516767014047}
   - component: {fileID: 6553066387341433916}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: TargetPlate
-  m_TagString: Untagged
+  m_TagString: OBSTACLE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,4 +122,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Destructible: 1
-  playerSpeedReduction: 0.5

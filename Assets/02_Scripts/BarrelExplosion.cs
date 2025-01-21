@@ -16,15 +16,15 @@ public class BarrelExplosion : MonoBehaviour
     private bool hasExploded = false; // 폭발한 상태인지 확인하는 플래그
     public GameObject explosionEffect = null; // 폭발 이펙트 프리펩
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("BULLET"))
-        {
-            Explode();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("BULLET"))
+    //    {
+    //        Explode();
+    //    }
+    //}
 
-    public void Explode()
+    public void TakeDamage()
     {
         if (hasExploded) return; // 이미 폭발했다면 중복 실행 방지
         hasExploded = true;
@@ -114,7 +114,7 @@ public class BarrelExplosion : MonoBehaviour
             // 버튼 추가
             if (GUILayout.Button("폭발"))
             {
-                barrelExplosion.Explode(); // 버튼 클릭 시 Explode() 실행
+                barrelExplosion.TakeDamage(); // 버튼 클릭 시 Explode() 실행
             }
         }
     }
