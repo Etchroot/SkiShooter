@@ -275,6 +275,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7354753298770828798, guid: 048dbb8db9e363a44b0299d4812cf8dc, type: 3}
   m_PrefabInstance: {fileID: 59287994}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &73445779 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
+  m_PrefabInstance: {fileID: 161754929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &79435259
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,8 +608,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 739769353}
     m_Modifications:
+    - target: {fileID: 3262783729460577964, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 1224328841576138, guid: 4dae77afe85342749b810219ddf11e1d, type: 3}
     - target: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3861
@@ -623,15 +632,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4455399537738532789, guid: 17ee53512ffd5a443acb54efa302f249, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1723,12 +1732,13 @@ Transform:
   - {fileID: 321728494}
   - {fileID: 185754803}
   - {fileID: 2136609191}
-  - {fileID: 8001444}
   - {fileID: 835608443}
-  - {fileID: 1232198102}
   - {fileID: 2001595729}
-  - {fileID: 366689358}
   - {fileID: 944344762}
+  - {fileID: 73445779}
+  - {fileID: 8001444}
+  - {fileID: 1232198102}
+  - {fileID: 366689358}
   - {fileID: 1863842766}
   - {fileID: 126429816}
   - {fileID: 59287995}
@@ -13976,4 +13986,3 @@ SceneRoots:
   - {fileID: 5972275282864022129}
   - {fileID: 150827543}
   - {fileID: 785837381}
-  - {fileID: 161754929}
