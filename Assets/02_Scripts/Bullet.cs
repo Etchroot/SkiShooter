@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour
         // 총알 이동과 동시에 레이캐스트 발사
         if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.deltaTime))
         {
+            //적군
             if (hit.collider.CompareTag("ENEMY"))
             {
                 //데미지 주는 로직
@@ -35,6 +36,7 @@ public class Bullet : MonoBehaviour
                 
             }
 
+            //장애물
             if (hit.collider.CompareTag("OBSTACLE"))
             {
                 //데미지 주는 로직
@@ -43,6 +45,17 @@ public class Bullet : MonoBehaviour
                 // 적과 충돌 시 처리
                 gunShooting.ReturnBulletToPool(this.gameObject);
                 
+            }
+
+            //가스통
+            if (hit.collider.CompareTag("BARREL"))
+            {
+                //데미지 주는 로직
+                hit.collider.GetComponent<BarrelExplosion>().TakeDamage(); //데미지 받는 함수 TakeDamage() 통일
+
+                // 적과 충돌 시 처리
+                gunShooting.ReturnBulletToPool(this.gameObject);
+
             }
         }
 
