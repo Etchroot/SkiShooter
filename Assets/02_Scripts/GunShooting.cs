@@ -164,7 +164,7 @@ public class GunShooting : MonoBehaviour
         }
         else
         {
-            source.PlayOneShot(emptyGunSound); // 총알이 없을 때 소리
+            source.PlayOneShot(emptyGunSound, 0.8f); // 총알이 없을 때 소리
         }
 
         yield return new WaitForSeconds(fireRate);
