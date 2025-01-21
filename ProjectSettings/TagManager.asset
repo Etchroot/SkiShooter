@@ -17,6 +17,7 @@ TagManager:
   - CHECKPOINT
   - TRUNK
   - OBSTACLE
+  - BARREL
   layers:
   - Default
   - TransparentFX
