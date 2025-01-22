@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     public Transform player; // 플레이어의 Transform
     //public GameObject projectilePrefab; // 발사체 프리팹

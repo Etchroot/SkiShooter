@@ -7,7 +7,7 @@ using System.Collections;
 using UnityEditor;
 #endif
 
-public class BarrelExplosion : MonoBehaviour
+public class BarrelExplosion : MonoBehaviour, IDamageable
 {
     [SerializeField] private float explosionForce = 300f; // 폭발력
     [SerializeField] private float explosionRadius = 10f; // 폭발 반경
