@@ -12,17 +12,18 @@ public class Enemy : MonoBehaviour, IDamageable
     public float rotationSpeed = 10f; // 회전 시간
     private bool isOnCooldown = false; // 공격 쿨다운 여부
     public bool isDead = false; // 적이 죽는 중인지 체크
+
     [SerializeField] private AudioClip gnuShotAudio; // 총 발사 소리 클립
     [SerializeField] private AudioSource audioSource; // 오디오 소스
+
+    private GameObject[] effects;
     [SerializeField] GameObject gunShotEffectPF1; // 총 발사시 나오는 이펙트 프리펩
     [SerializeField] GameObject gunShotEffectPF2;
     [SerializeField] GameObject gunShotEffectPF3;
     private float effectDuration = 0.1f; // 각 이펙트 지속 시간
     private float interval = 0.1f; // 각 이펙트 사이 간격
 
-
     private Animator anim;
-
 
     private void Start()
     {
@@ -30,11 +31,16 @@ public class Enemy : MonoBehaviour, IDamageable
         anim = GetComponentInChildren<Animator>();
 
         anim.SetTrigger("IDLE");
-    }
 
+        //초기화
+        effects = new GameObject[] { gunShotEffectPF1, gunShotEffectPF2, gunShotEffectPF3 };
+    }
 
     void Update()
     {
+        //사망여부
+        if (isDead) return;
+
         // 플레이어와 적 사이의 거리 계산
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
@@ -43,11 +49,13 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             LookAtPlayer(); // 플레이어를 바라봄
 
-            if (!isOnCooldown && !isDead)
+            //공격
+            if (!isOnCooldown)
             {
                 StartCoroutine(Attack());
             }
         }
+
     }
 
     void LookAtPlayer()
@@ -60,13 +68,18 @@ public class Enemy : MonoBehaviour, IDamageable
         transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * rotationSpeed);
     }
 
-
     IEnumerator Attack()
     {
+        // 죽었다면 공격 중단
+        if (isDead) yield break;
+
         isOnCooldown = true; // 쿨다운 활성화
 
         // 대기
         yield return new WaitForSeconds(attackCooldown);
+
+        // 죽었다면 공격 중단
+        if (isDead) yield break;
 
         StartCoroutine(PlayGunEffects());
         audioSource.PlayOneShot(gnuShotAudio); // 총 소리
@@ -83,10 +96,11 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private IEnumerator PlayGunEffects()
     {
-        GameObject[] effects = { gunShotEffectPF1, gunShotEffectPF2, gunShotEffectPF3 };
-
         foreach (GameObject effectPrefab in effects)
         {
+            // 적이 죽었는지 확인하여 중단
+            if (isDead) yield break;
+
             // 이펙트 생성
             GameObject effect = Instantiate(effectPrefab, firePoint.position, firePoint.rotation);
 
@@ -98,27 +112,10 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (!isDead && collision.collider.CompareTag("BULLET"))
-    //    {
-    //        StartCoroutine(Die());
-    //    }
-    //}
-
     public void TakeDamage()
     {
-        StopCoroutine(Attack());
-        StopCoroutine(PlayGunEffects());
         StartCoroutine(Die());
     }
-
 
     public IEnumerator Die()
     {
@@ -129,6 +126,10 @@ public class Enemy : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 
-
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 
 }
