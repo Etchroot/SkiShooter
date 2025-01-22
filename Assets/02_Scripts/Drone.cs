@@ -13,7 +13,7 @@ public class Drone : MonoBehaviour
     [SerializeField] private float heightSmoothSpeed = 100f; // 높이 변화 속도
     [SerializeField] private float rotationSpeed = 20f;  // 회전 속도
     
-    private float raycastDistance = 20f; // Raycast 거리
+    private float raycastDistance = 40f; // Raycast 거리
 
     private Vector3 lastCheckpointPosition; //마지막 체크포인트
     private bool isRotating = false;    //회전중
