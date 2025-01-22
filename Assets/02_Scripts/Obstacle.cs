@@ -3,12 +3,15 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     [SerializeField] private bool Destructible = false; // 파괴 가능 여부
-    
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
+
     // 오브젝트 파괴 처리
     public void TakeDamage()
     {
         if (Destructible) //파괴 가능한 것만 파괴가능
         {
+
             Destroy(gameObject); // 장애물 삭제
         }
     }
