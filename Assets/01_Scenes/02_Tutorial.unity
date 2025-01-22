@@ -3464,6 +3464,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Helmet
       objectReference: {fileID: 0}
+    - target: {fileID: 7246266801570126611, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7694190798791396725, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3577,10 +3581,18 @@ PrefabInstance:
       propertyPath: redScreen
       value: 
       objectReference: {fileID: 1408780008}
+    - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: reloadingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 79affe122766d5c488a5716fe3d0271c, type: 3}
     - target: {fileID: 7073693577007838419, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7515220929643299206, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: reloadingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 79affe122766d5c488a5716fe3d0271c, type: 3}
     - target: {fileID: 7758768295932684901, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: m_Name
       value: PlayerTuto
