@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour, IDamageable
 {
     [SerializeField] private bool Destructible = false; // 파괴 가능 여부
     
