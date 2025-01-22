@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionForce: 10
   explosionRadius: 20
-  upwardModifier: 1
+  upwardModifier: 3
   explosionSound: {fileID: 8300000, guid: 2a733616613136a4ea0210ec9894e0e9, type: 3}
   audioSource: {fileID: 8626574358791026804}
   explosionEffect: {fileID: 1224328841576138, guid: 4dae77afe85342749b810219ddf11e1d, type: 3}

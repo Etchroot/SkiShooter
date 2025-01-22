@@ -31,6 +31,7 @@ public class RedScreen : MonoBehaviour
 
     public void TriggerRedScreenEffect()
     {
+        Debug.Log("레드 스크린 띄움");
         redScreenImage.enabled = true;
         Invoke(nameof(HideRedScreen), 0.4f);
     }

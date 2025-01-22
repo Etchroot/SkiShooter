@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour, IDamageable
         {
             LookAtPlayer(); // 플레이어를 바라봄
 
-            if (!isOnCooldown)
+            if (!isOnCooldown && !isDead)
             {
                 StartCoroutine(Attack());
             }
@@ -114,6 +114,8 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage()
     {
+        StopCoroutine(Attack());
+        StopCoroutine(PlayGunEffects());
         StartCoroutine(Die());
     }
 

@@ -131,7 +131,7 @@ MonoBehaviour:
   firePoint: {fileID: 5240852569165725897}
   attackRange: 30
   attackCooldown: 3
-  rotationSpeed: 10
+  rotationSpeed: 15
   isDead: 0
   gnuShotAudio: {fileID: 8300000, guid: 081cc56f32024a24e863dc34b6ed2a74, type: 3}
   audioSource: {fileID: 4535846049701318214}

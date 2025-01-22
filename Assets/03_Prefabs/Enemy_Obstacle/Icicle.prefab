@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 8882050476202970170}
   - component: {fileID: 4323011313887916174}
   - component: {fileID: 6657801806228164573}
-  - component: {fileID: -5229667458872518617}
+  - component: {fileID: 4720732014978312612}
   - component: {fileID: 7229660819314765106}
   m_Layer: 12
   m_Name: Icicle
@@ -220,7 +220,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-5229667458872518617
+--- !u!114 &4720732014978312612
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,8 +245,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: fc582df3572b64d279888946675505af, type: 3}
+  m_Resource: {fileID: 8300000, guid: fc582df3572b64d279888946675505af, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
