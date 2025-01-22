@@ -11,7 +11,7 @@ public class Obstacle : MonoBehaviour
     {
         if (Destructible) //파괴 가능한 것만 파괴가능
         {
-
+            audioSource.PlayOneShot(audioClip); // 효과음 재생
             Destroy(gameObject); // 장애물 삭제
         }
     }
