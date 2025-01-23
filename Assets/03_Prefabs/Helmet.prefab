@@ -5920,6 +5920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetImage: {fileID: 9151548853479861536}
+  leftSide: {fileID: 1528432262765575990}
+  rightSide: {fileID: 1293030966968210363}
   blinkInterval: 0.5
   blinkCount: 5
   detectionRange: 50
