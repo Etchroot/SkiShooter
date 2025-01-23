@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &4599988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4548226226810053757, guid: 0b619c14d74294247bd7d953a789ae53, type: 3}
+  m_PrefabInstance: {fileID: 974850251}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5483592
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3459,7 +3464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6722248921331614745, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
       propertyPath: m_Name
-      value: Helmet (1)
+      value: Helmet
       objectReference: {fileID: 0}
     - target: {fileID: 7694190798791396725, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4011,7 +4016,7 @@ GameObject:
   - component: {fileID: 858233158}
   - component: {fileID: 858233157}
   m_Layer: 11
-  m_Name: Helmet
+  m_Name: Helmet(2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4651,7 +4656,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5085334477284843010, guid: 0b619c14d74294247bd7d953a789ae53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1120399809}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4548226226810053757, guid: 0b619c14d74294247bd7d953a789ae53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 974850256}
   m_SourcePrefab: {fileID: 100100000, guid: 0b619c14d74294247bd7d953a789ae53, type: 3}
 --- !u!225 &974850252 stripped
 CanvasGroup:
@@ -4663,6 +4671,21 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5085334477284843010, guid: 0b619c14d74294247bd7d953a789ae53, type: 3}
   m_PrefabInstance: {fileID: 974850251}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &974850256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4599988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ecc585667d5eaa4c9c072847e52741a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeCanvasdGroup: {fileID: 974850252}
+  textObj: {fileID: 1120399808}
+  deadSpeed: 5
 --- !u!1001 &975925553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5295,7 +5318,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120399809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6029,8 +6052,8 @@ MonoBehaviour:
   player: {fileID: 8458550450358757677}
   leftTarget: {fileID: 7668124736780291682, guid: d3ab45efeeb936e4c81a334113dccc87, type: 3}
   rightTarget: {fileID: 3161131962759420507, guid: c29a8ef3026d8804db4b3e76456d5fb6, type: 3}
-  spawnRadius: 15
-  spawnDistanceOutside: 50
+  spawnRadius: 50
+  spawnDistanceOutside: 100
 --- !u!4 &1329029711
 Transform:
   m_ObjectHideFlags: 0
@@ -12731,9 +12754,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2048294850}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: damage
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: mainUI
       value: 
       objectReference: {fileID: 5197677456252103332}
+    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: maxSpeed
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: redScreen
       value: 
