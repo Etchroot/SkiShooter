@@ -41,6 +41,10 @@ public class DroneSpawner : MonoBehaviour
 
             // 숫자에 따라 타겟 설정
             droneScript.target = randomChoice == 1 ? leftTarget : rightTarget;
+
+            WarringSignTree warringScript = GetComponent<WarringSignTree>();
+            if (randomChoice == 1) warringScript.DetectLeftSide();
+            else warringScript.DetectRightSide();
         }
     }
 
