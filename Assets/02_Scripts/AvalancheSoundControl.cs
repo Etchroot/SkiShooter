@@ -33,7 +33,7 @@ public class AvalancheSoundControl : MonoBehaviour
             float speed = player_New.currentSpeed;
             float normalizedSpeed = Mathf.Clamp01((speed - minSpeed) / (maxSpeed - minSpeed));
             audioSource.volume = Mathf.Lerp(maxVol, minVol, normalizedSpeed);
-            Debug.Log($"{audioSource}에서 소리 {audioSource.volume} 으로 재생중");
+            //Debug.Log($"{audioSource}에서 소리 {audioSource.volume} 으로 재생중");
 
         }
     }

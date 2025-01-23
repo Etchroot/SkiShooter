@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.85533625, y: 0.34827596, z: 0.8584135}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.99999994, y: 0.36807463, z: 1.0035977}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5551604649124187714}
   - {fileID: 124957138955821707}
@@ -126,8 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 709636385403309988, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
   target: {fileID: 0}
-  moveSpeed: 150
-  attackRange: 2
+  moveSpeed: 60
+  attackRange: 1
   attackCooldown: 1.97
   rotationSpeed: 5
   AttackEffect: {fileID: 100000, guid: 321e16248b7f61f498bc176d571debe6, type: 3}
@@ -148,7 +148,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -192,7 +192,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

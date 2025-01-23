@@ -3028,6 +3028,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7777465000649791479, guid: d3ab45efeeb936e4c81a334113dccc87, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6050,8 +6054,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dronePrefab: {fileID: 827125458431722109, guid: ba3fafb7bb210bd4eab2332a4e09627b, type: 3}
   player: {fileID: 8458550450358757677}
-  leftTarget: {fileID: 7668124736780291682, guid: d3ab45efeeb936e4c81a334113dccc87, type: 3}
-  rightTarget: {fileID: 3161131962759420507, guid: c29a8ef3026d8804db4b3e76456d5fb6, type: 3}
+  leftTarget: {fileID: 682147918}
+  rightTarget: {fileID: 1937124279}
   spawnRadius: 50
   spawnDistanceOutside: 100
 --- !u!4 &1329029711
@@ -8216,6 +8220,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1704978745}
     m_Modifications:
+    - target: {fileID: 1363777801291036395, guid: c29a8ef3026d8804db4b3e76456d5fb6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1465812089768796638, guid: c29a8ef3026d8804db4b3e76456d5fb6, type: 3}
       propertyPath: m_Name
       value: Right
