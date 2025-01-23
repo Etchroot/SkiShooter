@@ -16,7 +16,7 @@ public class WarnningSoundTitle : MonoBehaviour
     }
     public void WarnningAlram()
     {
-        InvokeRepeating(nameof(PlayAudio), 0f, intervalTime); // 5초마다 호출
+        InvokeRepeating(nameof(PlayAudio), 1.0f, intervalTime); // 5초마다 호출
     }
 
     void PlayAudio()
