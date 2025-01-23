@@ -20,6 +20,22 @@ public class WarringSignTree : MonoBehaviour
 
     private bool hasWarned = false; // 경고 여부 플래그
 
+    public static Action LeftSign;
+    public static Action RightSign;
+
+    private void Awake()
+    {
+        LeftSign = () =>
+        {
+            DetectLeftSide();
+        };
+
+        RightSign = () =>
+        {
+            DetectRightSide();
+        };
+    }
+
     void Start()
     {
         targetImage.enabled = false;

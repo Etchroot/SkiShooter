@@ -10,7 +10,6 @@ public class DroneSpawner : MonoBehaviour
     [SerializeField] private float spawnDistanceOutside = 12f; // 스폰 범위 밖 거리
 
     private bool hasSpawned = false; // 스폰 여부
-
     void Update()
     {
         // 플레이어가 스포너 감지 범위에 들어왔는지 확인
@@ -42,9 +41,9 @@ public class DroneSpawner : MonoBehaviour
             // 숫자에 따라 타겟 설정
             droneScript.target = randomChoice == 1 ? leftTarget : rightTarget;
 
-            WarringSignTree warringScript = GetComponent<WarringSignTree>();
-            if (randomChoice == 1) warringScript.DetectLeftSide();
-            else warringScript.DetectRightSide();
+            
+            if (randomChoice == 1) WarringSignTree.LeftSign();
+            else WarringSignTree.RightSign();
         }
     }
 
