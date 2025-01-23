@@ -13,7 +13,8 @@ public class Enemy : MonoBehaviour, IDamageable
     private bool isOnCooldown = false; // 공격 쿨다운 여부
     public bool isDead = false; // 적이 죽는 중인지 체크
 
-    [SerializeField] private AudioClip gnuShotAudio; // 총 발사 소리 클립
+    [SerializeField] private AudioClip gunShotAudio; // 총 발사 소리 클립
+    [SerializeField] private AudioClip[] getShotAudio; // 총 맞는 소리 클립
     [SerializeField] private AudioSource audioSource; // 오디오 소스
 
     private GameObject[] effects;
@@ -82,7 +83,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isDead) yield break;
 
         StartCoroutine(PlayGunEffects());
-        audioSource.PlayOneShot(gnuShotAudio); // 총 소리
+        audioSource.PlayOneShot(gunShotAudio); // 총 소리
 
         Player_New.Instance.TakeDamage();
 
@@ -120,6 +121,12 @@ public class Enemy : MonoBehaviour, IDamageable
     public IEnumerator Die()
     {
         isDead = true; // 죽는 중으로 설정
+
+        // 랜덤으로 죽는 소리 클립 재생
+        int randomIndex = Random.Range(0, getShotAudio.Length);
+        AudioClip selectedClip = getShotAudio[randomIndex];
+        audioSource.PlayOneShot(selectedClip);
+
         anim.SetTrigger("DIE");
         this.gameObject.tag = "Untagged";
         yield return new WaitForSeconds(3f);

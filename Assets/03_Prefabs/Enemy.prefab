@@ -133,7 +133,13 @@ MonoBehaviour:
   attackCooldown: 3
   rotationSpeed: 15
   isDead: 0
-  gnuShotAudio: {fileID: 8300000, guid: 081cc56f32024a24e863dc34b6ed2a74, type: 3}
+  gunShotAudio: {fileID: 8300000, guid: 081cc56f32024a24e863dc34b6ed2a74, type: 3}
+  getShotAudio:
+  - {fileID: 8300000, guid: f83c31be773d7ec48b22a3be2471110b, type: 3}
+  - {fileID: 8300000, guid: 7518b430b2a7cae478408ce054087b2a, type: 3}
+  - {fileID: 8300000, guid: bd3a2af2507d60c4db33283e3fbc0968, type: 3}
+  - {fileID: 8300000, guid: c426ecf14d6ca604486171dc9192e8fa, type: 3}
+  - {fileID: 8300000, guid: 3272925de600fe949a370d38d37c6af6, type: 3}
   audioSource: {fileID: 4535846049701318214}
   gunShotEffectPF1: {fileID: 100000, guid: d212069d76e5b364cbafea2cc6b0c09f, type: 3}
   gunShotEffectPF2: {fileID: 100000, guid: 85c53d635cc8bc34ea7dc918e1cbbb61, type: 3}
@@ -177,7 +183,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 2036999411535485988, guid: e3dae0697a7c92747bfab9affcc5ca71, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
