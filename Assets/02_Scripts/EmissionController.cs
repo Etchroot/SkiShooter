@@ -8,18 +8,17 @@ public class EmissionController : MonoBehaviour
     [SerializeField] private Material targetMaterial;
     [SerializeField] private float duration = 5f; // 색 변화 시간
 
-    private float initialEmissionValue = 43f; // 초기 G 값
-    private float emissionR;
-    private float emissionB;
+    private float initialEmissionValue = 255f / 255f; // 초기 G 값
+    private float emissionR = 255f / 255f;
+    private float emissionB = 0f / 255f;
     private bool isFading = false; // 현재 진행 중 확인 플래그
 
     private void Start()
     {
         if (targetMaterial != null)
         {
-            Color initialColor = targetMaterial.GetColor("_EmissionColor");
-            emissionR = initialColor.r;
-            emissionB = initialColor.b;
+            Color initialColor = new Color(emissionR, initialEmissionValue, emissionB);
+            targetMaterial.SetColor("_EmissionColor", initialColor);
         }
 
     }
@@ -51,16 +50,21 @@ public class EmissionController : MonoBehaviour
             yield return null;
         }
 
+        targetMaterial.SetColor("_EmissionColor", new Color(emissionR, 0, emissionB));
+
         // 복원 과정
-        while (elapsedTime < duration * 2)
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
         {
-            float newValue = Mathf.Lerp(0, initialEmissionValue, (elapsedTime - duration) / duration);
+            float newValue = Mathf.Lerp(0, initialEmissionValue, elapsedTime / duration);
             Color newColor = new Color(emissionR, newValue, emissionB);
             targetMaterial.SetColor("_EmissionColor", newColor);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        targetMaterial.SetColor("_EmissionColor", new Color(emissionR, initialEmissionValue, emissionB));
 
         isFading = false;
 
@@ -70,7 +74,7 @@ public class EmissionController : MonoBehaviour
     {
         if (targetMaterial != null)
         {
-            targetMaterial.SetColor("_EmissionColor", new Color(targetMaterial.GetColor("_EmissionColor").r, initialEmissionValue, targetMaterial.GetColor("_EmissionColor").b));
+            targetMaterial.SetColor("_EmissionColor", new Color(emissionR, initialEmissionValue, emissionB));
         }
     }
 
