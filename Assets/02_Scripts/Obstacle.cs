@@ -30,6 +30,14 @@ public class Obstacle : MonoBehaviour, IDamageable
             // }
 
             // MeshRenderer와 Collider 비활성화
+            MeshRenderer meshRendererP = GetComponent<MeshRenderer>();
+
+            if (meshRendererP != null && meshRendererP.enabled)
+            {
+                meshRendererP.enabled = false;
+            }
+            GetComponent<Collider>().enabled = false;
+
             // 하위 객체의 MeshRenderer 비활성화
             foreach (Transform child in transform)
             {
@@ -40,7 +48,6 @@ public class Obstacle : MonoBehaviour, IDamageable
                 }
             }
 
-            GetComponent<Collider>().enabled = false;
 
 
             StartCoroutine(Delay());
@@ -54,13 +61,4 @@ public class Obstacle : MonoBehaviour, IDamageable
         Destroy(gameObject); // 장애물 삭제
     }
 
-    // 플레이어와 충돌 처리
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    //총알에 맞으면
-    //    if (other.CompareTag("BULLET"))
-    //    {
-    //        destruction();
-    //    }
-    //}
 }
