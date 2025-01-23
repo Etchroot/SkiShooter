@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] private AudioClip gunShotAudio; // 총 발사 소리 클립
     [SerializeField] private AudioClip[] getShotAudio; // 총 맞는 소리 클립
     [SerializeField] private AudioSource audioSource; // 오디오 소스
+    [SerializeField] private AudioSource getShotAudioSource; // 총 맞는 소리 오디오 소스
 
     private GameObject[] effects;
     [SerializeField] GameObject gunShotEffectPF1; // 총 발사시 나오는 이펙트 프리펩
@@ -125,7 +126,7 @@ public class Enemy : MonoBehaviour, IDamageable
         // 랜덤으로 죽는 소리 클립 재생
         int randomIndex = Random.Range(0, getShotAudio.Length);
         AudioClip selectedClip = getShotAudio[randomIndex];
-        audioSource.PlayOneShot(selectedClip);
+        getShotAudioSource.PlayOneShot(selectedClip);
 
         anim.SetTrigger("DIE");
         this.gameObject.tag = "Untagged";

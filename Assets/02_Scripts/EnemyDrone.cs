@@ -89,7 +89,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         attack.transform.LookAt(Player_New.Instance.transform); // 이펙트가 플레이어 바라보게
         StartCoroutine(AttackEffectPosion(attack));
         audioSource.PlayOneShot(AttackSound);
-        Destroy(attack, 1.0f);
+        Destroy(attack, 0.5f);
         Debug.Log("드론 공격중");
 
         Player_New.Instance.TakeDamage();
@@ -110,8 +110,8 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     {
         isDead = true;
 
-        GameObject dieEffect = Instantiate(DieEffect, transform.position, Quaternion.identity);
         audioSource.PlayOneShot(DieSound);
+        GameObject dieEffect = Instantiate(DieEffect, transform.position, Quaternion.identity);
         Destroy(dieEffect, 2f);
 
         yield return new WaitForSeconds(0.5f);

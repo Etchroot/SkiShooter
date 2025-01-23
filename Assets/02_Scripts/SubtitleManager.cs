@@ -169,16 +169,15 @@ public class SubtitleManager : MonoBehaviour
 
     private IEnumerator DisplaySubtitle5()
     {
-        // subtitleText.text = "양 옆에 적군의 드론이 등장할 겁니다."; // 자막 내용 설정
-        // PlaySound(11); // 효과음 재생
-        // subtitleText.gameObject.SetActive(true); // 자막 활성화
-        // yield return new WaitForSeconds(3.0f); // 몇 초 대기
+        subtitleText.text = "양 옆에 적군의 드론이 등장할 겁니다."; // 자막 내용 설정
+        PlaySound(11); // 효과음 재생
+        subtitleText.gameObject.SetActive(true); // 자막 활성화
+        yield return new WaitForSeconds(3.0f); // 몇 초 대기
 
-        // subtitleText.text = "등장하기 전에 등장 위치를 미리 알려 드리겠습니다."; // 자막 내용 설정
-        // PlaySound(12); // 효과음 재생
-        // yield return new WaitForSeconds(4.0f); // 몇 초 대기
-        // ClearSubtitle(); // 자막 초기화
-        yield return null;
+        subtitleText.text = "등장하기 전에 등장 위치를 미리 알려 드리겠습니다."; // 자막 내용 설정
+        PlaySound(12); // 효과음 재생
+        yield return new WaitForSeconds(4.0f); // 몇 초 대기
+        ClearSubtitle(); // 자막 초기화
 
     }
 
