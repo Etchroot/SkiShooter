@@ -130,7 +130,7 @@ MonoBehaviour:
   attackRange: 2
   attackCooldown: 1.97
   rotationSpeed: 5
-  AttackEffect: {fileID: 1892133220914832, guid: a969fe0d13beb7843af485bf118355c0, type: 3}
+  AttackEffect: {fileID: 100000, guid: 321e16248b7f61f498bc176d571debe6, type: 3}
   AttackSound: {fileID: 8300000, guid: 65a8e1f13143c47ab9b96881eac40dff, type: 3}
   DieEffect: {fileID: 1892133220914832, guid: a969fe0d13beb7843af485bf118355c0, type: 3}
   DieSound: {fileID: 8300000, guid: 620dad4bb8e4b98429963b3bbe39c191, type: 3}

@@ -6,7 +6,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     public Transform player; // 플레이어의 Transform
     public Transform target; // 목적지 Transform
 
-    public float moveSpeed = 5f; // 이동 속도
+    public float moveSpeed = 17f; // 이동 속도
     public float attackRange = 2f; // 공격 범위
     public float attackCooldown = 2f; // 공격 쿨다운
     public float rotationSpeed = 5f; // 회전 속도
@@ -25,42 +25,43 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     {
         if (isDead) return;
 
-        if (!hasReachedTarget)
+        // 플레이어 위치를 계속 추적하며 이동
+        MoveTowardsTarget();
+
+        // 공격 범위 내에서만 회전과 공격 수행
+        if (hasReachedTarget)
         {
-            // 타겟 지점으로 이동
-            MoveTowardsTarget();
-        }
-        else
-        {
-            // 타겟 도착 후 플레이어를 바라보고 공격
             FacePlayerAndAttack();
         }
     }
 
     void MoveTowardsTarget()
     {
+        // 타겟 갱신: 타겟을 항상 플레이어의 현재 위치로 설정
+        target.position = player.position;
+
         // 타겟을 향해 이동
         Vector3 direction = (target.position - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
 
         // 타겟 지점에 도착했는지 확인
         float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        if (distanceToTarget <= 0.5f) // 도착 판정 거리
-        {
-            hasReachedTarget = true; // 타겟 도착
-        }
+        hasReachedTarget = distanceToTarget <= attackRange; // 도착 여부 판정
     }
 
     void FacePlayerAndAttack()
     {
+        // 플레이어와의 거리 확인
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer > attackRange) return; // 공격 범위 밖이면 함수 종료
+
         // 플레이어를 바라보도록 회전
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-        // 공격 범위 확인 및 공격
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer <= attackRange && !isOnCooldown)
+        // 공격 실행
+        if (!isOnCooldown)
         {
             StartCoroutine(Attack());
         }
