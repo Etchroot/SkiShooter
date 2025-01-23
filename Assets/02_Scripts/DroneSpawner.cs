@@ -53,6 +53,8 @@ public class DroneSpawner : MonoBehaviour
         // 스포너 중심에서 spawnDistanceOutside 만큼 떨어진 위치 계산
         Vector3 spawnPosition = transform.position + spawnDirection * spawnDistanceOutside;
 
+        spawnPosition.y = transform.position.y + 10;
+
         return spawnPosition;
     }
 
