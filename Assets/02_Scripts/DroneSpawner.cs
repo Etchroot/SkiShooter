@@ -1,54 +1,70 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DroneSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject dronePrefab; // 드론 프리팹
-    [SerializeField] private Transform[] spawnPoints; // 스폰 위치 배열
-    [SerializeField] private float spawnInterval = 5f; // 스폰 간격
-    [SerializeField] private Transform player; // 플레이어의 Transform
-    [SerializeField] private int maxDrones = 2; // 최대 드론 개수 제한
+    [SerializeField] private Transform player; // 플레이어 Transform
+    [SerializeField] private Transform leftTarget; // 플레이어 왼쪽 타겟
+    [SerializeField] private Transform rightTarget; // 플레이어 오른쪽 타겟
+    [SerializeField] private float spawnRadius = 10f; // 감지 범위
+    [SerializeField] private float spawnDistanceOutside = 12f; // 스폰 범위 밖 거리
 
-    private List<GameObject> activeDrones = new List<GameObject>(); // 활성화된 드론 리스트
+    private bool hasSpawned = false; // 스폰 여부
 
-    void Start()
+    void Update()
     {
-        StartCoroutine(SpawnDrones());
-    }
-
-    private IEnumerator SpawnDrones()
-    {
-        while (true)
+        // 플레이어가 스포너 감지 범위에 들어왔는지 확인
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= spawnRadius && !hasSpawned)
         {
-            yield return new WaitForSeconds(spawnInterval);
-
-            // 활성화된 드론의 개수를 확인
-            if (activeDrones.Count >= maxDrones)
-            {
-                continue; // 최대 개수 도달 시 스폰 중단
-            }
-
-            // 랜덤한 위치에서 드론 스폰
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            GameObject drone = Instantiate(dronePrefab, spawnPoint.position, spawnPoint.rotation);
-
-            // 플레이어 설정
-            EnemyDrone droneScript = drone.GetComponent<EnemyDrone>();
-            if (droneScript != null)
-            {
-                droneScript.player = player;
-            }
-
-            // 활성 드론 리스트에 추가
-            activeDrones.Add(drone);
-
-            // 드론이 파괴될 때 리스트에서 제거하도록 설정
-            drone.GetComponent<EnemyDrone>().onDestroyed += () =>
-            {
-                activeDrones.Remove(drone);
-            };
+            SpawnDrone();
+            hasSpawned = true; // 한 번만 스폰
         }
     }
+
+    void SpawnDrone()
+    {
+        // 스폰 범위 밖에서 드론 생성 위치 계산
+        Vector3 spawnPosition = GetRandomPositionOutsideSpawnRadius();
+
+        // 드론 생성
+        GameObject drone = Instantiate(dronePrefab, spawnPosition, Quaternion.identity);
+
+        // 랜덤 숫자 생성 (0 또는 1)
+        int randomChoice = Random.Range(0, 2);
+
+        // 드론에 타겟 설정
+        EnemyDrone droneScript = drone.GetComponent<EnemyDrone>();
+        if (droneScript != null)
+        {
+            droneScript.player = player;
+
+            // 숫자에 따라 타겟 설정
+            droneScript.target = randomChoice == 1 ? leftTarget : rightTarget;
+        }
+    }
+
+    private Vector3 GetRandomPositionOutsideSpawnRadius()
+    {
+        // 랜덤 방향 계산
+        Vector2 randomDirection = Random.insideUnitCircle.normalized; // 원형 방향
+        Vector3 spawnDirection = new Vector3(randomDirection.x, 0, randomDirection.y);
+
+        // 스포너 중심에서 spawnDistanceOutside 만큼 떨어진 위치 계산
+        Vector3 spawnPosition = transform.position + spawnDirection * spawnDistanceOutside;
+
+        return spawnPosition;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // 탐지 범위 (spawnRadius)를 노란색으로 표시
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+
+        // 스폰 범위 바깥 거리 (spawnDistanceOutside)를 초록색으로 표시
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, spawnDistanceOutside);
+    }
+
 }
