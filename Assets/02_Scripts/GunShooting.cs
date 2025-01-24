@@ -132,28 +132,28 @@ public class GunShooting : MonoBehaviour
         }
     }
 
-    IEnumerator GunSpin()
-    {
-        float duration = 1f; // 회전 시간
-        float angle = 720f; // 회전 각도
-        float elapsedTime = 0f;
+    //IEnumerator GunSpin()
+    //{
+    //    float duration = 1f; // 회전 시간
+    //    float angle = 720f; // 회전 각도
+    //    float elapsedTime = 0f;
 
-        Quaternion initalRotataion = handGun.transform.rotation; // 시작 회전상태
-        Quaternion targetRotataion = initalRotataion * Quaternion.Euler(Vector3.right * angle);
+    //    Quaternion initalRotataion = handGun.transform.rotation; // 시작 회전상태
+    //    Quaternion targetRotataion = initalRotataion * Quaternion.Euler(Vector3.right * angle);
 
-        while (elapsedTime < duration)
-        {
-            // 시간의 경과에 따라 회전 보간
-            float t = elapsedTime / duration; // 0에서 1까지
-            handGun.transform.rotation = Quaternion.Lerp(initalRotataion, targetRotataion, t);
+    //    while (elapsedTime < duration)
+    //    {
+    //        // 시간의 경과에 따라 회전 보간
+    //        float t = elapsedTime / duration; // 0에서 1까지
+    //        handGun.transform.rotation = Quaternion.Lerp(initalRotataion, targetRotataion, t);
 
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+    //        elapsedTime += Time.deltaTime;
+    //        yield return null;
+    //    }
 
-        // 회전 정확도 봏정
-        handGun.transform.rotation = targetRotataion;
-    }
+    //    // 회전 정확도 봏정
+    //    handGun.transform.rotation = targetRotataion;
+    //}
 
     IEnumerator FireSound(bool isEmpty = false)
     {
@@ -182,7 +182,7 @@ public class GunShooting : MonoBehaviour
         // 장전 완료
         currentBullet = maxBullet;
         source.PlayOneShot(reloadSound);
-        Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 재장전 완료");
+        //Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 재장전 완료");
 
 
         isReloading = false;
