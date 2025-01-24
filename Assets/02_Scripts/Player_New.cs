@@ -156,14 +156,14 @@ public class Player_New : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (CheckPointManager.Instance != null && !CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCheckpointPosition(true));
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (CheckPointManager.Instance != null && !CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
+    //    {
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCheckpointPosition(true));
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {

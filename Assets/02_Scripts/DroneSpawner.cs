@@ -61,15 +61,15 @@ public class DroneSpawner : MonoBehaviour
         return spawnPosition;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        // 탐지 범위 (spawnRadius)를 노란색으로 표시
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+    //private void OnDrawGizmosSelected()
+    //{
+    //    // 탐지 범위 (spawnRadius)를 노란색으로 표시
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, spawnRadius);
 
-        // 스폰 범위 바깥 거리 (spawnDistanceOutside)를 초록색으로 표시
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, spawnDistanceOutside);
-    }
+    //    // 스폰 범위 바깥 거리 (spawnDistanceOutside)를 초록색으로 표시
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireSphere(transform.position, spawnDistanceOutside);
+    //}
 
 }

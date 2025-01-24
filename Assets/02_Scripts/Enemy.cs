@@ -134,10 +134,10 @@ public class Enemy : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //}
 
 }
