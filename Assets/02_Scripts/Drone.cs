@@ -141,10 +141,10 @@ public class Drone : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        // Raycast 시각화 (디버깅용)
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(transform.position, Vector3.down * raycastDistance);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    // Raycast 시각화 (디버깅용)
+    //    Gizmos.color = Color.cyan;
+    //    Gizmos.DrawRay(transform.position, Vector3.down * raycastDistance);
+    //}
 }
