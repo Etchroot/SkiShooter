@@ -92,7 +92,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         StartCoroutine(AttackEffectPosion(attack));
         audioSource.PlayOneShot(AttackSound);
         Destroy(attack, 0.5f);
-        Debug.Log("드론 공격중");
+        //Debug.Log("드론 공격중");
 
         Player_New.Instance.TakeDamage();
 
