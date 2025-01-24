@@ -35,8 +35,8 @@ namespace CurvedUI
         float quality = 1f;
         [SerializeField]
         bool interactable = true;
-        [SerializeField]
-        bool blocksRaycasts = true;
+		[SerializeField]
+		bool blocksRaycasts = true;
         [SerializeField]
         bool forceUseBoxCollider = false;
 
@@ -69,10 +69,10 @@ namespace CurvedUI
         Canvas myCanvas;
         RectTransform m_rectTransform;
 
-        #endregion
+#endregion
 
 
-        #region LIFECYCLE
+#region LIFECYCLE
 
         void Awake()
         {
@@ -88,27 +88,27 @@ namespace CurvedUI
         void Start()
         {
             if (Application.isPlaying)
-            {
+            {    
                 // lets get rid of any raycasters and add our custom one
                 // It will be responsible for handling interactions.
-                // BaseRaycaster[] raycasters = GetComponents<BaseRaycaster>();
-                // foreach(BaseRaycaster caster in raycasters)
-                // {
-                //     if (!(caster is CurvedUIRaycaster))
-                //         caster.enabled = false;
-                // }
-                // this.gameObject.AddComponentIfMissing<CurvedUIRaycaster>();
+                BaseRaycaster[] raycasters = GetComponents<BaseRaycaster>();
+                foreach(BaseRaycaster caster in raycasters)
+                {
+                    if (!(caster is CurvedUIRaycaster))
+                        caster.enabled = false;
+                }
+                this.gameObject.AddComponentIfMissing<CurvedUIRaycaster>();
 
                 //find if there are any child canvases that may break interactions
                 Canvas[] canvases = GetComponentsInChildren<Canvas>();
-                foreach (Canvas cnv in canvases)
+                foreach(Canvas cnv in canvases)
                 {
                     if (cnv.gameObject != this.gameObject)
                     {
                         Transform trans = cnv.transform;
                         string hierarchyName = trans.name;
-
-                        while (trans.parent != null)
+                       
+                        while(trans.parent != null)
                         {
                             hierarchyName = trans.parent.name + "/" + hierarchyName;
                             trans = trans.parent;
@@ -131,7 +131,7 @@ namespace CurvedUI
             //Redraw canvas object on enable.
             foreach (UnityEngine.UI.Graphic graph in (this).GetComponentsInChildren<UnityEngine.UI.Graphic>())
             {
-                //graph.SetAllDirty();
+                graph.SetAllDirty();
             }
         }
 
@@ -139,13 +139,13 @@ namespace CurvedUI
         {
             foreach (UnityEngine.UI.Graphic graph in (this).GetComponentsInChildren<UnityEngine.UI.Graphic>())
             {
-                //graph.SetAllDirty();
+                graph.SetAllDirty();
             }
         }
 
         void Update()
         {
-            return;
+
             //recreate the geometry if entire canvas has been resized
             if (RectTransform.rect.size != savedRectSize)
             {
@@ -160,14 +160,13 @@ namespace CurvedUI
         #endregion
 
 
-        #region PRIVATE
+#region PRIVATE
 
         /// <summary>
         /// Changes the horizontal angle of the canvas.
         /// </summary>
         /// <param name="newAngle"></param>
-        void SetUIAngle(int newAngle)
-        {
+        void SetUIAngle(int newAngle)  {
 
             if (myCanvas == null)
                 myCanvas = GetComponent<Canvas>();
@@ -180,7 +179,7 @@ namespace CurvedUI
             savedRadius = GetCyllinderRadiusInCanvasSpace();
 
             foreach (CurvedUIVertexEffect ve in GetComponentsInChildren<CurvedUIVertexEffect>())
-                ve.SetDirty();
+                ve.SetDirty(); 
 
             foreach (Graphic graph in GetComponentsInChildren<Graphic>())
                 graph.SetAllDirty();
@@ -188,7 +187,7 @@ namespace CurvedUI
             if (Application.isPlaying && GetComponent<CurvedUIRaycaster>() != null)
                 //tell raycaster to update its collider now that angle has changed.
                 GetComponent<CurvedUIRaycaster>().RebuildCollider();
-        }
+         }
 
         Vector3 CanvasToCyllinder(Vector3 pos)
         {
@@ -228,8 +227,7 @@ namespace CurvedUI
                 vAngle = angle * (savedRectSize.y / savedRectSize.x);
                 radius += Angle > 0 ? -pos.z : pos.z;
             }
-            else
-            {
+            else {
                 radius = savedRectSize.x / 2.0f + pos.z;
                 if (vAngle == 0) return Vector3.zero;
             }
@@ -249,14 +247,13 @@ namespace CurvedUI
 
             return pos;
         }
-        #endregion
+#endregion
 
 
 
-        #region PUBLIC
+#region PUBLIC
 
-        RectTransform RectTransform
-        {
+        RectTransform RectTransform {
             get
             {
                 if (m_rectTransform == null) m_rectTransform = transform as RectTransform;
@@ -280,7 +277,7 @@ namespace CurvedUI
             }
 
             //additional script that will create a curved caret for input fields
-            foreach (UnityEngine.UI.InputField iField in GetComponentsInChildren<UnityEngine.UI.InputField>(true))
+            foreach(UnityEngine.UI.InputField iField in GetComponentsInChildren<UnityEngine.UI.InputField>(true))
             {
                 if (iField.GetComponent<CurvedUIInputFieldCaret>() == null)
                 {
@@ -290,14 +287,12 @@ namespace CurvedUI
 
             //TextMeshPro experimental support. Go to CurvedUITMP.cs to learn how to enable it.
 #if CURVEDUI_TMP || TMP_PRESENT
-            foreach (TextMeshProUGUI tmp in GetComponentsInChildren<TextMeshProUGUI>(true))
-            {
-                if (tmp.GetComponent<CurvedUITMP>() == null)
-                {
-                    tmp.gameObject.AddComponent<CurvedUITMP>();
-                    tmp.SetAllDirty();
-                }
-            }
+		    foreach(TextMeshProUGUI tmp in GetComponentsInChildren<TextMeshProUGUI>(true)){
+			    if(tmp.GetComponent<CurvedUITMP>() == null){
+				    tmp.gameObject.AddComponent<CurvedUITMP>();
+				    tmp.SetAllDirty();
+			    }
+		    }
 
             foreach (TMP_InputField tmp in GetComponentsInChildren<TMP_InputField>(true))
             {
@@ -319,25 +314,25 @@ namespace CurvedUI
             switch (Shape)
             {
                 case CurvedUIShape.CYLINDER:
-                    {
-                        return CanvasToCyllinder(pos);
-                    }
+                {
+                    return CanvasToCyllinder(pos);
+                }
                 case CurvedUIShape.CYLINDER_VERTICAL:
-                    {
-                        return CanvasToCyllinderVertical(pos);
-                    }
+                {
+                    return CanvasToCyllinderVertical(pos);
+                }
                 case CurvedUIShape.RING:
-                    {
-                        return CanvasToRing(pos);
-                    }
+                {
+                    return CanvasToRing(pos);
+                }
                 case CurvedUIShape.SPHERE:
-                    {
-                        return CanvasToSphere(pos);
-                    }
+                {
+                    return CanvasToSphere(pos);
+                }
                 default:
-                    {
-                        return Vector3.zero;
-                    }
+                {
+                    return Vector3.zero;
+                }
             }
 
         }
@@ -369,30 +364,30 @@ namespace CurvedUI
             switch (Shape)
             {
                 case CurvedUIShape.CYLINDER:
-                    {
-                        // find the direction to the center of cyllinder on flat XZ plane
-                        return transform.localToWorldMatrix.MultiplyVector((pos - new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace())).ModifyY(0)).normalized;
-                    }
+                {
+                    // find the direction to the center of cyllinder on flat XZ plane
+                    return transform.localToWorldMatrix.MultiplyVector((pos - new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace())).ModifyY(0)).normalized;
+                }
                 case CurvedUIShape.CYLINDER_VERTICAL:
-                    {
-                        // find the direction to the center of cyllinder on flat YZ plane
-                        return transform.localToWorldMatrix.MultiplyVector((pos - new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace())).ModifyX(0)).normalized;
-                    }
+                {
+                    // find the direction to the center of cyllinder on flat YZ plane
+                    return transform.localToWorldMatrix.MultiplyVector((pos - new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace())).ModifyX(0)).normalized;
+                }
                 case CurvedUIShape.RING:
-                    {
-                        // just return the back direction of the canvas
-                        return -transform.forward;
-                    }
+                {
+                    // just return the back direction of the canvas
+                    return -transform.forward;
+                }
                 case CurvedUIShape.SPHERE:
-                    {
-                        //return the direction towards the sphere's center
-                        Vector3 center = (PreserveAspect ? new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace()) : Vector3.zero);
-                        return transform.localToWorldMatrix.MultiplyVector((pos - center)).normalized;
-                    }
+                {
+                    //return the direction towards the sphere's center
+                    Vector3 center = (PreserveAspect ? new Vector3(0, 0, -GetCyllinderRadiusInCanvasSpace()) : Vector3.zero);
+                    return transform.localToWorldMatrix.MultiplyVector((pos - center)).normalized;
+                }
                 default:
-                    {
-                        return Vector3.zero;
-                    }
+                {
+                    return Vector3.zero;
+                }
             }
         }
 
@@ -413,25 +408,25 @@ namespace CurvedUI
             switch (Shape)
             {
                 case CurvedUISettings.CurvedUIShape.CYLINDER:
-                    {
-                        return caster.RaycastToCyllinderCanvas(ray, out o_positionOnCanvas, true);
-                    }
+                {
+                    return caster.RaycastToCyllinderCanvas(ray, out o_positionOnCanvas, true);
+                }
                 case CurvedUISettings.CurvedUIShape.CYLINDER_VERTICAL:
-                    {
-                        return caster.RaycastToCyllinderVerticalCanvas(ray, out o_positionOnCanvas, true);
-                    }
+                {
+                    return caster.RaycastToCyllinderVerticalCanvas(ray, out o_positionOnCanvas, true);
+                }
                 case CurvedUISettings.CurvedUIShape.RING:
-                    {
-                        return caster.RaycastToRingCanvas(ray, out o_positionOnCanvas, true);
-                    }
+                {
+                    return caster.RaycastToRingCanvas(ray, out o_positionOnCanvas, true);
+                }
                 case CurvedUISettings.CurvedUIShape.SPHERE:
-                    {
-                        return caster.RaycastToSphereCanvas(ray, out o_positionOnCanvas, true);
-                    }
+                {
+                    return caster.RaycastToSphereCanvas(ray, out o_positionOnCanvas, true);
+                }
                 default:
-                    {
-                        return false;
-                    }
+                {
+                    return false;
+                }
             }
         }
 
@@ -443,10 +438,10 @@ namespace CurvedUI
             float ret;
             if (PreserveAspect)
             {
-                if (shape == CurvedUIShape.CYLINDER_VERTICAL)
-                    ret = (RectTransform.rect.size.y / ((2 * Mathf.PI) * (angle / 360.0f)));
+                if(shape == CurvedUIShape.CYLINDER_VERTICAL)
+                  ret = (RectTransform.rect.size.y / ((2 * Mathf.PI) * (angle / 360.0f)));
                 else
-                    ret = (RectTransform.rect.size.x / ((2 * Mathf.PI) * (angle / 360.0f)));
+                  ret = (RectTransform.rect.size.x / ((2 * Mathf.PI) * (angle / 360.0f)));
 
             }
             else
@@ -468,17 +463,17 @@ namespace CurvedUI
                 {
                     case CurvedUIShape.CYLINDER: ret /= GetSegmentsByAngle(angle); break;
                     case CurvedUIShape.CYLINDER_VERTICAL: goto case CurvedUIShape.CYLINDER;
-                    case CurvedUIShape.RING: goto case CurvedUIShape.CYLINDER;
-                    case CurvedUIShape.SPHERE:
-                        {
-                            ret.x /= GetSegmentsByAngle(angle);
+                    case CurvedUIShape.RING: goto case CurvedUIShape.CYLINDER; 
+                    case CurvedUIShape.SPHERE: 
+                    {
+                        ret.x /= GetSegmentsByAngle(angle);
 
-                            if (PreserveAspect)
-                                ret.y = ret.x * RectTransform.rect.size.y / RectTransform.rect.size.x;
-                            else
-                                ret.y /= GetSegmentsByAngle(VerticalAngle);
-                            break;
-                        }
+                        if (PreserveAspect)
+                            ret.y = ret.x * RectTransform.rect.size.y / RectTransform.rect.size.x;
+                        else
+                            ret.y /= GetSegmentsByAngle(VerticalAngle);
+                        break;
+                    }
                 }
             }
             //Debug.Log(this.gameObject.name + " returning size " + ret + " which is " + ret * this.transform.localScale.x + " in world space.", this.gameObject);
@@ -500,19 +495,16 @@ namespace CurvedUI
         /// Tells you how many segmetens should the entire 360 deg. cyllinder or sphere consist of.
         /// Used by CurvedUIVertexEffect
         /// </summary>
-        public int BaseCircleSegments
-        {
-            get { return baseCircleSegments; }
+        public int BaseCircleSegments {
+            get  {  return baseCircleSegments; }
         }
 
         /// <summary>
         /// The measure of the arc of the Canvas.
         /// </summary>
-        public int Angle
-        {
+        public int Angle {
             get { return angle; }
-            set
-            {
+            set {
                 if (angle != value)
                     SetUIAngle(value);
             }
@@ -522,11 +514,9 @@ namespace CurvedUI
         /// Multiplier used to deremine how many segments a base curve of a shape has. 
         /// Default 1. Lower values greatly increase performance. Higher values give you sharper curve.
         /// </summary>
-        public float Quality
-        {
+        public float Quality {
             get { return quality; }
-            set
-            {
+            set {
                 if (quality != value)
                 {
                     quality = value;
@@ -538,11 +528,9 @@ namespace CurvedUI
         /// <summary>
         /// Current Shape of the canvas
         /// </summary>
-        public CurvedUIShape Shape
-        {
+        public CurvedUIShape Shape {
             get { return shape; }
-            set
-            {
+            set  {
                 if (shape != value)
                 {
                     shape = value;
@@ -554,11 +542,9 @@ namespace CurvedUI
         /// <summary>
         /// Vertical angle of the canvas. Used in sphere shape and ring shape.
         /// </summary>
-        public int VerticalAngle
-        {
+        public int VerticalAngle {
             get { return vertAngle; }
-            set
-            {
+            set  {
                 if (vertAngle != value)
                 {
                     vertAngle = value;
@@ -570,11 +556,9 @@ namespace CurvedUI
         /// <summary>
         /// Fill of a ring in ring shaped canvas. 0-1
         /// </summary>
-        public float RingFill
-        {
+        public float RingFill {
             get { return ringFill; }
-            set
-            {
+            set {
                 if (ringFill != value)
                 {
                     ringFill = value;
@@ -586,10 +570,8 @@ namespace CurvedUI
         /// <summary>
         /// Calculated radius of the curved canvas. 
         /// </summary>
-        public float SavedRadius
-        {
-            get
-            {
+        public float SavedRadius {
+            get {
                 if (savedRadius == 0)
                     savedRadius = GetCyllinderRadiusInCanvasSpace();
 
@@ -600,11 +582,9 @@ namespace CurvedUI
         /// <summary>
         /// External diameter of the ring shaped canvas.
         /// </summary>
-        public int RingExternalDiameter
-        {
+        public int RingExternalDiameter {
             get { return ringExternalDiamater; }
-            set
-            {
+            set  {
                 if (ringExternalDiamater != value)
                 {
                     ringExternalDiamater = value;
@@ -616,11 +596,9 @@ namespace CurvedUI
         /// <summary>
         /// Whether the center of the ring should be bottom or top of the canvas.
         /// </summary>
-        public bool RingFlipVertical
-        {
+        public bool RingFlipVertical {
             get { return ringFlipVertical; }
-            set
-            {
+            set  {
                 if (ringFlipVertical != value)
                 {
                     ringFlipVertical = value;
@@ -632,11 +610,9 @@ namespace CurvedUI
         /// <summary>
         /// If enabled, CurvedUI will try to preserve aspect ratio of original canvas.
         /// </summary>
-        public bool PreserveAspect
-        {
+        public bool PreserveAspect {
             get { return preserveAspect; }
-            set
-            {
+            set {
                 if (preserveAspect != value)
                 {
                     preserveAspect = value;
@@ -649,50 +625,45 @@ namespace CurvedUI
         /// <summary>
         /// Can the canvas be interacted with?
         /// </summary>
-        public bool Interactable
-        {
+        public bool Interactable {
             get { return interactable; }
-            set { interactable = value; }
+            set  {  interactable = value; }
         }
 
         /// <summary>
         /// Should The collider for this canvas be created using more expensive box colliders?
         /// DEfault false.
         /// </summary>
-        public bool ForceUseBoxCollider
-        {
+        public bool ForceUseBoxCollider {
             get { return forceUseBoxCollider; }
-            set { forceUseBoxCollider = value; }
+            set {  forceUseBoxCollider = value; }
         }
 
-
+        
 
         /// <summary>
         /// Will the canvas block raycasts
         /// Settings this to false will destroy the canvas' collider.
         /// </summary>
-        public bool BlocksRaycasts
-        {
-            get { return blocksRaycasts; }
-            set
-            {
-                if (blocksRaycasts != value)
-                {
-                    blocksRaycasts = value;
+        public bool BlocksRaycasts {
+			get { return blocksRaycasts; }
+			set
+			{
+				if (blocksRaycasts != value) {
+					blocksRaycasts = value;
 
                     //tell raycaster to update its collider now that angle has changed.
                     if (Application.isPlaying && GetComponent<CurvedUIRaycaster>() != null)
-                        GetComponent<CurvedUIRaycaster>().RebuildCollider();
-                }
-            }
-        }
+						GetComponent<CurvedUIRaycaster>().RebuildCollider();
+				}
+			}
+		}
 
         /// <summary>
         /// Should the raycaster take other layers into account to determine if canvas has been interacted with.
         /// </summary>
         [Obsolete("Use RaycastLayerMask property instead.")]
-        public bool RaycastMyLayerOnly
-        {
+        public bool RaycastMyLayerOnly {
             get { return true; }
             set { }
         }
@@ -721,14 +692,11 @@ namespace CurvedUI
         /// Returns true if user's pointer is currently pointing inside this canvas.
         /// This is a shortcut to CurvedUIRaycaster's PointingAtCanvas bool.
         /// </summary>
-        public bool PointingAtCanvas
-        {
-            get
-            {
+        public bool PointingAtCanvas {
+            get {
                 if (GetComponent<CurvedUIRaycaster>() != null)
                     return GetComponent<CurvedUIRaycaster>().PointingAtCanvas;
-                else
-                {
+                else {
                     Debug.LogWarning("CURVEDUI: Can't check if user is pointing at this canvas - No CurvedUIRaycaster is added to this canvas.");
                     return false;
                 }
@@ -749,8 +717,7 @@ namespace CurvedUI
         /// Current controller mode. Decides how user can interact with the canvas. 
         /// This is a shortcut to CurvedUIInputModule's property.
         /// </summary>
-        public CurvedUIInputModule.CUIControlMethod ControlMethod
-        {
+        public CurvedUIInputModule.CUIControlMethod ControlMethod {
             get { return CurvedUIInputModule.ControlMethod; }
             set { CurvedUIInputModule.ControlMethod = value; }
         }
@@ -796,8 +763,7 @@ namespace CurvedUI
         /// Gaze Control Method. Should execute OnClick events on button after user points at them?
 		/// This is a shortcut to CurvedUIInputModule's property.
         /// </summary>
-        public bool GazeUseTimedClick
-        {
+        public bool GazeUseTimedClick {
             get { return CurvedUIInputModule.Instance.GazeUseTimedClick; }
             set { CurvedUIInputModule.Instance.GazeUseTimedClick = value; }
         }
@@ -806,8 +772,7 @@ namespace CurvedUI
         /// Gaze Control Method. How long after user points on a button should we click it?
 		/// This is a shortcut to CurvedUIInputModule's property.
         /// </summary>
-        public float GazeClickTimer
-        {
+        public float GazeClickTimer {
             get { return CurvedUIInputModule.Instance.GazeClickTimer; }
             set { CurvedUIInputModule.Instance.GazeClickTimer = value; }
         }
@@ -816,8 +781,7 @@ namespace CurvedUI
         /// Gaze Control Method. How long after user looks at a button should we start the timer? Default 1 second.
         /// This is a shortcut to CurvedUIInputModule's property.
         /// </summary>
-        public float GazeClickTimerDelay
-        {
+        public float GazeClickTimerDelay {
             get { return CurvedUIInputModule.Instance.GazeClickTimerDelay; }
             set { CurvedUIInputModule.Instance.GazeClickTimerDelay = value; }
         }
@@ -826,8 +790,7 @@ namespace CurvedUI
         /// Gaze Control Method. How long till Click method is executed on Buttons under gaze? Goes 0-1.
 		/// This is a shortcut to CurvedUIInputModule's property.
         /// </summary>
-        public float GazeTimerProgress
-        {
+        public float GazeTimerProgress {
             get { return CurvedUIInputModule.Instance.GazeTimerProgress; }
         }
         #endregion
@@ -840,12 +803,12 @@ namespace CurvedUI
 
         #region ENUMS
         public enum CurvedUIShape
-        {
-            CYLINDER = 0,
-            RING = 1,
-            SPHERE = 2,
-            CYLINDER_VERTICAL = 3,
-        }
-        #endregion
+		{
+			CYLINDER = 0,
+			RING = 1,
+			SPHERE = 2,
+			CYLINDER_VERTICAL = 3,
+		}
+		#endregion
     }
 }
