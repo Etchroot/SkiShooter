@@ -70,7 +70,7 @@ public class Drone : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Raycast가 바닥을 감지하지 못했습니다.");
+            //Debug.LogWarning("Raycast가 바닥을 감지하지 못했습니다.");
         }
     }
 
@@ -122,7 +122,7 @@ public class Drone : MonoBehaviour
 
         if (directionToCheckpoint == Vector3.zero)
         {
-            Debug.LogWarning("회전 방향이 없습니다. (목표와 위치가 동일)");
+            //Debug.LogWarning("회전 방향이 없습니다. (목표와 위치가 동일)");
             return;
         }
 
@@ -147,33 +147,4 @@ public class Drone : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(transform.position, Vector3.down * raycastDistance);
     }
-
-
-    // 적군 위치 브리핑
-    public void BriefEnemyPosition(Transform enemyTransform)
-    {
-        if (playerTransform == null)
-            return;
-
-        Vector3 directionToEnemy = enemyTransform.position - playerTransform.position;
-        float angle = Vector3.SignedAngle(playerTransform.forward, directionToEnemy, Vector3.up);
-
-        if (angle > -45 && angle <= 45)
-        {
-            Debug.Log("적군 위치: 앞");
-        }
-        else if (angle > 45 && angle <= 135)
-        {
-            Debug.Log("적군 위치: 오른쪽");
-        }
-        else if (angle > -135 && angle <= -45)
-        {
-            Debug.Log("적군 위치: 왼쪽");
-        }
-        else
-        {
-            Debug.Log("적군 위치: 뒤");
-        }
-    }
-
 }
