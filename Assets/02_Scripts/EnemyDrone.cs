@@ -20,6 +20,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     [SerializeField] private GameObject DieEffect; // 죽었을 때 효과
     [SerializeField] private AudioClip DieSound; // 폭발 소리
     [SerializeField] private AudioSource audioSource; // 오디오 소스
+    [SerializeField] private GameObject firePoint; // 이펙트 위치
 
     void Update()
     {
@@ -84,8 +85,9 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         isOnCooldown = true; // 쿨다운 활성화
         yield return new WaitForSeconds(attackCooldown);
 
+        if (isDead) yield break;
         // 공격 효과 실행
-        GameObject attack = Instantiate(AttackEffect, transform.position, Quaternion.identity);
+        GameObject attack = Instantiate(AttackEffect, firePoint.transform.position, firePoint.transform.rotation);
         attack.transform.LookAt(Player_New.Instance.transform); // 이펙트가 플레이어 바라보게
         StartCoroutine(AttackEffectPosion(attack));
         audioSource.PlayOneShot(AttackSound);
@@ -114,7 +116,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         GameObject dieEffect = Instantiate(DieEffect, transform.position, Quaternion.identity);
         Destroy(dieEffect, 2f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         Destroy(gameObject);
     }
 

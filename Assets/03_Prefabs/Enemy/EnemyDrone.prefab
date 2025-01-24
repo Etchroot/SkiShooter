@@ -135,6 +135,7 @@ MonoBehaviour:
   DieEffect: {fileID: 1892133220914832, guid: a969fe0d13beb7843af485bf118355c0, type: 3}
   DieSound: {fileID: 8300000, guid: 8524588a69a4f3e40bb597b6221138f1, type: 3}
   audioSource: {fileID: 6580458352514613433}
+  firePoint: {fileID: 1928421287499701393}
 --- !u!82 &6580458352514613433
 AudioSource:
   m_ObjectHideFlags: 0
