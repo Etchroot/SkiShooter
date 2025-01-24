@@ -88,7 +88,7 @@ public class MainUI : MonoBehaviour
         }
 
         palytime += Time.deltaTime;
-        Debug.Log($"플레이 타임 : {palytime}");
+        //Debug.Log($"플레이 타임 : {palytime}");
 
         Timer();
         LeftReloading();
@@ -123,8 +123,15 @@ public class MainUI : MonoBehaviour
                 // AddPlayerScoreOptions 객체로 저장해야 하므로 타입을 변경
                 Metadata = metadata
             };
-            await LeaderboardsService.Instance.AddPlayerScoreAsync("Ranking", score, options);
-            Debug.Log($"리더보드에 점수와 플레이타임 저장 완료 :{score}, {options}");
+            try
+            {
+                await LeaderboardsService.Instance.AddPlayerScoreAsync("Ranking", score, options);
+                Debug.Log($"리더보드에 점수와 플레이타임 저장 완료 :{score}, {options}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"리더보드 받아오기 실패: {e.Message}");
+            }
         }
         catch (RequestFailedException e)
         {
@@ -261,6 +268,7 @@ public class MainUI : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "03_Main") // Main씬일때만 처리
         {
+            string playerId = null;
             int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
             int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
             Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
@@ -271,11 +279,25 @@ public class MainUI : MonoBehaviour
             string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
             float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
             string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
-            string playerId = AuthenticationService.Instance.PlayerId;
+            try // 이 부분이 오류나도 진행 할 수 있도록
+            {
+                playerId = AuthenticationService.Instance.PlayerId;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"PlayerID를 가져오는 동안 오류 발생 : {e.Message}");
+            }
 
             // Leaderboard와 Cloud Save에 데이터 전송
             await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
-            await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
+            if (playerId != null)
+            {
+                await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
+            }
+            else
+            {
+                Debug.Log($"plyerId 없어서 클라우드 전송불가");
+            }
 
             ChangeLeaderBoard();
         }
