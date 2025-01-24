@@ -1,60 +1,64 @@
+using System.Collections;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : MonoBehaviour, IDamageable
 {
     [SerializeField] private bool Destructible = false; // 파괴 가능 여부
-    [SerializeField] private int hp = 1; // 장애물 체력 (0이 되면 파괴)
-    [SerializeField] private float playerSpeedReduction = 0.5f; // 충돌 시 플레이어 속도 감소 비율 (0.5 = 50% 감소)
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
 
-    private void Start()
+    // 오브젝트 파괴 처리
+    public void TakeDamage()
     {
-        // 파괴 가능 여부 초기화 로그
-        Debug.Log($"{this.name} - 파괴 가능 여부: {Destructible}");
-    }
-
-
-    // 총알이나 공격을 받아 체력이 감소하는 로직
-    public void TakeDamage(int damage)
-    {
-        if (Destructible) // 파괴 가능 오브젝트만 데미지 처리
+        if (Destructible) //파괴 가능한 것만 파괴가능
         {
-            hp -= damage;
-            Debug.Log($"{this.name} 체력 감소: {hp}");
-            if (hp <= 0)
+            if (audioSource != null && audioClip != null)
             {
-                destruction();
+                audioSource.PlayOneShot(audioClip); // 효과음 재생
             }
+            // if (audioSource == null)
+            // {
+            //     Debug.LogError("AudioSource 가 null 입니다");
+            // }
+            // if (audioClip == null)
+            // {
+            //     Debug.LogError("AudioClip 이 null 입니다.");
+            // }
+            // else
+            // {
+            //     Debug.LogError("알 수 없는 오류");
+            // }
+
+            // MeshRenderer와 Collider 비활성화
+            MeshRenderer meshRendererP = GetComponent<MeshRenderer>();
+
+            if (meshRendererP != null && meshRendererP.enabled)
+            {
+                meshRendererP.enabled = false;
+            }
+            GetComponent<Collider>().enabled = false;
+
+            // 하위 객체의 MeshRenderer 비활성화
+            foreach (Transform child in transform)
+            {
+                MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
+                if (meshRenderer != null)
+                {
+                    meshRenderer.enabled = false;
+                }
+            }
+
+
+
+            StartCoroutine(Delay());
+
         }
     }
 
-    // 오브젝트 파괴 처리
-    private void destruction()
+    IEnumerator Delay()
     {
-        Debug.Log($"{this.name} 파괴됨");
+        yield return new WaitForSeconds(1.0f);
         Destroy(gameObject); // 장애물 삭제
     }
 
-    // 플레이어와 충돌 처리
-    private void OnTriggerEnter(Collider other)
-    {
-        // 플레이어와 충돌 확인
-        //if (other.CompareTag("PlayerHead"))
-        // {
-        // Debug.Log("플레이어와 충돌 발생!");
-
-        // 플레이어의 속도를 감소시키는 로직
-        //PlayerMovement playerMovement = other.GetComponentInParent<PlayerMovement>(); // 부모 객체에서 속도 관리 스크립트 찾기
-        //if (playerMovement != null)
-        //{
-        //    playerMovement.ReduceSpeed(playerSpeedReduction); // 속도 감소
-        //}
-        //}
-
-        // 총알과의 충돌 확인
-        if (other.CompareTag("BULLET"))
-        {
-            Debug.Log("장애물 총알 맞음");
-            TakeDamage(1);
-        }
-    }
 }

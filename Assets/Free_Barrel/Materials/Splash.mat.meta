@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c78fa5a4dfe37a343bcc89776b9ac6ef
+timeCreated: 1515322455
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 108702
+  packageName: Free PBR Barrel
+  packageVersion: 1.0
+  assetPath: Assets/Free_Barrel/Materials/Splash.mat
+  uploadId: 222640

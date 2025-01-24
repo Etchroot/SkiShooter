@@ -9,6 +9,7 @@ public class GunShooting : MonoBehaviour
 
     public GameObject BulletPrefab; // 총알 프리팹
     public Transform FirePoint; // 총구 위치
+    public GameObject handGun; // 총 프리펩
 
     public bool isLeft = true; // true: 왼쪽, false: 오른쪽
 
@@ -30,8 +31,8 @@ public class GunShooting : MonoBehaviour
     public bool isReloading = false; // 재장전 중인지 확인
 
     private Haptic haptics;
-    public float hapticsAmplitude = 1.0f;
-    public float hapticsDuration = 0.2f;
+    public float hapticsAmplitude = 0.2f;
+    public float hapticsDuration = 0.05f;
 
     // 오브젝트 풀링 관련 변수
     [SerializeField] private int poolSize = 30; // 풀 크기
@@ -39,9 +40,20 @@ public class GunShooting : MonoBehaviour
 
     //private int totalBulletsCreated = 0; //생성된 총알수 (각각 27발씩 생성됨)
 
+    // 탄창 재장전 모션 관련 변수
+    [SerializeField] private string gunclipPrefabPath = "GunClip"; // Resources 내 경로
+    [SerializeField] private Transform gunclipPosition; // 탄창이 결합될 위치
+    [SerializeField] private float fallSpeed = 10f; // 탄창 떨어지는 속도
+
+    private GameObject gunclipPrefab; // 새로운 탄창 프리펩
+    public GameObject currentGunclip; // 현재 결합된 탄창
+
     void Awake()
     {
         haptics = GetComponent<Haptic>();
+
+        // Resources 폴더에서 프리펩 로드
+        gunclipPrefab = Resources.Load<GameObject>(gunclipPrefabPath);
 
         // 오브젝트 풀 초기화
         bulletPool = new Queue<GameObject>();
@@ -54,7 +66,7 @@ public class GunShooting : MonoBehaviour
 
             //totalBulletsCreated++; // 초기 생성 카운트 증가
         }
-            //Debug.Log($"초기 총알 풀 생성 완료. 생성된 총알 수: {totalBulletsCreated}");
+        //Debug.Log($"초기 총알 풀 생성 완료. 생성된 총알 수: {totalBulletsCreated}");
     }
 
     void Update()
@@ -86,6 +98,7 @@ public class GunShooting : MonoBehaviour
         if (previousGrips == 0 && gripPressed == 1 && currentBullet < maxBullet && !isReloading)
         {
             StartCoroutine(Reload());
+            //StartCoroutine(GunSpin());
         }
 
         // 이전 그립 버튼 상태 업데이트
@@ -119,6 +132,29 @@ public class GunShooting : MonoBehaviour
         }
     }
 
+    IEnumerator GunSpin()
+    {
+        float duration = 1f; // 회전 시간
+        float angle = 720f; // 회전 각도
+        float elapsedTime = 0f;
+
+        Quaternion initalRotataion = handGun.transform.rotation; // 시작 회전상태
+        Quaternion targetRotataion = initalRotataion * Quaternion.Euler(Vector3.right * angle);
+
+        while (elapsedTime < duration)
+        {
+            // 시간의 경과에 따라 회전 보간
+            float t = elapsedTime / duration; // 0에서 1까지
+            handGun.transform.rotation = Quaternion.Lerp(initalRotataion, targetRotataion, t);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // 회전 정확도 봏정
+        handGun.transform.rotation = targetRotataion;
+    }
+
     IEnumerator FireSound(bool isEmpty = false)
     {
         if (!isEmpty)
@@ -128,7 +164,7 @@ public class GunShooting : MonoBehaviour
         }
         else
         {
-            source.PlayOneShot(emptyGunSound); // 총알이 없을 때 소리
+            source.PlayOneShot(emptyGunSound, 0.8f); // 총알이 없을 때 소리
         }
 
         yield return new WaitForSeconds(fireRate);
@@ -139,6 +175,7 @@ public class GunShooting : MonoBehaviour
     {
         // 장전 중
         isReloading = true;
+        ReloadMotion();
         source.PlayOneShot(reloadingSound);
         yield return new WaitForSeconds(reloadTime);
 
@@ -146,6 +183,7 @@ public class GunShooting : MonoBehaviour
         currentBullet = maxBullet;
         source.PlayOneShot(reloadSound);
         Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 재장전 완료");
+
 
         isReloading = false;
     }
@@ -161,7 +199,7 @@ public class GunShooting : MonoBehaviour
             // 풀에 남은 총알이 없을 경우 새로운 총알 생성
             GameObject bullet = Instantiate(BulletPrefab);
             bullet.GetComponent<Bullet>().Initialize(this); // GunShooting 참조 전달
-            
+
             //totalBulletsCreated++; // 생성된 총알 카운트 증가
             //Debug.Log($"새로운 총알 생성. 총 생성된 총알 수: {totalBulletsCreated}");
 
@@ -174,4 +212,58 @@ public class GunShooting : MonoBehaviour
         bullet.SetActive(false);
         bulletPool.Enqueue(bullet);
     }
+
+    #region 탄창 재장전 모션
+
+
+    public void ReloadMotion()
+    {
+        // 기존 탄창 배출
+        EjectCurrentGunclip();
+
+        // 딜레이 추가
+        StartCoroutine(DelayReloadMotion());
+
+        IEnumerator DelayReloadMotion()
+        {
+            yield return new WaitForSeconds(reloadTime);
+            // 새로운 탄창 생성 및 결합
+            AttachNewGunclip();
+        }
+
+    }
+
+    private void EjectCurrentGunclip()
+    {
+        if (currentGunclip != null)
+        {
+            // 탄창 배출 로직
+            currentGunclip.transform.SetParent(null); // 결합 해체
+
+            // Rigidbody 추가 및 Y축 방향으로 힘 가하기
+            Rigidbody rb = currentGunclip.GetComponent<Rigidbody>();
+            if (rb == null) rb = currentGunclip.AddComponent<Rigidbody>();
+
+            rb.AddForce(gunclipPosition.up * -fallSpeed, ForceMode.VelocityChange);
+
+
+            // 배출된 탄창 파괴
+            Destroy(currentGunclip, 2f);
+
+            // 탄창 참조 해제
+            currentGunclip = null;
+        }
+    }
+
+    private void AttachNewGunclip()
+    {
+        // 새로운 탄창 생성
+        GameObject newGunclip = Instantiate(gunclipPrefab, gunclipPosition.position, gunclipPosition.rotation);
+
+        // 결합
+        newGunclip.transform.SetParent(gunclipPosition);
+        currentGunclip = newGunclip;
+    }
+
+    #endregion
 }

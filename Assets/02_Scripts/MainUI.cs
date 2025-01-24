@@ -12,6 +12,7 @@ using Unity.Services.CloudSave.Models;
 using Unity.Services.Authentication;
 using UnityEngine.SceneManagement;
 
+
 public class MainUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI LeftBulletText;
@@ -25,6 +26,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject LeftController;
     [SerializeField] private GameObject RightController;
     [SerializeField] private CanvasGroup fadeCanvasGroup; // fadeout 캔버스
+    [SerializeField] private PlayerManager playerManager; // 플레이어 매니저 스크립트
     private MeshCollider meshCollider; // 강제 종료 할 meshcollider
     private GunShooting leftgunShooting;
     private GunShooting rightgunShooting;
@@ -74,7 +76,7 @@ public class MainUI : MonoBehaviour
     {
         LeftBulletText.text = $"{leftgunShooting.currentBullet}";
         RightBulletText.text = $"{rightgunShooting.currentBullet}";
-        currentSpeedcal = Player_New.Instance.currentSpeed * 5f;
+        currentSpeedcal = Player_New.Instance.currentSpeed * 3f;
 
         if (Player_New.Instance != null)
         {
@@ -221,7 +223,7 @@ public class MainUI : MonoBehaviour
         if (leftgunShooting.isReloading == true)
         {
             LeftReloadImage.SetActive(true);
-            Invoke("DeacitveLeftReloadImage", 2f);
+            Invoke("DeacitveLeftReloadImage", 1f);
         }
     }
     void RightReloading()
@@ -229,7 +231,7 @@ public class MainUI : MonoBehaviour
         if (rightgunShooting.isReloading == true)
         {
             RightReloadImage.SetActive(true);
-            Invoke("DeacitveRightReloadImage", 2f);
+            Invoke("DeacitveRightReloadImage", 1f);
         }
     }
     void DeacitveLeftReloadImage()
@@ -256,42 +258,59 @@ public class MainUI : MonoBehaviour
     // 게임 종료시 처리
     public async void EndGame() // Player_New 스크립트에서 호출해서 씀
     {
-        int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
-        int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
-        Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
+        if (SceneManager.GetActiveScene().name == "03_Main") // Main씬일때만 처리
+        {
+            int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
+            int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
+            Debug.Log($"최종 플레이타임: {minutes}분{seconds}초");
 
-        finalSpeed = Mathf.Round(currentSpeedcal * 100f) / 100f;
+            finalSpeed = Mathf.Round(currentSpeedcal * 100f) / 100f;
 
-        // 플레이 타임과 최종 속력을 점수로 변환
-        string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
-        float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
-        string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
-        string playerId = AuthenticationService.Instance.PlayerId;
+            // 플레이 타임과 최종 속력을 점수로 변환
+            string finalTime = string.Format("{0}:{1:00}", minutes, seconds);
+            float finalScore = Mathf.Floor(finalSpeed); // 점수는 최종 속력으로
+            string nickname = PlayerPrefs.GetString("PlayerNickname", "UnknownPlayer");
+            string playerId = AuthenticationService.Instance.PlayerId;
 
+            // Leaderboard와 Cloud Save에 데이터 전송
+            await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
+            await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
 
+            ChangeLeaderBoard();
+        }
+        if (SceneManager.GetActiveScene().name == "02_Tutorial")
+        {
+            StartCoroutine(LoadSceneFadeOut("03_Main"));
+        }
 
-        // Leaderboard와 Cloud Save에 데이터 전송
-        await SubmitScoreToLeaderboard(nickname, finalScore, finalTime);
-        await SaveAdditionalDataToCloud(playerId, nickname, finalTime, finalScore);
 
         isGameRunning = false;
 
-        ChangeScene();
+
     }
 
-    // 게임 엔드시 씬 변경
-    public void ChangeScene()
+    // 게임 엔드시 리더보드로 장면 전환 및 플레이어 변경
+    public void ChangeLeaderBoard()
     {
-        Debug.Log("씬 변경 진입");
-        if (!isGameRunning)
-        {
-            StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
-            Debug.Log("씬을 변경합니다.");
-        }
-        else
-        {
-            Debug.LogError("씬이 변경되지 않았습니다.");
-        }
+        // Debug.Log("씬 변경 진입");
+        // if (!isGameRunning)
+        // {
+        //     StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
+        //     Debug.Log("씬을 변경합니다.");
+        // }
+        // else
+        // {
+        //     Debug.LogError("씬이 변경되지 않았습니다.");
+        // }
+        StartCoroutine(FadeOut());
+        StartCoroutine(DelayedSwitchToXR(2f));
+
+    }
+
+    private IEnumerator DelayedSwitchToXR(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        playerManager.SwitchToXR();
     }
 
     private IEnumerator LoadSceneFadeOut(String scenename)
@@ -306,7 +325,7 @@ public class MainUI : MonoBehaviour
         // 로딩이 완료될 떄까지 대기
         while (!asyncLoad.isDone)
         {
-            if (asyncLoad.progress >= 0.5f) // 로딩이 완료되면
+            if (asyncLoad.progress >= 0.2f) // 로딩이 완료되면
             {
                 asyncLoad.allowSceneActivation = true;
             }

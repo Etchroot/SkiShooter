@@ -2,41 +2,62 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float BulletSpeed = 5f;
+    [SerializeField] private float BulletSpeed = 50f;  // 속도 증가
     [SerializeField] private float BulletTime = 3f;
     private GunShooting gunShooting; // GunShooting 참조
+
+    private float lifetime;
 
     public void Initialize(GunShooting gunShootingInstance)
     {
         gunShooting = gunShootingInstance;
     }
 
-    void Update()
+    void Start()
     {
-        transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
+        lifetime = BulletTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Update()
     {
-        if (other.CompareTag("ENEMY"))
+        RaycastHit hit;
+
+        // 총알 이동과 동시에 레이캐스트 발사
+        if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.deltaTime))
         {
-            // 적 처리 로직 (예: 데미지)
-            Destroy(other.gameObject);
+            // 태그로 먼저 필터링
+            if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY")|| hit.collider.CompareTag("OBSTACLE"))
+            {
+                // 해당 오브젝트가 IDamageable을 구현했는지 확인
+                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.TakeDamage(); // 데미지 처리
+                    gunShooting.ReturnBulletToPool(this.gameObject); // 총알 풀로 반환
+                    return;
+                }
+            }
         }
 
-        // 풀에 반환
-        gunShooting.ReturnBulletToPool(this.gameObject);
+
+        // 실제 총알 이동
+        transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
+
+        // 일정 시간이 지나면 풀로 반환
+        lifetime -= Time.deltaTime;
+        if (lifetime <= 0)
+        {
+            gunShooting.ReturnBulletToPool(this.gameObject);
+        }
     }
 
     private void OnEnable()
     {
-        // 일정 시간이 지나면 풀로 반환
-        Invoke(nameof(ReturnToPool), BulletTime);
+        lifetime = BulletTime;
     }
 
     private void OnDisable()
     {
-        // 오브젝트가 비활성화될 때 Invoke 취소
         CancelInvoke();
     }
 

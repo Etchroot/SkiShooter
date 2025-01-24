@@ -116,7 +116,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2816530601532771530}
   m_Father: {fileID: 0}
@@ -183,5 +183,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77aedff777dbbc4e83044ebce609253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletSpeed: 100
-  BulletTime: 1.5
+  BulletSpeed: 150
+  BulletTime: 3
