@@ -7079,6 +7079,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9193856064627519286}
     - target: {fileID: 2298653195305288055, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: baseSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298653195305288055, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: redScreen
       value: 
       objectReference: {fileID: 1408780008}

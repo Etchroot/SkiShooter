@@ -88,6 +88,7 @@ public class MainUI : MonoBehaviour
         }
 
         palytime += Time.deltaTime;
+        Debug.Log($"플레이 타임 : {palytime}");
 
         Timer();
         LeftReloading();
