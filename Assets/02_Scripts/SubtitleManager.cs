@@ -29,24 +29,6 @@ public class SubtitleManager : MonoBehaviour
         }
     }
 
-
-    // #region 임시 함수
-    // public IEnumerator WaitForSecondsCoroutine(float seconds)
-    // {
-    //     yield return new WaitForSeconds(seconds);
-    // }
-    // private IEnumerator PlaySubtitlesSequentially()
-    // {
-    //     for (int i = 1; i <= 8; i++)
-    //     {
-    //         ShowSubtitle(i);
-    //         yield return currentCoroutine;
-    //         yield return new WaitForSeconds(1f);
-    //     }
-    // }
-
-    // #endregion
-
     public void ClearSubtitle()
     {
         subtitleText.text = ""; // 텍스트 비우기
@@ -108,7 +90,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(2.0f); // 몇 초 대기
 
-        subtitleText.text = "이 드론으로 전투를 도와드릴 AI ‘제임스’입니다."; // 자막 내용 설정
+        subtitleText.text = "이 드론으로 전투를 도와드릴\nAI ‘제임스’입니다."; // 자막 내용 설정
         PlaySound(1); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
@@ -121,7 +103,7 @@ public class SubtitleManager : MonoBehaviour
         PlaySound(3); // 효과음 재생
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
 
-        subtitleText.text = "탈출에 앞서 분석한 정보를 토대로 시뮬레이션을 진행하겠습니다."; // 자막 내용 설정
+        subtitleText.text = "탈출에 앞서 분석한 정보를 토대로\n시뮬레이션을 진행하겠습니다."; // 자막 내용 설정
         PlaySound(4); // 효과음 재생
         yield return new WaitForSeconds(5.0f); // 몇 초 대기
 
@@ -134,7 +116,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
 
-        subtitleText.text = "스키는 자동으로 저를 따라오게 설정해두었으므로, 주변 적과 장애물에만 집중하시길 바랍니다."; // 자막 내용 설정
+        subtitleText.text = "스키는 자동으로 저를 따라오게 설정해두었으므로\n주변 적과 장애물에만 집중하시길 바랍니다."; // 자막 내용 설정
         PlaySound(6); // 효과음 재생
         yield return new WaitForSeconds(7.0f); // 몇 초 대기
 
@@ -147,11 +129,14 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(3.0f); // 몇 초 대기
 
-        subtitleText.text = "재장전은 횟수에 제한이 없지만, 재장전 시 1초가 소요됩니다."; // 자막 내용 설정
+        subtitleText.text = "재장전은 횟수에 제한이 없지만\n재장전 시 1초가 소요됩니다."; // 자막 내용 설정
         PlaySound(8); // 효과음 재생
         yield return new WaitForSeconds(6.0f); // 몇 초 대기
+
+        subtitleText.text = "검지로 사격하고 중지로 재장전합니다.";
+        PlaySound(23);
+        yield return new WaitForSeconds(4.0f);
         ClearSubtitle(); // 자막 초기화
-        //yield return new WaitForSeconds(5f); // 추가 대기
     }
     private IEnumerator DisplaySubtitle4()
     {
@@ -160,11 +145,10 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
 
-        subtitleText.text = "적이 우리에게 공격하기 전에 먼저 제거해야 합니다."; // 자막 내용 설정
+        subtitleText.text = "적이 우리에게 공격하기 전에\n먼저 제거해야 합니다."; // 자막 내용 설정
         PlaySound(10); // 효과음 재생
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-                         // yield return new WaitForSeconds(3f);
     }
 
     private IEnumerator DisplaySubtitle5()
@@ -174,7 +158,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(3.0f); // 몇 초 대기
 
-        subtitleText.text = "등장하기 전에 등장 위치를 미리 알려 드리겠습니다."; // 자막 내용 설정
+        subtitleText.text = "등장하기 전에 등장 위치를\n미리 알려 드리겠습니다."; // 자막 내용 설정
         PlaySound(12); // 효과음 재생
         yield return new WaitForSeconds(4.0f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
@@ -183,12 +167,11 @@ public class SubtitleManager : MonoBehaviour
 
     private IEnumerator DisplaySubtitle6()
     {
-        subtitleText.text = "드럼통을 폭발시켜 주변의 적들을 한 번에 제거할 수 있습니다."; // 자막 내용 설정
+        subtitleText.text = "드럼통을 폭발시켜\n주변의 적들을 한 번에 제거할 수 있습니다."; // 자막 내용 설정
         PlaySound(13); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(5.0f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-                         // yield return new WaitForSeconds(3f);
     }
 
 
@@ -203,7 +186,6 @@ public class SubtitleManager : MonoBehaviour
         PlaySound(15); // 효과음 재생
         yield return new WaitForSeconds(3.0f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-                         // yield return new WaitForSeconds(2f);
     }
     private IEnumerator DisplaySubtitle8()
     {
@@ -212,24 +194,23 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(3.0f); // 몇 초 대기
 
-        subtitleText.text = "고개를 숙여서 피해야 하며 등장하기 전 미리 알려 드리겠습니다."; // 자막 내용 설정
+        subtitleText.text = "고개를 숙여서 피해야 하며\n등장하기 전 미리 알려 드리겠습니다."; // 자막 내용 설정
         PlaySound(17); // 효과음 재생
         yield return new WaitForSeconds(5.0f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
-                         // yield return new WaitForSeconds(9f);
     }
     private IEnumerator DisplaySubtitle9()
     {
-        subtitleText.text = "실전에서 스키의 속도는 시간에 따라 증가합니다."; // 자막 내용 설정
+        subtitleText.text = "실전에서 스키의 속도는\n시간에 따라 증가합니다."; // 자막 내용 설정
         PlaySound(18); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4f); // 몇 초 대기
 
-        subtitleText.text = "하지만 적에게 공격당하거나 장애물을 제거하지 못하고 부딪히게 되면 스키의 속도가 줄어듭니다. "; // 자막 내용 설정
+        subtitleText.text = "하지만 적에게 공격당하거나\n장애물을 제거하지 못하고 부딪히게 되면\n스키의 속도가 줄어듭니다. "; // 자막 내용 설정
         PlaySound(19); // 효과음 재생
         yield return new WaitForSeconds(7f); // 몇 초 대기
 
-        subtitleText.text = "속도가 일정 수준 이하로 떨어지면 눈사태에 휩쓸리게 됩니다."; // 자막 내용 설정
+        subtitleText.text = "속도가 일정 수준 이하로 떨어지면\n눈사태에 휩쓸리게 됩니다."; // 자막 내용 설정
         PlaySound(20); // 효과음 재생
         yield return new WaitForSeconds(5f); // 몇 초 대기
         ClearSubtitle(); // 자막 초기화
