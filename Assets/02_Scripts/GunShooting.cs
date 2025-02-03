@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
 public class GunShooting : MonoBehaviour
@@ -34,12 +35,6 @@ public class GunShooting : MonoBehaviour
     public float hapticsAmplitude = 0.2f;
     public float hapticsDuration = 0.05f;
 
-    // 오브젝트 풀링 관련 변수
-    [SerializeField] private int poolSize = 30; // 풀 크기
-    private Queue<GameObject> bulletPool; // 총알 풀
-
-    //private int totalBulletsCreated = 0; //생성된 총알수 (각각 27발씩 생성됨)
-
     // 탄창 재장전 모션 관련 변수
     [SerializeField] private string gunclipPrefabPath = "GunClip"; // Resources 내 경로
     [SerializeField] private Transform gunclipPosition; // 탄창이 결합될 위치
@@ -48,6 +43,9 @@ public class GunShooting : MonoBehaviour
     private GameObject gunclipPrefab; // 새로운 탄창 프리펩
     public GameObject currentGunclip; // 현재 결합된 탄창
 
+    // UnityEngine.Pool을 활용한 오브젝트 풀
+    private ObjectPool<GameObject> bulletPool;
+
     void Awake()
     {
         haptics = GetComponent<Haptic>();
@@ -55,19 +53,20 @@ public class GunShooting : MonoBehaviour
         // Resources 폴더에서 프리펩 로드
         gunclipPrefab = Resources.Load<GameObject>(gunclipPrefabPath);
 
-        // 오브젝트 풀 초기화
-        bulletPool = new Queue<GameObject>();
-        for (int i = 0; i < poolSize; i++)
-        {
-            GameObject bullet = Instantiate(BulletPrefab);
-            bullet.SetActive(false); // 초기에는 비활성화
-            bullet.GetComponent<Bullet>().Initialize(this); // GunShooting 참조 전달
-            bulletPool.Enqueue(bullet);
-
-            //totalBulletsCreated++; // 초기 생성 카운트 증가
-        }
-        //Debug.Log($"초기 총알 풀 생성 완료. 생성된 총알 수: {totalBulletsCreated}");
     }
+
+    void Start()
+    {
+        if (ObjectPoolManager.Instance == null)
+        {
+            Debug.LogError("ObjectPoolManager 인스턴스가 초기화되지 않았습니다!");
+            return;
+        }
+
+        ObjectPoolManager.Instance.CreatePool("Bullet", BulletPrefab, 60, 100);
+
+    }
+
 
     void Update()
     {
@@ -107,53 +106,31 @@ public class GunShooting : MonoBehaviour
 
     void FireBullet()
     {
-        if (currentBullet > 0)
+        if (currentBullet <= 0)
         {
-            // 총알 발사
-            GameObject bullet = GetBulletFromPool();
-            bullet.transform.position = FirePoint.position; // 총알 위치 설정
-            bullet.transform.rotation = FirePoint.rotation; // 총알 방향 설정
-            bullet.SetActive(true);
+            StartCoroutine(FireSound(true)); // 총알 없음 소리
+            return;
+        }
 
-            currentBullet--; // 발사 후 총알 감소
-            canFire = false;
-            StartCoroutine(FireSound()); // 발사 소리 재생
+        canFire = false;
+        currentBullet--;
 
-            // Haptics Trigger (진동 발생)
-            haptics?.TriggerHapticFeedback(isLeft, hapticsAmplitude, hapticsDuration);
+        Vector3 firePosition = FirePoint.position;
+        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", firePosition, FirePoint.rotation);
+        Bullet bullet = bulletObj.GetComponent<Bullet>();
 
-            //Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 개수: {currentBullet}");
+        if (bullet != null)
+        {
+            bullet.Pool = ObjectPoolManager.Instance.GetPool("Bullet") as IObjectPool<Bullet>;
         }
         else
         {
-            //Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알이 없습니다!");
-            canFire = false;
-            StartCoroutine(FireSound(true)); // 총알 없음 소리
+            Debug.LogError("FireBullet: Bullet 컴포넌트를 찾을 수 없습니다!");
         }
+
+        StartCoroutine(FireSound());
     }
 
-    //IEnumerator GunSpin()
-    //{
-    //    float duration = 1f; // 회전 시간
-    //    float angle = 720f; // 회전 각도
-    //    float elapsedTime = 0f;
-
-    //    Quaternion initalRotataion = handGun.transform.rotation; // 시작 회전상태
-    //    Quaternion targetRotataion = initalRotataion * Quaternion.Euler(Vector3.right * angle);
-
-    //    while (elapsedTime < duration)
-    //    {
-    //        // 시간의 경과에 따라 회전 보간
-    //        float t = elapsedTime / duration; // 0에서 1까지
-    //        handGun.transform.rotation = Quaternion.Lerp(initalRotataion, targetRotataion, t);
-
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    // 회전 정확도 봏정
-    //    handGun.transform.rotation = targetRotataion;
-    //}
 
     IEnumerator FireSound(bool isEmpty = false)
     {
@@ -186,31 +163,6 @@ public class GunShooting : MonoBehaviour
 
 
         isReloading = false;
-    }
-
-    GameObject GetBulletFromPool()
-    {
-        if (bulletPool.Count > 0)
-        {
-            return bulletPool.Dequeue();
-        }
-        else
-        {
-            // 풀에 남은 총알이 없을 경우 새로운 총알 생성
-            GameObject bullet = Instantiate(BulletPrefab);
-            bullet.GetComponent<Bullet>().Initialize(this); // GunShooting 참조 전달
-
-            //totalBulletsCreated++; // 생성된 총알 카운트 증가
-            //Debug.Log($"새로운 총알 생성. 총 생성된 총알 수: {totalBulletsCreated}");
-
-            return bullet;
-        }
-    }
-
-    public void ReturnBulletToPool(GameObject bullet)
-    {
-        bullet.SetActive(false);
-        bulletPool.Enqueue(bullet);
     }
 
     #region 탄창 재장전 모션

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class DroneSpawner : MonoBehaviour
 {
@@ -10,66 +11,69 @@ public class DroneSpawner : MonoBehaviour
     [SerializeField] private float spawnDistanceOutside = 12f; // 스폰 범위 밖 거리
 
     private bool hasSpawned = false; // 스폰 여부
+    private IObjectPool<GameObject> dronePool; // 드론 오브젝트 풀
+
+    void Start()
+    {
+        // 드론 풀을 먼저 생성
+        ObjectPoolManager.Instance.CreatePool("drone", dronePrefab, 10, 20);
+
+        // 풀을 직접 가져오기
+        dronePool = ObjectPoolManager.Instance.GetPool("drone");
+        if (dronePool == null)
+        {
+            Debug.LogError("Drone pool is null!");
+        }
+    }
+
     void Update()
     {
-        // 플레이어가 스포너 감지 범위에 들어왔는지 확인
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // 플레이어가 감지 범위 안에 있고 드론이 스폰되지 않았다면 스폰
         if (distanceToPlayer <= spawnRadius && !hasSpawned)
         {
             SpawnDrone();
-            hasSpawned = true; // 한 번만 스폰
+            hasSpawned = true;
+        }
+        // 플레이어가 범위를 벗어나면 다시 스폰 가능
+        else if (distanceToPlayer > spawnRadius + 5f)
+        {
+            hasSpawned = false;
         }
     }
 
     void SpawnDrone()
     {
-        // 스폰 범위 밖에서 드론 생성 위치 계산
         Vector3 spawnPosition = GetRandomPositionOutsideSpawnRadius();
 
-        // 드론 생성
-        GameObject drone = Instantiate(dronePrefab, spawnPosition, Quaternion.identity);
+        // ObjectPoolManager에서 드론을 풀에서 가져옵니다.
+        GameObject drone = dronePool.Get();
 
-        // 랜덤 숫자 생성 (0 또는 1)
-        int randomChoice = Random.Range(0, 2);
+        if (drone == null)
+        {
+            Debug.LogError("Failed to get drone from pool!");
+            return;
+        }
 
-        // 드론에 타겟 설정
+        drone.transform.position = spawnPosition;
+        drone.transform.rotation = Quaternion.identity;
+
         EnemyDrone droneScript = drone.GetComponent<EnemyDrone>();
         if (droneScript != null)
         {
             droneScript.player = player;
-
-            // 숫자에 따라 타겟 설정
-            droneScript.target = randomChoice == 1 ? leftTarget : rightTarget;
-
-            
-            if (randomChoice == 1) WarringSignTree.LeftSign();
-            else WarringSignTree.RightSign();
+            droneScript.target = Random.Range(0, 2) == 1 ? leftTarget : rightTarget;
+            droneScript.SetPool(dronePool); // 드론에 풀 전달
         }
     }
 
     private Vector3 GetRandomPositionOutsideSpawnRadius()
     {
-        // 랜덤 방향 계산
-        Vector2 randomDirection = Random.insideUnitCircle.normalized; // 원형 방향
+        Vector2 randomDirection = Random.insideUnitCircle.normalized;
         Vector3 spawnDirection = new Vector3(randomDirection.x, 0, randomDirection.y);
-
-        // 스포너 중심에서 spawnDistanceOutside 만큼 떨어진 위치 계산
         Vector3 spawnPosition = transform.position + spawnDirection * spawnDistanceOutside;
-
         spawnPosition.y = transform.position.y + 10;
-
         return spawnPosition;
     }
-
-    //private void OnDrawGizmosSelected()
-    //{
-    //    // 탐지 범위 (spawnRadius)를 노란색으로 표시
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, spawnRadius);
-
-    //    // 스폰 범위 바깥 거리 (spawnDistanceOutside)를 초록색으로 표시
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawWireSphere(transform.position, spawnDistanceOutside);
-    //}
-
 }

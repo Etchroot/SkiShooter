@@ -1,71 +1,72 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float BulletSpeed = 50f;  // 속도 증가
+    public IObjectPool<Bullet> Pool { get; set; }
+
+    [SerializeField] private float BulletSpeed = 50f;
     [SerializeField] private float BulletTime = 3f;
-    private GunShooting gunShooting; // GunShooting 참조
 
     private float lifetime;
+    private Vector3 moveDirection;
 
-    public void Initialize(GunShooting gunShootingInstance)
-    {
-        gunShooting = gunShootingInstance;
-    }
-
-    void Start()
+    void OnEnable()
     {
         lifetime = BulletTime;
+        moveDirection = transform.forward; // 초기 방향 설정
     }
 
     void Update()
     {
-        RaycastHit hit;
-
-        // 총알 이동과 동시에 레이캐스트 발사
-        if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.deltaTime))
-        {
-            // 태그로 먼저 필터링
-            if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY")|| hit.collider.CompareTag("OBSTACLE"))
-            {
-                // 해당 오브젝트가 IDamageable을 구현했는지 확인
-                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                if (damageable != null)
-                {
-                    damageable.TakeDamage(); // 데미지 처리
-                    gunShooting.ReturnBulletToPool(this.gameObject); // 총알 풀로 반환
-                    return;
-                }
-            }
-        }
-
-
-        // 실제 총알 이동
-        transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
-
-        // 일정 시간이 지나면 풀로 반환
+        // 수명 감소 및 반환
         lifetime -= Time.deltaTime;
         if (lifetime <= 0)
         {
-            gunShooting.ReturnBulletToPool(this.gameObject);
+            //ReturnToPool();
+            ObjectPoolManager.Instance.ReturnToPool("Bullet",this.gameObject);
         }
     }
 
-    private void OnEnable()
+    void FixedUpdate()
     {
-        lifetime = BulletTime;
-    }
+        RaycastHit hit;
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
+        transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
 
-    private void ReturnToPool()
-    {
-        if (gunShooting != null)
+        // 디버깅용 Ray 그리기
+        //Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
+
+        // 총알 이동 거리 내에서 충돌 감지
+        if (Physics.Raycast(transform.position, moveDirection, out hit, BulletSpeed * Time.fixedDeltaTime))
         {
-            gunShooting.ReturnBulletToPool(this.gameObject);
+            if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY") || hit.collider.CompareTag("OBSTACLE"))
+            {
+                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+                if (damageable != null)
+                {
+                    damageable.TakeDamage();
+                    //ReturnToPool();
+                    ObjectPoolManager.Instance.ReturnToPool("Bullet", this.gameObject);
+
+                }
+            }
         }
+        
     }
+
+    //private void ReturnToPool()
+    //{
+    //    if (Pool != null)
+    //    {
+    //        Pool.Release(this);
+    //        gameObject.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Bullet의 Pool이 설정되지 않았습니다! 총알을 삭제합니다.");
+    //        Destroy(gameObject); // 풀을 찾지 못하면 그냥 삭제
+    //    }
+    //}
+
 }
