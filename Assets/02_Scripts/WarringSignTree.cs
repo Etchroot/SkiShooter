@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Services.CloudSave.Internal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,8 +18,10 @@ public class WarringSignTree : MonoBehaviour
     private bool isBlinkng = false; // 깜빡임 여부 플래그
     private bool leftBlinkng = false;
     private bool rightBlinkng = false;
-
     private bool hasWarned = false; // 경고 여부 플래그
+
+    private Coroutine blinkCoroutine; // 깜빡임 코루틴을 저장할 변수
+    private Dictionary<Collider, float> previousDistances = new Dictionary<Collider, float>();
 
     public static Action LeftSign;
     public static Action RightSign;
@@ -68,7 +71,11 @@ public class WarringSignTree : MonoBehaviour
     {
         if (!isBlinkng)
         {
-            StartCoroutine(BlinkRoutine(targetImage));
+            if (blinkCoroutine != null)
+            {
+                StopCoroutine(blinkCoroutine); // 기존 코루틴이 실행중이라면 종료
+            }
+            blinkCoroutine = StartCoroutine(BlinkRoutine(targetImage));
         }
     }
 
@@ -92,6 +99,10 @@ public class WarringSignTree : MonoBehaviour
 
         for (int i = 0; i < blinkCount; i++)
         {
+            if (!hasWarned) // 감지 대상이 없어지면 즉시 중단
+            {
+                break;
+            }
             // Alpha값 조정으로 투명하게 만들기
             SetImageAlpha(sign, 0f);
             yield return new WaitForSeconds(blinkInterval);
@@ -139,21 +150,59 @@ public class WarringSignTree : MonoBehaviour
             if (col.CompareTag("TRUNK"))
             {
                 trunkInRange = true;
+                float currentDistance = Vector3.Distance(transform.position, col.transform.position);
 
-                // 아직 경고하지 않은 경우 경고 시작
-                if (!hasWarned)
+                // 이전 프레임 거리 저장 값이 있는지 확인
+                if (!previousDistances.ContainsKey(col))
                 {
-                    hasWarned = true; // 경고 상태로 설정
-                    StartBlinking();
+                    previousDistances[col] = currentDistance;
                 }
-                break;
+
+                float previousDistance = previousDistances[col];
+                previousDistances[col] = currentDistance; // 현재 거리 업데이트
+
+                // 물체가 가까워지고 아직 경고하지 않은 경우 경고 시작
+                if (currentDistance < previousDistance)
+                {
+                    if (!hasWarned)
+                    {
+                        hasWarned = true; // 경고 상태로 설정
+                        StartBlinking();
+                    }
+                }
+                else if (currentDistance > previousDistance) // TRUNK가 멀어지기 시작하면 즉시 경고 해제
+                {
+                    hasWarned = false;
+
+                    if (blinkCoroutine != null)
+                    {
+                        StopCoroutine(blinkCoroutine);
+                        targetImage.enabled = false;
+                        isBlinkng = false;
+                    }
+                }
             }
         }
 
-        // TRUNK가 범위에서 벗어난 경우 다시 호출 기회를 부여
-        if (!trunkInRange)
+        // 감지된 TRUNK가 하나도 없을 때도 경고 해제
+        if (!trunkInRange && hasWarned)
         {
-            hasWarned = false; // 경고 초기화
+            hasWarned = false;
+
+            if (blinkCoroutine != null) // 깜빡임 중이라면 종료
+            {
+                StopCoroutine(blinkCoroutine);
+                targetImage.enabled = false;
+                isBlinkng = false;
+            }
+
+            // foreach (var col in previousDistances.Keys)
+            // {
+            //     if (!trunkInRange || Vector3.Distance(transform.position, col.transform.position) > previousDistances[col])
+            //     {
+            //         hasWarned = false; // 경고 초기화
+            //     }
+            // }
         }
     }
     #endregion
