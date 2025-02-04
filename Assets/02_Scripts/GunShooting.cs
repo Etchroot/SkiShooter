@@ -10,7 +10,6 @@ public class GunShooting : MonoBehaviour
 
     public GameObject BulletPrefab; // 총알 프리팹
     public Transform FirePoint; // 총구 위치
-    public GameObject handGun; // 총 프리펩
 
     public bool isLeft = true; // true: 왼쪽, false: 오른쪽
 
@@ -106,6 +105,7 @@ public class GunShooting : MonoBehaviour
 
     void FireBullet()
     {
+        Vector3 bulletDirection = FirePoint.TransformDirection(Vector3.forward);
         if (currentBullet <= 0)
         {
             StartCoroutine(FireSound(true)); // 총알 없음 소리
@@ -115,19 +115,19 @@ public class GunShooting : MonoBehaviour
         canFire = false;
         currentBullet--;
 
-        Vector3 firePosition = FirePoint.position;
-        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", firePosition, FirePoint.rotation);
+        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", FirePoint.position, FirePoint.rotation);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
 
         if (bullet != null)
         {
             bullet.Pool = ObjectPoolManager.Instance.GetPool("Bullet") as IObjectPool<Bullet>;
+            bullet.SetDirection(bulletDirection);
         }
         else
         {
             Debug.LogError("FireBullet: Bullet 컴포넌트를 찾을 수 없습니다!");
         }
-
+        
         StartCoroutine(FireSound());
     }
 

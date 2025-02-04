@@ -11,10 +11,14 @@ public class Bullet : MonoBehaviour
     private float lifetime;
     private Vector3 moveDirection;
 
+    public void SetDirection(Vector3 direction)  // 🔥 외부에서 방향을 설정할 수 있도록 추가
+    {
+        moveDirection = direction.normalized;  // 방향을 정규화
+    }
+
     void OnEnable()
     {
         lifetime = BulletTime;
-        moveDirection = transform.forward; // 초기 방향 설정
     }
 
     void Update()
@@ -32,10 +36,10 @@ public class Bullet : MonoBehaviour
     {
         RaycastHit hit;
 
-        transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
+        transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
 
         // 디버깅용 Ray 그리기
-        //Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
+        Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
 
         // 총알 이동 거리 내에서 충돌 감지
         if (Physics.Raycast(transform.position, moveDirection, out hit, BulletSpeed * Time.fixedDeltaTime))
@@ -54,19 +58,5 @@ public class Bullet : MonoBehaviour
         }
         
     }
-
-    //private void ReturnToPool()
-    //{
-    //    if (Pool != null)
-    //    {
-    //        Pool.Release(this);
-    //        gameObject.SetActive(false);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Bullet의 Pool이 설정되지 않았습니다! 총알을 삭제합니다.");
-    //        Destroy(gameObject); // 풀을 찾지 못하면 그냥 삭제
-    //    }
-    //}
 
 }
