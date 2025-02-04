@@ -18,6 +18,7 @@ TagManager:
   - TRUNK
   - OBSTACLE
   - BARREL
+  - UI
   layers:
   - Default
   - TransparentFX

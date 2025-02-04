@@ -90,7 +90,7 @@ public class SubtitleManager : MonoBehaviour
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(2.0f); // 몇 초 대기
 
-        subtitleText.text = "이 드론으로 전투를 도와드릴\nAI ‘제임스’입니다."; // 자막 내용 설정
+        subtitleText.text = "이 드론으로 전투를 도와드릴\nAI ‘앨리스’입니다."; // 자막 내용 설정
         PlaySound(1); // 효과음 재생
         subtitleText.gameObject.SetActive(true); // 자막 활성화
         yield return new WaitForSeconds(4.0f); // 몇 초 대기

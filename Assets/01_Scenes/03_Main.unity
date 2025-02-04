@@ -3581,6 +3581,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8203631656487153825, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -122
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203631656487153825, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 151
+      objectReference: {fileID: 0}
     - target: {fileID: 8550189307059994958, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8937,6 +8945,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1956967255}
     - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: emptyGunSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 251a89500e88fdb4da90091837f8c82d, type: 3}
+    - target: {fileID: 5553674313992193236, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: reloadingSound
       value: 
       objectReference: {fileID: 8300000, guid: 79affe122766d5c488a5716fe3d0271c, type: 3}
@@ -8968,6 +8980,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: emptyGunSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 251a89500e88fdb4da90091837f8c82d, type: 3}
     - target: {fileID: 8311667887264521419, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: reloadingSound
       value: 
