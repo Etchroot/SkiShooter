@@ -4,26 +4,20 @@ using System.Collections.Generic;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-    private static ObjectPoolManager instance;
-    public static ObjectPoolManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject obj = new GameObject("ObjectPoolManager");
-                instance = obj.AddComponent<ObjectPoolManager>();
-                DontDestroyOnLoad(obj);
-            }
-            return instance;
-        }
-    }
-
+    
     private Dictionary<string, IObjectPool<GameObject>> pools = new Dictionary<string, IObjectPool<GameObject>>();
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
+    private static ObjectPoolManager instance;
+    public static ObjectPoolManager Instance => instance;
     private void Awake()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "01_Title")
+        {
+            Destroy(gameObject);
+            return; 
+        }
+
         if (instance == null)
         {
             instance = this;
@@ -34,6 +28,7 @@ public class ObjectPoolManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
     /// <summary>
     /// 특정 키로 오브젝트 풀 생성
@@ -49,15 +44,38 @@ public class ObjectPoolManager : MonoBehaviour
         prefabs[key] = prefab;
 
         pools[key] = new ObjectPool<GameObject>(
-            createFunc: () => Instantiate(prefab),
-            actionOnGet: obj => obj.SetActive(true),
-            actionOnRelease: obj => obj.SetActive(false),
-            actionOnDestroy: obj => Destroy(obj),
-            collectionCheck: false, // 중복 반환 방지 (true일 경우 성능 저하 가능)
+            createFunc: () =>
+            {
+                GameObject obj = Instantiate(prefab);
+
+                if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "01_Title")
+                {
+                    DontDestroyOnLoad(obj);  // 씬이 변경되어도 삭제되지 않도록 설정
+                }
+
+                return obj;
+            },
+            //actionOnGet: obj =>
+            //{
+            //    if (obj != null)
+            //        obj.SetActive(true);
+            //},
+            actionOnRelease: obj =>
+            {
+                if (obj != null)
+                    obj.SetActive(false);
+            },
+            actionOnDestroy: obj =>
+            {
+                if (obj != null)
+                    Destroy(obj);
+            },
+            collectionCheck: false,
             defaultCapacity: initialSize,
             maxSize: maxSize
         );
     }
+
 
     /// <summary>
     /// 풀에서 오브젝트 가져오기
@@ -73,6 +91,7 @@ public class ObjectPoolManager : MonoBehaviour
         GameObject obj = pools[key].Get();
         obj.transform.position = position;
         obj.transform.rotation = rotation;
+        obj.SetActive(true);
         return obj;
     }
 

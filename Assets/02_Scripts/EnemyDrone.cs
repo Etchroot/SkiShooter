@@ -23,18 +23,31 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private GameObject firePoint;
 
+    private ParticleSystem ps;
+
     public IObjectPool<GameObject> pool; // 오브젝트 풀
+
+    void Awake()
+    {
+        ps = GetComponent<ParticleSystem>();
+    }
 
     public void SetPool(IObjectPool<GameObject> objectPool)
     {
         pool = objectPool;
     }
 
+    void Start()
+    {
+        
+        ObjectPoolManager.Instance.CreatePool("EnemyDroneAttackEffect", AttackEffect, 1, 3);
+        ObjectPoolManager.Instance.CreatePool("EnemyDroneDieEffect", DieEffect, 1, 3);
+    }
+
     void OnEnable()
     {
         isDead = false;
         hasReachedTarget = false;
-        // 드론을 활성화 상태로 초기화
         gameObject.SetActive(true);
     }
 
@@ -88,12 +101,13 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         if (isDead) yield break;
 
         // 효과 객체를 풀에서 가져옵니다.
-        GameObject attack = ObjectPoolManager.Instance.GetFromPool("attackEffect", firePoint.transform.position, Quaternion.identity);
+        GameObject attack = ObjectPoolManager.Instance.GetFromPool("EnemyDroneAttackEffect", firePoint.transform.position, Quaternion.identity);
         StartCoroutine(UpdateAttackEffectPosition(attack));
         audioSource.PlayOneShot(AttackSound);
 
+        yield return new WaitForSeconds(0.2f);
         // 효과가 끝난 후 반환합니다.
-        ObjectPoolManager.Instance.ReturnToPool("attackEffect", attack);
+        ObjectPoolManager.Instance.ReturnToPool("EnemyDroneAttackEffect", attack);
 
         Player_New.Instance.TakeDamage();
 
@@ -114,21 +128,29 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         isDead = true;
         audioSource.PlayOneShot(DieSound);
 
-        // 사망 효과 객체를 풀에서 가져옵니다.
-        GameObject dieEffect = ObjectPoolManager.Instance.GetFromPool("dieEffect", transform.position, Quaternion.identity);
-        ObjectPoolManager.Instance.ReturnToPool("dieEffect", dieEffect); // 효과가 끝난 후 반환
-
-        yield return new WaitForSeconds(1.5f);
+        GameObject dieEffect = ObjectPoolManager.Instance.GetFromPool("EnemyDroneDieEffect", transform.position, Quaternion.identity);
+        if (dieEffect != null)
+        {
+            ParticleSystem ps = dieEffect.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                ps.Clear();
+                ps.Play();
+                yield return new WaitForSeconds(ps.main.duration); // 파티클이 끝날 때까지 대기
+                ObjectPoolManager.Instance.ReturnToPool("EnemyDroneDieEffect", dieEffect);
+            }
+        }
 
         if (pool != null)
         {
-            pool.Release(gameObject); // 풀로 반환
+            ObjectPoolManager.Instance.ReturnToPool("drone", this.gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+
 
     public void TakeDamage()
     {

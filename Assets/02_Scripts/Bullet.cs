@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
     private float lifetime;
     private Vector3 moveDirection;
 
-    public void SetDirection(Vector3 direction)  // 🔥 외부에서 방향을 설정할 수 있도록 추가
+    public void SetDirection(Vector3 direction)  // 외부에서 방향을 설정할 수 있도록 추가
     {
         moveDirection = direction.normalized;  // 방향을 정규화
     }
@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
     void OnEnable()
     {
         lifetime = BulletTime;
+
     }
 
     void Update()

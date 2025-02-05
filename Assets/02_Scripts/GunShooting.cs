@@ -62,12 +62,12 @@ public class GunShooting : MonoBehaviour
             return;
         }
 
-        ObjectPoolManager.Instance.CreatePool("Bullet", BulletPrefab, 60, 100);
+        ObjectPoolManager.Instance.CreatePool("Bullet", BulletPrefab, 30, 100);
 
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
         float triggerPressed = 0;
         float gripPressed = 0;
@@ -103,9 +103,9 @@ public class GunShooting : MonoBehaviour
         previousGrips = gripPressed;
     }
 
+
     void FireBullet()
     {
-        Vector3 bulletDirection = FirePoint.TransformDirection(Vector3.forward);
         if (currentBullet <= 0)
         {
             StartCoroutine(FireSound(true)); // 총알 없음 소리
@@ -115,7 +115,12 @@ public class GunShooting : MonoBehaviour
         canFire = false;
         currentBullet--;
 
-        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", FirePoint.position, FirePoint.rotation);
+        // FirePoint의 위치와 회전값을 최신 상태로 가져옴
+        Vector3 bulletDirection = FirePoint.TransformDirection(Vector3.forward);  // 총알이 나갈 방향
+        Vector3 bulletPosition = FirePoint.position;
+
+        // 오브젝트 풀에서 총알을 가져와 발사
+        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", bulletPosition, FirePoint.rotation);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
 
         if (bullet != null)
@@ -127,9 +132,10 @@ public class GunShooting : MonoBehaviour
         {
             Debug.LogError("FireBullet: Bullet 컴포넌트를 찾을 수 없습니다!");
         }
-        
+
         StartCoroutine(FireSound());
     }
+
 
 
     IEnumerator FireSound(bool isEmpty = false)
@@ -138,13 +144,13 @@ public class GunShooting : MonoBehaviour
         {
             float volume = Random.Range(0.4f, 1f); // 발사 소리의 랜덤 볼륨
             source.PlayOneShot(fireSound, volume);
+            yield return new WaitForSeconds(fireRate);
         }
         else
         {
             source.PlayOneShot(emptyGunSound, 0.8f); // 총알이 없을 때 소리
         }
-
-        yield return new WaitForSeconds(fireRate);
+        
         canFire = true;
     }
 

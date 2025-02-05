@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dronePrefab: {fileID: 827125458431722109, guid: ba3fafb7bb210bd4eab2332a4e09627b, type: 3}
   player: {fileID: 0}
-  leftTarget: {fileID: 0}
-  rightTarget: {fileID: 0}
+  leftTarget: {fileID: 7668124736780291682, guid: d3ab45efeeb936e4c81a334113dccc87, type: 3}
+  rightTarget: {fileID: 3161131962759420507, guid: c29a8ef3026d8804db4b3e76456d5fb6, type: 3}
   spawnRadius: 50
   spawnDistanceOutside: 100
