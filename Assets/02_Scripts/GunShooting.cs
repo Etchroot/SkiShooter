@@ -122,6 +122,8 @@ public class GunShooting : MonoBehaviour
         // 오브젝트 풀에서 총알을 가져와 발사
         GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", bulletPosition, FirePoint.rotation);
         Bullet bullet = bulletObj.GetComponent<Bullet>();
+        bullet.transform.SetPositionAndRotation(FirePoint.position, FirePoint.rotation);
+        bullet.gameObject.SetActive(true);
 
         if (bullet != null)
         {
@@ -150,7 +152,7 @@ public class GunShooting : MonoBehaviour
         {
             source.PlayOneShot(emptyGunSound, 0.8f); // 총알이 없을 때 소리
         }
-        
+
         canFire = true;
     }
 

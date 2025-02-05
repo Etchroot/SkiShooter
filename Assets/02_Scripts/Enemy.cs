@@ -134,6 +134,31 @@ public class Enemy : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 
+    public IEnumerator DiebyExplosion()
+    {
+        isDead = true; // 죽는 중으로 설정
+
+        // 애니메이션 제거
+        Animator animator = GetComponentInChildren<Animator>();
+        if (animator != null)
+        {
+            Debug.Log("체크");
+
+            animator.enabled = false;
+        }
+
+        // 빌헬름의 비명 재생
+        if (getShotAudio.Length > 0)
+        {
+            AudioClip lastClip = getShotAudio[getShotAudio.Length - 1];
+            getShotAudioSource.PlayOneShot(lastClip);
+        }
+
+        this.gameObject.tag = "Untagged";
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
+    }
+
     //private void OnDrawGizmosSelected()
     //{
     //    Gizmos.color = Color.red;

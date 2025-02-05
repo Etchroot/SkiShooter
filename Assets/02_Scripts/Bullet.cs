@@ -33,20 +33,15 @@ public class Bullet : MonoBehaviour
             //ReturnToPool();
             ObjectPoolManager.Instance.ReturnToPool("Bullet", this.gameObject);
         }
-    }
 
-    void FixedUpdate()
-    {
-        RaycastHit hit;
-
-        transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
+        transform.position += moveDirection * BulletSpeed * Time.deltaTime;
         //transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
 
         // 디버깅용 Ray 그리기
         Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
 
         // 총알 이동 거리 내에서 충돌 감지
-        if (Physics.Raycast(transform.position, moveDirection, out hit, BulletSpeed * Time.fixedDeltaTime))
+        if (Physics.Raycast(transform.position, moveDirection, out var hit, 1.0f))
         {
             if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY") || hit.collider.CompareTag("OBSTACLE"))
             {

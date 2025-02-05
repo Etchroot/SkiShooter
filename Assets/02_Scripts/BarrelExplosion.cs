@@ -48,10 +48,11 @@ public class BarrelExplosion : MonoBehaviour, IDamageable
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
 
-            if (rb != null) // Rigidbody가 있는 오브젝트만 폭발 영향 받음
+            // 적이 폭발 반경 내에 있다면 isKinematic = false로 변경
+            DisableKinematicOnChildren disableScript = nearbyObject.GetComponentInChildren<DisableKinematicOnChildren>();
+            if (disableScript != null)
             {
-                // Rigidbody에 폭발력 적용
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardModifier, ForceMode.Impulse);
+                disableScript.DisableKinematic();
             }
 
             // 적에게 추가적인 데미지 부여
@@ -60,8 +61,14 @@ public class BarrelExplosion : MonoBehaviour, IDamageable
             {
                 if (!enemy.isDead)
                 {
-                    StartCoroutine(enemy.Die()); // Die() 코루틴 실행
+                    StartCoroutine(enemy.DiebyExplosion()); // Die() 코루틴 실행
                 }
+            }
+
+            if (rb != null) // Rigidbody가 있는 오브젝트만 폭발 영향 받음
+            {
+                // Rigidbody에 폭발력 적용
+                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardModifier, ForceMode.Impulse);
             }
 
         }

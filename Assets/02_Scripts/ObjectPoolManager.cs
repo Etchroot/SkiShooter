@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-    
+
     private Dictionary<string, IObjectPool<GameObject>> pools = new Dictionary<string, IObjectPool<GameObject>>();
     private Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject>();
 
@@ -15,7 +15,7 @@ public class ObjectPoolManager : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "01_Title")
         {
             Destroy(gameObject);
-            return; 
+            return;
         }
 
         if (instance == null)
@@ -52,7 +52,7 @@ public class ObjectPoolManager : MonoBehaviour
                 {
                     DontDestroyOnLoad(obj);  // 씬이 변경되어도 삭제되지 않도록 설정
                 }
-
+                obj.SetActive(false);
                 return obj;
             },
             //actionOnGet: obj =>
@@ -89,9 +89,9 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         GameObject obj = pools[key].Get();
-        obj.transform.position = position;
-        obj.transform.rotation = rotation;
-        obj.SetActive(true);
+        // obj.transform.position = position;
+        // obj.transform.rotation = rotation;
+        //obj.SetActive(true);
         return obj;
     }
 
