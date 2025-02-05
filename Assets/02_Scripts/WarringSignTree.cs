@@ -12,6 +12,7 @@ public class WarringSignTree : MonoBehaviour
     [SerializeField] private Image rightSide; // 오른쪽 적
     [SerializeField] private float blinkInterval = 0.5f; // 깜빡이는 간격
     [SerializeField] private int blinkCount = 5; // 깜빡일 횟수
+    private int blinkCountDrone = 2; // 드롬 경고창 깜빡임 횟수
     [SerializeField] private float detectionRange = 100f; // 감지 범위
     [SerializeField] private LayerMask detectionLayer; // 감지 대상 레이어
 
@@ -55,14 +56,14 @@ public class WarringSignTree : MonoBehaviour
     {
         if (!leftBlinkng)
         {
-            StartCoroutine(BlinkRoutine(leftSide));
+            StartCoroutine(BlinkRoutineDrone(leftSide));
         }
     }
     public void DetectRightSide()
     {
         if (!rightBlinkng)
         {
-            StartCoroutine(BlinkRoutine(rightSide));
+            StartCoroutine(BlinkRoutineDrone(rightSide));
         }
     }
 
@@ -85,14 +86,7 @@ public class WarringSignTree : MonoBehaviour
         {
             isBlinkng = true;
         }
-        if (sign == leftSide)
-        {
-            leftBlinkng = true;
-        }
-        if (sign == rightSide)
-        {
-            rightBlinkng = true;
-        }
+
 
         // 이미지 활성화
         sign.enabled = true;
@@ -110,6 +104,8 @@ public class WarringSignTree : MonoBehaviour
             yield return new WaitForSeconds(blinkInterval);
         }
 
+
+
         // 깜빡임이 끝난 후 이미지 비활성화
         sign.enabled = false;
 
@@ -117,6 +113,44 @@ public class WarringSignTree : MonoBehaviour
         {
             isBlinkng = false;
         }
+
+
+    }
+
+    private IEnumerator BlinkRoutineDrone(Image sign)
+    {
+
+        if (sign == leftSide)
+        {
+            leftBlinkng = true;
+        }
+        if (sign == rightSide)
+        {
+            rightBlinkng = true;
+        }
+
+        // 이미지 활성화
+        sign.enabled = true;
+
+        for (int i = 0; i < blinkCountDrone; i++)
+        {
+            // if (!hasWarned) // 감지 대상이 없어지면 즉시 중단
+            // {
+            //     break;
+            // }
+            // Alpha값 조정으로 투명하게 만들기
+            SetImageAlpha(sign, 0f);
+            yield return new WaitForSeconds(blinkInterval);
+            SetImageAlpha(sign, 1f);
+            yield return new WaitForSeconds(blinkInterval);
+        }
+
+
+
+        // 깜빡임이 끝난 후 이미지 비활성화
+        sign.enabled = false;
+
+
         if (sign == leftSide)
         {
             leftBlinkng = false;
@@ -125,7 +159,6 @@ public class WarringSignTree : MonoBehaviour
         {
             rightBlinkng = false;
         }
-
     }
 
     private void SetImageAlpha(Image _sign, float alpha)

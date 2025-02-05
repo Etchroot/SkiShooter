@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
         if (lifetime <= 0)
         {
             //ReturnToPool();
-            ObjectPoolManager.Instance.ReturnToPool("Bullet",this.gameObject);
+            ObjectPoolManager.Instance.ReturnToPool("Bullet", this.gameObject);
         }
     }
 
@@ -39,8 +39,8 @@ public class Bullet : MonoBehaviour
     {
         RaycastHit hit;
 
-        //transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
-        transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
+        transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
+        //transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
 
         // 디버깅용 Ray 그리기
         Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
 }
