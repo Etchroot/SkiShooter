@@ -63,7 +63,13 @@ public class DroneSpawner : MonoBehaviour
         if (droneScript != null)
         {
             droneScript.player = player;
-            droneScript.target = Random.Range(0, 2) == 1 ? leftTarget : rightTarget;
+
+            int ran = Random.Range(0, 2);
+            droneScript.target = ran == 1 ? leftTarget : rightTarget;
+
+            if (ran == 1) WarringSignTree.LeftSign();
+            else WarringSignTree.RightSign();
+
             droneScript.SetPool(dronePool); // 드론에 풀 전달
         }
     }

@@ -11,6 +11,8 @@ public class Bullet : MonoBehaviour
     private float lifetime;
     private Vector3 moveDirection;
 
+
+
     public void SetDirection(Vector3 direction)  // 외부에서 방향을 설정할 수 있도록 추가
     {
         moveDirection = direction.normalized;  // 방향을 정규화
@@ -37,7 +39,8 @@ public class Bullet : MonoBehaviour
     {
         RaycastHit hit;
 
-        transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
+        //transform.position += moveDirection * BulletSpeed * Time.fixedDeltaTime;
+        transform.Translate(moveDirection * BulletSpeed * Time.fixedDeltaTime);
 
         // 디버깅용 Ray 그리기
         Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.fixedDeltaTime), Color.red, 0.1f);
