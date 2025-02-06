@@ -12,7 +12,7 @@ public class WarringSignTree : MonoBehaviour
     [SerializeField] private Image rightSide; // 오른쪽 적
     [SerializeField] private float blinkInterval = 0.5f; // 깜빡이는 간격
     [SerializeField] private int blinkCount = 5; // 깜빡일 횟수
-    private int blinkCountDrone = 2; // 드롬 경고창 깜빡임 횟수
+    private int blinkCountDrone = 2; // 드론 경고창 깜빡임 횟수
     [SerializeField] private float detectionRange = 100f; // 감지 범위
     [SerializeField] private LayerMask detectionLayer; // 감지 대상 레이어
 
