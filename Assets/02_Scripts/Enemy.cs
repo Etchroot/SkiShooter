@@ -126,7 +126,7 @@ public class Enemy : MonoBehaviour, IDamageable
         // 랜덤으로 죽는 소리 클립 재생
         int randomIndex = Random.Range(0, getShotAudio.Length - 1);
         AudioClip selectedClip = getShotAudio[randomIndex];
-        getShotAudioSource.PlayOneShot(selectedClip);
+        getShotAudioSource.PlayOneShot(selectedClip, 1.5f); // 볼륨 증가
 
         anim.SetTrigger("DIE");
         this.gameObject.tag = "Untagged";
