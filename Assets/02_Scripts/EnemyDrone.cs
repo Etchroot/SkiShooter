@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using System.Collections;
 
 public class EnemyDrone : MonoBehaviour, IDamageable
@@ -7,43 +6,28 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     public Transform player; // 플레이어 Transform
     public Transform target; // 목적지 Transform
 
-    public float moveSpeed = 17f; // 이동 속도
-    public float attackRange = 2f; // 공격 범위
-    public float attackCooldown = 2f; // 공격 쿨다운
-    public float rotationSpeed = 5f; // 회전 속도
+    [SerializeField] private float moveSpeed = 17f; // 이동 속도
+    [SerializeField] private float attackRange = 2f; // 공격 범위
+    [SerializeField] private float attackCooldown = 2f; // 공격 쿨다운
+    [SerializeField] private float rotationSpeed = 5f; // 회전 속도
 
     private bool isOnCooldown = false;
     private bool isDead = false;
     private bool hasReachedTarget = false;
 
-    [SerializeField] private GameObject AttackEffect;
+    //[SerializeField] private GameObject AttackEffect;
+    //[SerializeField] private GameObject DieEffect;
     [SerializeField] private AudioClip AttackSound;
-    [SerializeField] private GameObject DieEffect;
     [SerializeField] private AudioClip DieSound;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private GameObject firePoint;
+    [SerializeField] private Transform firePoint;
 
     private ParticleSystem ps;
-
-    public IObjectPool<GameObject> pool; // 오브젝트 풀
 
     void Awake()
     {
         ps = GetComponent<ParticleSystem>();
     }
-
-    public void SetPool(IObjectPool<GameObject> objectPool)
-    {
-        pool = objectPool;
-    }
-
-    void Start()
-    {
-        
-        ObjectPoolManager.Instance.CreatePool("EnemyDroneAttackEffect", AttackEffect, 1, 3);
-        ObjectPoolManager.Instance.CreatePool("EnemyDroneDieEffect", DieEffect, 1, 3);
-    }
-
     void OnEnable()
     {
         isDead = false;
@@ -100,27 +84,20 @@ public class EnemyDrone : MonoBehaviour, IDamageable
 
         if (isDead) yield break;
 
-        // 효과 객체를 풀에서 가져옵니다.
-        GameObject attack = ObjectPoolManager.Instance.GetFromPool("EnemyDroneAttackEffect", firePoint.transform.position, Quaternion.identity);
-        StartCoroutine(UpdateAttackEffectPosition(attack));
+        // 공격이펙트 풀
+        GameObject attack = ObjectPoolManager.GetObject(EPoolObjectType.EnemyDrone_Attack);
+        attack.transform.position = this.firePoint.position;
+        attack.transform.rotation = this.firePoint.rotation;
         audioSource.PlayOneShot(AttackSound);
 
         yield return new WaitForSeconds(0.2f);
-        // 효과가 끝난 후 반환합니다.
-        ObjectPoolManager.Instance.ReturnToPool("EnemyDroneAttackEffect", attack);
+
+        //오브젝트풀 리턴
+        ObjectPoolManager.ReturnObject(attack, EPoolObjectType.EnemyDrone_Attack);
 
         Player_New.Instance.TakeDamage();
 
         isOnCooldown = false;
-    }
-
-    IEnumerator UpdateAttackEffectPosition(GameObject effect)
-    {
-        while (effect != null)
-        {
-            effect.transform.position = player.position; // 플레이어를 향하게 설정
-            yield return null;
-        }
     }
 
     IEnumerator Die()
@@ -128,7 +105,9 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         isDead = true;
         audioSource.PlayOneShot(DieSound);
 
-        GameObject dieEffect = ObjectPoolManager.Instance.GetFromPool("EnemyDroneDieEffect", transform.position, Quaternion.identity);
+        GameObject dieEffect = ObjectPoolManager.GetObject(EPoolObjectType.EnemyDrone_Die);
+        dieEffect.transform.position = gameObject.transform.position;
+        
         if (dieEffect != null)
         {
             ParticleSystem ps = dieEffect.GetComponent<ParticleSystem>();
@@ -137,18 +116,12 @@ public class EnemyDrone : MonoBehaviour, IDamageable
                 ps.Clear();
                 ps.Play();
                 yield return new WaitForSeconds(ps.main.duration); // 파티클이 끝날 때까지 대기
-                ObjectPoolManager.Instance.ReturnToPool("EnemyDroneDieEffect", dieEffect);
+                // 오브젝트풀 리턴
+                ObjectPoolManager.ReturnObject(dieEffect, EPoolObjectType.EnemyDrone_Die);
             }
         }
-
-        if (pool != null)
-        {
-            ObjectPoolManager.Instance.ReturnToPool("drone", this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        // 오브젝트풀 리턴
+        ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.EnemyDrone);
     }
 
 

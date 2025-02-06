@@ -11,20 +11,6 @@ public class DroneSpawner : MonoBehaviour
     [SerializeField] private float spawnDistanceOutside = 12f; // 스폰 범위 밖 거리
 
     private bool hasSpawned = false; // 스폰 여부
-    private IObjectPool<GameObject> dronePool; // 드론 오브젝트 풀
-
-    void Start()
-    {
-        // 드론 풀을 먼저 생성
-        ObjectPoolManager.Instance.CreatePool("drone", dronePrefab, 10, 20);
-
-        // 풀을 직접 가져오기
-        dronePool = ObjectPoolManager.Instance.GetPool("drone");
-        if (dronePool == null)
-        {
-            Debug.LogError("Drone pool is null!");
-        }
-    }
 
     void Update()
     {
@@ -47,14 +33,7 @@ public class DroneSpawner : MonoBehaviour
     {
         Vector3 spawnPosition = GetRandomPositionOutsideSpawnRadius();
 
-        // ObjectPoolManager에서 드론을 풀에서 가져옵니다.
-        GameObject drone = dronePool.Get();
-
-        if (drone == null)
-        {
-            Debug.LogError("Failed to get drone from pool!");
-            return;
-        }
+        GameObject drone = ObjectPoolManager.GetObject(EPoolObjectType.EnemyDrone);
 
         drone.transform.position = spawnPosition;
         drone.transform.rotation = Quaternion.identity;
@@ -69,8 +48,6 @@ public class DroneSpawner : MonoBehaviour
 
             if (ran == 1) WarringSignTree.LeftSign();
             else WarringSignTree.RightSign();
-
-            droneScript.SetPool(dronePool); // 드론에 풀 전달
         }
     }
 

@@ -246,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8766957836608595198}
   - component: {fileID: 827251079852315501}
-  - component: {fileID: 6216434979540792684}
+  - component: {fileID: 5303706637109469804}
   m_Layer: 7
   m_Name: SciFiHandGun
   m_TagString: Untagged
@@ -298,7 +298,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6216434979540792684
+--- !u!114 &5303706637109469804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

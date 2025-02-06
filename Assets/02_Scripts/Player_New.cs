@@ -55,7 +55,7 @@ public class Player_New : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
         {
