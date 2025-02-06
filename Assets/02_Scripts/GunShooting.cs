@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
 public class GunShooting : MonoBehaviour
@@ -42,9 +41,6 @@ public class GunShooting : MonoBehaviour
     private GameObject gunclipPrefab; // 새로운 탄창 프리펩
     public GameObject currentGunclip; // 현재 결합된 탄창
 
-    // UnityEngine.Pool을 활용한 오브젝트 풀
-    private ObjectPool<GameObject> bulletPool;
-
     void Awake()
     {
         haptics = GetComponent<Haptic>();
@@ -53,21 +49,7 @@ public class GunShooting : MonoBehaviour
         gunclipPrefab = Resources.Load<GameObject>(gunclipPrefabPath);
 
     }
-
-    void Start()
-    {
-        if (ObjectPoolManager.Instance == null)
-        {
-            Debug.LogError("ObjectPoolManager 인스턴스가 초기화되지 않았습니다!");
-            return;
-        }
-
-        ObjectPoolManager.Instance.CreatePool("Bullet", BulletPrefab, 30, 100);
-
-    }
-
-
-    void FixedUpdate()
+    void Update()
     {
         float triggerPressed = 0;
         float gripPressed = 0;
@@ -103,7 +85,6 @@ public class GunShooting : MonoBehaviour
         previousGrips = gripPressed;
     }
 
-
     void FireBullet()
     {
         if (currentBullet <= 0)
@@ -114,31 +95,17 @@ public class GunShooting : MonoBehaviour
 
         canFire = false;
         currentBullet--;
-
-        // FirePoint의 위치와 회전값을 최신 상태로 가져옴
-        Vector3 bulletDirection = FirePoint.TransformDirection(Vector3.forward);  // 총알이 나갈 방향
-        Vector3 bulletPosition = FirePoint.position;
-
+                
         // 오브젝트 풀에서 총알을 가져와 발사
-        GameObject bulletObj = ObjectPoolManager.Instance.GetFromPool("Bullet", bulletPosition, FirePoint.rotation);
-        Bullet bullet = bulletObj.GetComponent<Bullet>();
-        bullet.transform.SetPositionAndRotation(FirePoint.position, FirePoint.rotation);
-        bullet.gameObject.SetActive(true);
-
-        if (bullet != null)
-        {
-            bullet.Pool = ObjectPoolManager.Instance.GetPool("Bullet") as IObjectPool<Bullet>;
-            bullet.SetDirection(bulletDirection);
-        }
-        else
-        {
-            Debug.LogError("FireBullet: Bullet 컴포넌트를 찾을 수 없습니다!");
-        }
-
+        GameObject bulletObj = ObjectPoolManager.GetObject(EPoolObjectType.Bullet);
+        bulletObj.transform.SetPositionAndRotation(FirePoint.position, FirePoint.rotation);
+        
         StartCoroutine(FireSound());
+
+        // Haptics Trigger (진동 발생)
+        haptics?.TriggerHapticFeedback(isLeft, hapticsAmplitude, hapticsDuration);
+
     }
-
-
 
     IEnumerator FireSound(bool isEmpty = false)
     {
