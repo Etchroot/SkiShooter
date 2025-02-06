@@ -41,36 +41,33 @@ public class BarrelExplosion : MonoBehaviour, IDamageable
             Debug.LogError("폭발 프리펩이 없음");
         }
 
-        // 폭발 반경 내의 모든 Collider를 탐색
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        // 폭발 반경 내의 Enemy 검출
+        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, explosionRadius, 1 << LayerMask.NameToLayer("ENEMY"));
+        foreach (var enemy in enemyColliders)
+        {
+            // Animator 비활성화
+            enemy.GetComponentInChildren<Animator>().enabled = false;
+            // Ragdoll 활성화
+            enemy.GetComponentInChildren<DisableKinematicOnChildren>().DisableKinematic();
+            // 적에게 추가적인 데미지 부여
+            var _enemy = enemy.GetComponent<Enemy>();
+            if (!_enemy.isDead)
+            {
+                StartCoroutine(_enemy.DiebyExplosion());
+            }
+        }
 
+        // 폭발 반경 내의 모든 Collider를 탐색
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, 1 << 13);
         foreach (Collider nearbyObject in colliders)
         {
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-
-            // 적이 폭발 반경 내에 있다면 isKinematic = false로 변경
-            DisableKinematicOnChildren disableScript = nearbyObject.GetComponentInChildren<DisableKinematicOnChildren>();
-            if (disableScript != null)
-            {
-                disableScript.DisableKinematic();
-            }
-
-            // 적에게 추가적인 데미지 부여
-            Enemy enemy = nearbyObject.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                if (!enemy.isDead)
-                {
-                    StartCoroutine(enemy.DiebyExplosion()); // Die() 코루틴 실행
-                }
-            }
 
             if (rb != null) // Rigidbody가 있는 오브젝트만 폭발 영향 받음
             {
                 // Rigidbody에 폭발력 적용
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius, upwardModifier, ForceMode.Impulse);
             }
-
         }
 
         // 가스통의 시각적/물리적 요소 비활성화

@@ -124,7 +124,7 @@ public class Enemy : MonoBehaviour, IDamageable
         isDead = true; // 죽는 중으로 설정
 
         // 랜덤으로 죽는 소리 클립 재생
-        int randomIndex = Random.Range(0, getShotAudio.Length);
+        int randomIndex = Random.Range(0, getShotAudio.Length - 1);
         AudioClip selectedClip = getShotAudio[randomIndex];
         getShotAudioSource.PlayOneShot(selectedClip);
 
@@ -139,13 +139,13 @@ public class Enemy : MonoBehaviour, IDamageable
         isDead = true; // 죽는 중으로 설정
 
         // 애니메이션 제거
-        Animator animator = GetComponentInChildren<Animator>();
-        if (animator != null)
-        {
-            Debug.Log("체크");
+        // Animator animator = GetComponentInChildren<Animator>();
+        // if (animator != null)
+        // {
+        //     Debug.Log("체크");
 
-            animator.enabled = false;
-        }
+        //     animator.enabled = false;
+        // }
 
         // 빌헬름의 비명 재생
         if (getShotAudio.Length > 0)
