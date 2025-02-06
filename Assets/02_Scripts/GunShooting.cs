@@ -95,12 +95,16 @@ public class GunShooting : MonoBehaviour
 
         canFire = false;
         currentBullet--;
-
+                
         // 오브젝트 풀에서 총알을 가져와 발사
         GameObject bulletObj = ObjectPoolManager.GetObject(EPoolObjectType.Bullet);
         bulletObj.transform.SetPositionAndRotation(FirePoint.position, FirePoint.rotation);
         
         StartCoroutine(FireSound());
+
+        // Haptics Trigger (진동 발생)
+        haptics?.TriggerHapticFeedback(isLeft, hapticsAmplitude, hapticsDuration);
+
     }
 
     IEnumerator FireSound(bool isEmpty = false)
