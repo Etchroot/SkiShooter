@@ -1533,6 +1533,10 @@ PrefabInstance:
       propertyPath: delay
       value: 0.02
       objectReference: {fileID: 0}
+    - target: {fileID: 320977474209866148, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
+      propertyPath: m_text
+      value: "\uC790\uD3ED \uD65C\uC131\uD654"
+      objectReference: {fileID: 0}
     - target: {fileID: 369596792419935476, guid: 8bcadffd0eebf2d45b6c82a6f81e3f4b, type: 3}
       propertyPath: m_fontSizeMax
       value: 40
