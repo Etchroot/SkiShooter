@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.0001
+  m_FogDensity: 0.00015
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -2703,6 +2703,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4082331024997538396, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
+      propertyPath: warringSignTree
+      value: 
+      objectReference: {fileID: 764878257}
+    - target: {fileID: 4082331024997538396, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
+      propertyPath: detectionLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 8112470272826447029, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
       propertyPath: m_Name
       value: Trunk
@@ -3479,6 +3487,10 @@ PrefabInstance:
       value: 151
       objectReference: {fileID: 0}
     - target: {fileID: 8530867719485224423, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+      propertyPath: blinkCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8530867719485224423, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
       propertyPath: detectionRange
       value: 100
       objectReference: {fileID: 0}
@@ -3515,6 +3527,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1188862435}
   m_SourcePrefab: {fileID: 100100000, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+--- !u!114 &764878257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8530867719485224423, guid: dff4258e9904d6e42965e60c4ffbb943, type: 3}
+  m_PrefabInstance: {fileID: 764878256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 782cec22b7764384cb32455eb039760b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &766338143
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5587,7 +5610,7 @@ MonoBehaviour:
   target: {fileID: 1200658227}
   playercamera: {fileID: 6752275085783206824}
   rotationSpeed: 15
-  coreSpeed: 300
+  coreSpeed: 400
   distance: 1
 --- !u!4 &1200658227 stripped
 Transform:
@@ -6560,6 +6583,14 @@ PrefabInstance:
     - target: {fileID: 545736692450830289, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082331024997538396, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
+      propertyPath: warringSignTree
+      value: 
+      objectReference: {fileID: 764878257}
+    - target: {fileID: 4082331024997538396, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
+      propertyPath: detectionLayer.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 8112470272826447029, guid: 3e81209d2f7007c43b1b9873588bfae5, type: 3}
       propertyPath: m_Name
@@ -8604,6 +8635,10 @@ PrefabInstance:
       propertyPath: mainUI
       value: 
       objectReference: {fileID: 1851675641}
+    - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
+      propertyPath: maxSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 158155377978439049, guid: 9197b7480254ffd46973f33ce6726343, type: 3}
       propertyPath: redScreen
       value: 

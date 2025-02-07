@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 353510820466182434}
   - component: {fileID: 5756257382850240661}
   - component: {fileID: 5134100717969752442}
+  - component: {fileID: 4082331024997538396}
   m_Layer: 12
   m_Name: Trunk
   m_TagString: TRUNK
@@ -217,3 +218,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.72, y: 0.7920009, z: 3.07}
   m_Center: {x: -0.00012378395, y: 0.39431888, z: 0.054151416}
+--- !u!114 &4082331024997538396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112470272826447029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c86ad1f902aaf4e9cc8611ed9d05d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 100
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  warringSignTree: {fileID: 0}

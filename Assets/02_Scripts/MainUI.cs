@@ -88,7 +88,6 @@ public class MainUI : MonoBehaviour
         }
 
         palytime += Time.deltaTime;
-        //Debug.Log($"플레이 타임 : {palytime}");
 
         Timer();
         LeftReloading();
@@ -253,8 +252,6 @@ public class MainUI : MonoBehaviour
 
     void Timer()
     {
-
-
         int minutes = Mathf.FloorToInt(palytime / 60); // 분 계산
         int seconds = Mathf.FloorToInt(palytime % 60); // 초 계산
 
@@ -315,16 +312,7 @@ public class MainUI : MonoBehaviour
     // 게임 엔드시 리더보드로 장면 전환 및 플레이어 변경
     public void ChangeLeaderBoard()
     {
-        // Debug.Log("씬 변경 진입");
-        // if (!isGameRunning)
-        // {
-        //     StartCoroutine(LoadSceneFadeOut("04_Leaderboard"));
-        //     Debug.Log("씬을 변경합니다.");
-        // }
-        // else
-        // {
-        //     Debug.LogError("씬이 변경되지 않았습니다.");
-        // }
+
         StartCoroutine(FadeOut());
         StartCoroutine(DelayedSwitchToXR(2f));
 
