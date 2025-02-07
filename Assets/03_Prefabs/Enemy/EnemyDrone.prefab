@@ -134,6 +134,7 @@ MonoBehaviour:
   DieSound: {fileID: 8300000, guid: 8524588a69a4f3e40bb597b6221138f1, type: 3}
   audioSource: {fileID: 6580458352514613433}
   firePoint: {fileID: 5551604649124187714}
+  DronModel: {fileID: 124957138955796139}
 --- !u!82 &6580458352514613433
 AudioSource:
   m_ObjectHideFlags: 0
@@ -380,6 +381,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300006, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -388,6 +397,11 @@ PrefabInstance:
       addedObject: {fileID: 5551604649124187714}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+--- !u!1 &124957138955796139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+  m_PrefabInstance: {fileID: 124957138955696137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &124957138955821707 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}

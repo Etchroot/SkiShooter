@@ -53,6 +53,10 @@ public class Obstacle : MonoBehaviour, IDamageable
             StartCoroutine(Delay());
 
         }
+        else
+        {
+            return;
+        }
     }
 
     IEnumerator Delay()

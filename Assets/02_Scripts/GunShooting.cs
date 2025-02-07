@@ -114,13 +114,14 @@ public class GunShooting : MonoBehaviour
             float volume = Random.Range(0.4f, 1f); // 발사 소리의 랜덤 볼륨
             source.PlayOneShot(fireSound, volume);
             yield return new WaitForSeconds(fireRate);
+            canFire = true;
         }
         else
         {
             source.PlayOneShot(emptyGunSound, 0.8f); // 총알이 없을 때 소리
+            canFire = false;
         }
-
-        canFire = true;
+        
     }
 
     IEnumerator Reload()
@@ -136,7 +137,7 @@ public class GunShooting : MonoBehaviour
         source.PlayOneShot(reloadSound);
         //Debug.Log($"{(isLeft ? "왼쪽" : "오른쪽")} 총알 재장전 완료");
 
-
+        canFire = true;
         isReloading = false;
     }
 
