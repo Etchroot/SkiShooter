@@ -116,6 +116,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage()
     {
+        if (isDead) return;
         StartCoroutine(Die());
     }
 
