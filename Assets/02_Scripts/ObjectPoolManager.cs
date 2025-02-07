@@ -10,7 +10,8 @@ public enum EPoolObjectType
     HitBloodEffect,
     EnemyDrone,
     EnemyDrone_Die,
-    EnemyDrone_Attack
+    EnemyDrone_Attack,
+    ICE_BRAKE
 }
 
 // 오브젝트 풀
