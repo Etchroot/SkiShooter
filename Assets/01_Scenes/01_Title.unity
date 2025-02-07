@@ -1453,12 +1453,6 @@ MonoBehaviour:
   - {fileID: 2111813586}
   - {fileID: 454348990}
   - {fileID: 1281549914}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   clickSound: {fileID: 8300000, guid: 843ded30ce423e84c90e21b592a63f5b, type: 3}
   audioSource: {fileID: 1086285854}
 --- !u!114 &1089668159 stripped
