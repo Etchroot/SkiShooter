@@ -13,11 +13,16 @@ public class Bullet : MonoBehaviour
 
     private bool hashit =false;
 
-    private void Awake()
+    private int enemyLayer; // ENEMY Layer 저장 변수
+
+
+    void Awake()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         layerMask = LayerMask.GetMask("ENEMY", "OBSTACLE", "BARREL", "ENEMYDRONE", "LAND");
+        enemyLayer = LayerMask.NameToLayer("ENEMY");  // ENEMY Layer의 숫자를 가져오기
     }
+
 
     void OnEnable()
     {
@@ -56,7 +61,8 @@ public class Bullet : MonoBehaviour
                 if (meshRenderer != null)
                     meshRenderer.enabled = false;
 
-                EPoolObjectType re_Type = hit.collider.CompareTag("ENEMY") ? EPoolObjectType.HitBloodEffect : EPoolObjectType.HitEffect;
+                EPoolObjectType re_Type = hit.collider.gameObject.layer == enemyLayer ?
+                          EPoolObjectType.HitBloodEffect : EPoolObjectType.HitEffect;
                 GameObject hitEffect = ObjectPoolManager.GetObject(re_Type);
 
                 if (hitEffect != null)
@@ -70,9 +76,7 @@ public class Bullet : MonoBehaviour
                         ps.Clear();
                         ps.Play();
 
-                        ReturnHitEffect(ps.main.duration);
-
-                        ObjectPoolManager.ReturnObject(hitEffect, re_Type);
+                        StartCoroutine(ReturnHitEffect(ps.main.duration, hitEffect, re_Type));
                     }
                     else
                     {
@@ -80,13 +84,16 @@ public class Bullet : MonoBehaviour
                     }
                 }
             }
-            ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+            //ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
         }
     }
 
-    private IEnumerator ReturnHitEffect(float delay)
+    private IEnumerator ReturnHitEffect(float delay,GameObject effect, EPoolObjectType re_Type)
     {
+        //Debug.Log(re_Type);
         yield return new WaitForSeconds(delay);
+        ObjectPoolManager.ReturnObject(effect, re_Type);
+        ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
     }
 
 

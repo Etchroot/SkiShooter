@@ -49,7 +49,7 @@ MonoBehaviour:
     initCount: 30
     prefab: {fileID: 4853834029268263431, guid: 93757a8e4c8c73141b654d077d5b0925, type: 3}
   - type: 1
-    initCount: 2
+    initCount: 10
     prefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   - type: 2
     initCount: 2
