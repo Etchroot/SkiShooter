@@ -80,11 +80,19 @@ public class Bullet : MonoBehaviour
                     }
                     else
                     {
-                        ObjectPoolManager.ReturnObject(hitEffect, re_Type);
+                        StartCoroutine(ReturnHitEffect(2f, hitEffect, re_Type));
                     }
                 }
+                else
+                {
+                    StartCoroutine(ReturnHitEffect(2f, hitEffect, re_Type));
+                    ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+                }
             }
-            //ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+            else
+            {
+                ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+            }
         }
     }
 

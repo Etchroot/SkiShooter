@@ -24,15 +24,27 @@ public class EnemyDrone : MonoBehaviour, IDamageable
 
     private ParticleSystem ps;
 
+    [SerializeField] private GameObject DronModel;
+
     void Awake()
     {
+        
         ps = GetComponent<ParticleSystem>();
     }
     void OnEnable()
     {
         isDead = false;
         hasReachedTarget = false;
-        gameObject.SetActive(true);
+        //gameObject.SetActive(true);
+        if (DronModel != null)
+            DronModel.SetActive(true);
+
+    }
+
+    void OnDisable()
+    {
+        if (DronModel != null)
+            DronModel.SetActive(true);
     }
 
     void Update()
@@ -90,7 +102,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         attack.transform.rotation = this.firePoint.rotation;
         audioSource.PlayOneShot(AttackSound);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.05f);
 
         //오브젝트풀 리턴
         ObjectPoolManager.ReturnObject(attack, EPoolObjectType.EnemyDrone_Attack);
@@ -104,6 +116,9 @@ public class EnemyDrone : MonoBehaviour, IDamageable
     {
         isDead = true;
         audioSource.PlayOneShot(DieSound);
+
+        if (DronModel != null)
+            DronModel.SetActive(false);
 
         GameObject dieEffect = ObjectPoolManager.GetObject(EPoolObjectType.EnemyDrone_Die);
         dieEffect.transform.position = gameObject.transform.position;
@@ -123,7 +138,6 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         // 오브젝트풀 리턴
         ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.EnemyDrone);
     }
-
 
     public void TakeDamage()
     {
