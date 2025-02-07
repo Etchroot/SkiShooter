@@ -19,6 +19,7 @@ TagManager:
   - OBSTACLE
   - BARREL
   - UI
+  - ENEMYDRONE
   layers:
   - Default
   - TransparentFX
@@ -34,8 +35,8 @@ TagManager:
   - HELMET
   - OBSTACLE
   - ENEMY_BODY
-  - 
-  - 
+  - BARREL
+  - ENEMTDRONE
   - 
   - 
   - 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
@@ -6,45 +7,88 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float BulletTime = 3f;
 
     private float lifetime;
-    
+    private MeshRenderer meshRenderer;
+
+    private int layerMask;
+
+    private bool hashit =false;
+
+    private void Awake()
+    {
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        layerMask = LayerMask.GetMask("ENEMY", "OBSTACLE", "BARREL", "ENEMYDRONE", "LAND");
+    }
+
     void OnEnable()
     {
         lifetime = BulletTime;
+        hashit = false;
+    }
+
+    void OnDisable()
+    {
+        if (meshRenderer != null)
+            meshRenderer.enabled = true;
     }
 
     void Update()
     {
-        // 수명 감소 및 반환
+        if (hashit) return;
+
         lifetime -= Time.deltaTime;
-        if (lifetime <= 0)
+        if (lifetime <= 0 && !hashit)
         {
-            //오브젝트풀 반환
             ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
         }
 
         transform.position += transform.forward * BulletSpeed * Time.deltaTime;
-        //transform.Translate(transform.forward * BulletSpeed * Time.deltaTime);
 
-        // 디버깅용 Ray 그리기
-        //Debug.DrawRay(transform.position, moveDirection * (BulletSpeed * Time.DeltaTime), Color.red, 0.1f);
-
-        // 총알 이동 거리 내에서 충돌 감지
-        if (Physics.Raycast(transform.position, transform.forward, out var hit, 1.0f))
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, BulletSpeed * Time.deltaTime, layerMask))
         {
-            if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY") || hit.collider.CompareTag("OBSTACLE"))
+            hashit = true;
+
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+
+            if (damageable != null)
             {
-                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                if (damageable != null)
+                damageable.TakeDamage();
+
+                if (meshRenderer != null)
+                    meshRenderer.enabled = false;
+
+                EPoolObjectType re_Type = hit.collider.CompareTag("ENEMY") ? EPoolObjectType.HitBloodEffect : EPoolObjectType.HitEffect;
+                GameObject hitEffect = ObjectPoolManager.GetObject(re_Type);
+
+                if (hitEffect != null)
                 {
-                    damageable.TakeDamage();
+                    hitEffect.transform.position = hit.point;
+                    hitEffect.transform.rotation = Quaternion.LookRotation(hit.normal);
 
-                    //오브젝트풀 반환
-                    ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+                    ParticleSystem ps = hitEffect.GetComponent<ParticleSystem>();
+                    if (ps != null)
+                    {
+                        ps.Clear();
+                        ps.Play();
 
+                        ReturnHitEffect(ps.main.duration);
+
+                        ObjectPoolManager.ReturnObject(hitEffect, re_Type);
+                    }
+                    else
+                    {
+                        ObjectPoolManager.ReturnObject(hitEffect, re_Type);
+                    }
                 }
             }
+            ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
         }
-
     }
+
+    private IEnumerator ReturnHitEffect(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+    }
+
+
 
 }

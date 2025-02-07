@@ -50,10 +50,16 @@ MonoBehaviour:
     prefab: {fileID: 4853834029268263431, guid: 93757a8e4c8c73141b654d077d5b0925, type: 3}
   - type: 1
     initCount: 2
-    prefab: {fileID: 827125458431722109, guid: ba3fafb7bb210bd4eab2332a4e09627b, type: 3}
+    prefab: {fileID: 3077343761403282166, guid: f78aaaec3b393e24ca74cd6de8194347, type: 3}
   - type: 2
     initCount: 2
-    prefab: {fileID: 1892133220914832, guid: a969fe0d13beb7843af485bf118355c0, type: 3}
+    prefab: {fileID: 100014, guid: 84a826bfb16b21b42b59b720d475b6eb, type: 3}
   - type: 3
+    initCount: 2
+    prefab: {fileID: 827125458431722109, guid: ba3fafb7bb210bd4eab2332a4e09627b, type: 3}
+  - type: 4
+    initCount: 2
+    prefab: {fileID: 1892133220914832, guid: a969fe0d13beb7843af485bf118355c0, type: 3}
+  - type: 5
     initCount: 2
     prefab: {fileID: 100000, guid: 321e16248b7f61f498bc176d571debe6, type: 3}

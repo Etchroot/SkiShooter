@@ -1199,7 +1199,7 @@ GameObject:
   - component: {fileID: 281910163}
   m_Layer: 10
   m_Name: Land
-  m_TagString: Untagged
+  m_TagString: LAND
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2948,10 +2948,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terrain_Mountain
       objectReference: {fileID: 0}
-    - target: {fileID: 3608377083957554373, guid: 0980f4fb468d0b84a97f60efdc3499d0, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 5481811364374925040, guid: 0980f4fb468d0b84a97f60efdc3499d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23
@@ -2991,10 +2987,6 @@ PrefabInstance:
     - target: {fileID: 5481811364374925040, guid: 0980f4fb468d0b84a97f60efdc3499d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8486848163176241161, guid: 0980f4fb468d0b84a97f60efdc3499d0, type: 3}
-      propertyPath: m_TreeBillboardDistance
-      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6037,17 +6029,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4706600575911195348, guid: c59b3e158ff3ab74f9a53b4b4be5d23e, type: 3}
-      propertyPath: m_TreeBillboardDistance
-      value: 1000
-      objectReference: {fileID: 0}
     - target: {fileID: 7658570612017359278, guid: c59b3e158ff3ab74f9a53b4b4be5d23e, type: 3}
       propertyPath: m_Name
       value: Terrain_Mountain 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7658570612017359278, guid: c59b3e158ff3ab74f9a53b4b4be5d23e, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

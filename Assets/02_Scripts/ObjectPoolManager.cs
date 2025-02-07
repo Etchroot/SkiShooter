@@ -6,6 +6,8 @@ using System;
 public enum EPoolObjectType
 {
     Bullet,
+    HitEffect,
+    HitBloodEffect,
     EnemyDrone,
     EnemyDrone_Die,
     EnemyDrone_Attack
