@@ -6710,6 +6710,14 @@ PrefabInstance:
       propertyPath: gunclipPosition
       value: 
       objectReference: {fileID: 879314352}
+    - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: hapticsDuration
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: hapticsAmplitude
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5450942341007561865, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: m_Icon
       value: 
@@ -6746,6 +6754,14 @@ PrefabInstance:
       propertyPath: reloadingSound
       value: 
       objectReference: {fileID: 8300000, guid: 79affe122766d5c488a5716fe3d0271c, type: 3}
+    - target: {fileID: 7515220929643299206, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: hapticsDuration
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 7515220929643299206, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
+      propertyPath: hapticsAmplitude
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7758768295932684901, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: m_Name
       value: PlayerTuto
