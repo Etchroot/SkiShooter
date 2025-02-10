@@ -102,7 +102,7 @@ public class EnemyDrone : MonoBehaviour, IDamageable
         attack.transform.rotation = this.firePoint.rotation;
         audioSource.PlayOneShot(AttackSound);
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.08f);
 
         //오브젝트풀 리턴
         ObjectPoolManager.ReturnObject(attack, EPoolObjectType.EnemyDrone_Attack);

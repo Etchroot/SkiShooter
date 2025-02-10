@@ -46,10 +46,12 @@ public class Enemy : MonoBehaviour, IDamageable
         // 플레이어와 적 사이의 거리 계산
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+        LookAtPlayer(); // 플레이어를 바라봄
+
         // 플레이어가 공격 범위 안에 있는지 확인
         if (distanceToPlayer <= attackRange)
         {
-            LookAtPlayer(); // 플레이어를 바라봄
+            //LookAtPlayer(); // 플레이어를 바라봄
 
             //공격
             if (!isOnCooldown)
