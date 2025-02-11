@@ -1,8 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+public enum ObstacleList
+{
+    Target,
+    Ice
+}
+
 public class Obstacle : MonoBehaviour, IDamageable
 {
+    public ObstacleList type;
     [SerializeField] private bool Destructible = false; // 파괴 가능 여부
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private AudioSource audioSource;
@@ -56,7 +63,10 @@ public class Obstacle : MonoBehaviour, IDamageable
                 }
             }
 
-            StartCoroutine(iceBreake());
+            if (type == ObstacleList.Ice)
+            {
+                StartCoroutine(iceBreake());
+            }
 
         }
         else
