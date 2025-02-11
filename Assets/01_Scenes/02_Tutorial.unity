@@ -1628,6 +1628,11 @@ Transform:
   - {fileID: 1982237778}
   m_Father: {fileID: 1993081547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &529217745 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4817529608621322388, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+  m_PrefabInstance: {fileID: 879314348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &624858722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2118,19 +2123,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8766957836608595198, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
   m_PrefabInstance: {fileID: 879314348}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &879314350 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5565367771029446293, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
-  m_PrefabInstance: {fileID: 879314348}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &879314351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5383617848128687184, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
   m_PrefabInstance: {fileID: 879314348}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &879314352 stripped
+--- !u!4 &879314353 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8463357854327343169, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7147442246413964704, guid: 5e9e4729391b4054b9878ca5cb779c47, type: 3}
   m_PrefabInstance: {fileID: 879314348}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &903267325
@@ -6701,7 +6701,7 @@ PrefabInstance:
     - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: currentGunclip
       value: 
-      objectReference: {fileID: 879314350}
+      objectReference: {fileID: 529217745}
     - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: reloadingSound
       value: 
@@ -6709,7 +6709,7 @@ PrefabInstance:
     - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: gunclipPosition
       value: 
-      objectReference: {fileID: 879314352}
+      objectReference: {fileID: 879314353}
     - target: {fileID: 5277131649055520386, guid: ecda3f7da32ca5b47924e1b1c6d27ad5, type: 3}
       propertyPath: hapticsDuration
       value: 0.02
