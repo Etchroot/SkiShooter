@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (getShotAudio.Length > 0)
         {
             AudioClip lastClip = getShotAudio[getShotAudio.Length - 1];
-            getShotAudioSource.PlayOneShot(lastClip, 0.8f); // 볼륨 감소
+            getShotAudioSource.PlayOneShot(lastClip, 0.6f); // 볼륨 감소
         }
 
         this.gameObject.tag = "Untagged";
