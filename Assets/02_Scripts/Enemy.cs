@@ -46,10 +46,12 @@ public class Enemy : MonoBehaviour, IDamageable
         // 플레이어와 적 사이의 거리 계산
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+        LookAtPlayer(); // 플레이어를 바라봄
+
         // 플레이어가 공격 범위 안에 있는지 확인
         if (distanceToPlayer <= attackRange)
         {
-            LookAtPlayer(); // 플레이어를 바라봄
+            //LookAtPlayer(); // 플레이어를 바라봄
 
             //공격
             if (!isOnCooldown)
@@ -116,6 +118,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void TakeDamage()
     {
+        if (isDead) return;
         StartCoroutine(Die());
     }
 
@@ -124,9 +127,9 @@ public class Enemy : MonoBehaviour, IDamageable
         isDead = true; // 죽는 중으로 설정
 
         // 랜덤으로 죽는 소리 클립 재생
-        int randomIndex = Random.Range(0, getShotAudio.Length);
+        int randomIndex = Random.Range(0, getShotAudio.Length - 1);
         AudioClip selectedClip = getShotAudio[randomIndex];
-        getShotAudioSource.PlayOneShot(selectedClip);
+        getShotAudioSource.PlayOneShot(selectedClip, 1.5f); // 볼륨 증가
 
         anim.SetTrigger("DIE");
         this.gameObject.tag = "Untagged";
@@ -134,10 +137,35 @@ public class Enemy : MonoBehaviour, IDamageable
         Destroy(this.gameObject);
     }
 
-    private void OnDrawGizmosSelected()
+    public IEnumerator DiebyExplosion()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        isDead = true; // 죽는 중으로 설정
+
+        // 애니메이션 제거
+        // Animator animator = GetComponentInChildren<Animator>();
+        // if (animator != null)
+        // {
+        //     Debug.Log("체크");
+
+        //     animator.enabled = false;
+        // }
+
+        // 빌헬름의 비명 재생
+        if (getShotAudio.Length > 0)
+        {
+            AudioClip lastClip = getShotAudio[getShotAudio.Length - 1];
+            getShotAudioSource.PlayOneShot(lastClip, 0.6f); // 볼륨 감소
+        }
+
+        this.gameObject.tag = "Untagged";
+        yield return new WaitForSeconds(3f);
+        Destroy(this.gameObject);
     }
+
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, attackRange);
+    //}
 
 }

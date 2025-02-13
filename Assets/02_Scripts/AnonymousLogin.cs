@@ -3,28 +3,23 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using System.Threading.Tasks;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using Unity.Services.CloudSave;
 using TMPro;
-using Unity.Services.Leaderboards;
-using System.Net;
+
 
 public class AnonymousLogin : MonoBehaviour
 {
     public TMP_InputField nicknameInputField;
     [SerializeField] Button saveButton;
 
-    //private string leaderboardID = "Ranking"; // LeaderBoard ID 설정
-    //private int score = 0; // 초기 점수 
+
     private async void Start()
     {
         // Unity Services 초기화
         await UnityServices.InitializeAsync();
-        Debug.Log("Unity Services Initialized");
-
         Debug.Log("데이터 초기화 중");
-        ClearSavedLoginData();
 
+        // 항상 새로 로그인 (기존 세션 제거)
+        ClearSavedLoginData();
 
         // 익명 로그인 시도
         await SignInAnonymously();
@@ -48,6 +43,12 @@ public class AnonymousLogin : MonoBehaviour
     {
         try
         {
+            // 로그인 상태 확인
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                Debug.Log("이미 로그인 된 상태입니다. 세션을 초기화 합니다.");
+                ClearSavedLoginData();
+            }
             // 익명 로그인
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
             Debug.Log($"익명 로그인 성공! Player ID: {AuthenticationService.Instance.PlayerId}");
@@ -69,7 +70,7 @@ public class AnonymousLogin : MonoBehaviour
 
         if (string.IsNullOrEmpty(nickname))
         {
-            Debug.LogWarning("닉네임이 입력되지 않았습니다.");
+            Debug.LogWarning("닉네임이 입력되지 않았습니다. 기본 닉네임으로 설정합니다.");
             // 닉네임 입력 없이 버튼 클릭하면 닉네임 자동 지정
             nickname = "JamesBond";
         }
@@ -77,44 +78,6 @@ public class AnonymousLogin : MonoBehaviour
         // PlayerPrefs에 닉네임 저장
         PlayerPrefs.SetString("PlayerNickname", nickname);
         PlayerPrefs.Save();
-
-        //await SaveNicknameToCloud(nickname);
-        //await SubmitScoreToLeaderboard(nickname, score);
+        Debug.Log($"닉네임 : {nickname}");
     }
-
-    // // 닉네임을 Cloud Save에 저장
-    // private async Task SaveNicknameToCloud(string nickname)
-    // {
-    //     // 저장할 데이터
-    //     var data = new Dictionary<string, object>
-    //     {
-    //         {"codename", nickname}
-    //     };
-
-    //     //데이터 저장
-    //     try
-    //     {
-    //         await CloudSaveService.Instance.Data.Player.SaveAsync(data);
-    //         Debug.Log("코드네임을 성공적으로 저장했습니다.");
-    //     }
-    //     catch (CloudSaveException e)
-    //     {
-    //         Debug.LogError($"Cloud Save Exception: {e.Message}");
-    //     }
-
-    // }
-
-    // private async Task SubmitScoreToLeaderboard(string nickname, int score)
-    // {
-    //     try
-    //     {
-    //         // LeaderBoard에 스코어와 닉네임 제출
-    //         await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardID, score);
-    //         Debug.Log($"Leaderboar에 {nickname}의 점수 {score} 저장 완료");
-    //     }
-    //     catch (RequestFailedException e)
-    //     {
-    //         Debug.LogError($"Leaderboard에 저장 실패 : {e.Message}");
-    //     }
-    // }
 }

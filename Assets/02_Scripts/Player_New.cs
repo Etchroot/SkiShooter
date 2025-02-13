@@ -55,7 +55,7 @@ public class Player_New : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
         {
@@ -93,12 +93,12 @@ public class Player_New : MonoBehaviour
         currentSpeed = 0f;
         tutorialInProgress = true;
 
-        Debug.Log("코루틴 들어감");
+        //Debug.Log("코루틴 들어감");
 
         //튜토리얼 대기
         yield return new WaitForSeconds(tutorialDelay);
 
-        Debug.Log("코루틴 끝");
+        //Debug.Log("코루틴 끝");
         // 대기 완료 후 기본속도로 이동
         currentSpeed = baseSpeed;
         tutorialInProgress = false;
@@ -114,7 +114,7 @@ public class Player_New : MonoBehaviour
     {
         currentSpeed = Mathf.Max(currentSpeed - damage, 0); // 속도 감소, 음수 방지
         redScreen.TriggerRedScreenEffect(); // 피격 스크린 띄우기
-        Debug.Log("적 총알 맞음");
+        //Debug.Log("적 총알 맞음");
     }
 
     void RotateTowardsDrone()
@@ -156,20 +156,20 @@ public class Player_New : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (CheckPointManager.Instance != null && !CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCheckpointPosition(true));
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (CheckPointManager.Instance != null && !CheckPointManager.Instance.PlayerAllCheckpointsCompleted)
+    //    {
+    //        Gizmos.color = Color.red;
+    //        Gizmos.DrawLine(transform.position, CheckPointManager.Instance.GetCheckpointPosition(true));
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("END"))
         {
-            Debug.Log("END 태그 오브젝트와 충돌!");
+            //Debug.Log("END 태그 오브젝트와 충돌!");
             mainUI.EndGame();
         }
     }

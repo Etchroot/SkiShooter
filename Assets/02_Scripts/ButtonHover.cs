@@ -1,5 +1,8 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class ButtonHover : MonoBehaviour
 {
@@ -21,7 +24,16 @@ public class ButtonHover : MonoBehaviour
         {
             targetText.color = hoverColor;
         }
+        //TriggerHapticFeedback();
     }
+
+    // private void TriggerHapticFeedback()
+    // {
+    //     if (controller != null)
+    //     {
+    //         controller.SendHapticImpulse(hapticIntensity, hapticDuration);
+    //     }
+    // }
 
     public void OnPointerExit()
     {

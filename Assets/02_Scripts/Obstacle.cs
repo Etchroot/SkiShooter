@@ -1,11 +1,26 @@
 using System.Collections;
 using UnityEngine;
 
+public enum ObstacleList
+{
+    Target,
+    Ice
+}
+
 public class Obstacle : MonoBehaviour, IDamageable
 {
+    public ObstacleList type;
     [SerializeField] private bool Destructible = false; // 파괴 가능 여부
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private AudioSource audioSource;
+
+    private ParticleSystem ps;
+
+    void Awake()
+    {
+
+        ps = GetComponent<ParticleSystem>();
+    }
 
     // 오브젝트 파괴 처리
     public void TakeDamage()
@@ -48,17 +63,35 @@ public class Obstacle : MonoBehaviour, IDamageable
                 }
             }
 
+            if (type == ObstacleList.Ice)
+            {
+                StartCoroutine(iceBreake());
+            }
 
-
-            StartCoroutine(Delay());
-
+        }
+        else
+        {
+            return;
         }
     }
 
-    IEnumerator Delay()
+    IEnumerator iceBreake()
     {
-        yield return new WaitForSeconds(1.0f);
+        GameObject iceEffect = ObjectPoolManager.GetObject(EPoolObjectType.ICE_BRAKE);
+        iceEffect.transform.position = gameObject.transform.position;
+
+        if (iceEffect != null)
+        {
+            ParticleSystem ps = iceEffect.GetComponent<ParticleSystem>();
+            if (ps != null)
+            {
+                ps.Clear();
+                ps.Play();
+                yield return new WaitForSeconds(ps.main.duration); // 파티클이 끝날 때까지 대기
+                // 오브젝트풀 리턴
+                ObjectPoolManager.ReturnObject(iceEffect, EPoolObjectType.ICE_BRAKE);
+            }
+        }
         Destroy(gameObject); // 장애물 삭제
     }
-
 }

@@ -1,71 +1,109 @@
 using UnityEngine;
+using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float BulletSpeed = 50f;  // 속도 증가
+    [SerializeField] private float BulletSpeed = 50f;
     [SerializeField] private float BulletTime = 3f;
-    private GunShooting gunShooting; // GunShooting 참조
 
     private float lifetime;
+    private MeshRenderer meshRenderer;
 
-    public void Initialize(GunShooting gunShootingInstance)
+    private int layerMask;
+
+    private bool hashit =false;
+
+    private int enemyLayer; // ENEMY Layer 저장 변수
+
+
+    void Awake()
     {
-        gunShooting = gunShootingInstance;
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        layerMask = LayerMask.GetMask("ENEMY", "OBSTACLE", "BARREL", "ENEMYDRONE", "LAND");
+        enemyLayer = LayerMask.NameToLayer("ENEMY");  // ENEMY Layer의 숫자를 가져오기
     }
 
-    void Start()
+
+    void OnEnable()
     {
         lifetime = BulletTime;
+        hashit = false;
+    }
+
+    void OnDisable()
+    {
+        if (meshRenderer != null)
+            meshRenderer.enabled = true;
     }
 
     void Update()
     {
-        RaycastHit hit;
+        if (hashit) return;
 
-        // 총알 이동과 동시에 레이캐스트 발사
-        if (Physics.Raycast(transform.position, transform.forward, out hit, BulletSpeed * Time.deltaTime))
+        lifetime -= Time.deltaTime;
+        if (lifetime <= 0 && !hashit)
         {
-            // 태그로 먼저 필터링
-            if (hit.collider.CompareTag("BARREL") || hit.collider.CompareTag("ENEMY")|| hit.collider.CompareTag("OBSTACLE"))
+            ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+        }
+
+        transform.position += transform.forward * BulletSpeed * Time.deltaTime;
+
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, BulletSpeed * Time.deltaTime, layerMask))
+        {
+            hashit = true;
+
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+
+            if (damageable != null)
             {
-                // 해당 오브젝트가 IDamageable을 구현했는지 확인
-                IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                if (damageable != null)
+                damageable.TakeDamage();
+
+                if (meshRenderer != null)
+                    meshRenderer.enabled = false;
+
+                EPoolObjectType re_Type = hit.collider.gameObject.layer == enemyLayer ?
+                          EPoolObjectType.HitBloodEffect : EPoolObjectType.HitEffect;
+                GameObject hitEffect = ObjectPoolManager.GetObject(re_Type);
+
+                if (hitEffect != null)
                 {
-                    damageable.TakeDamage(); // 데미지 처리
-                    gunShooting.ReturnBulletToPool(this.gameObject); // 총알 풀로 반환
-                    return;
+                    hitEffect.transform.position = hit.point;
+                    hitEffect.transform.rotation = Quaternion.LookRotation(hit.normal);
+
+                    ParticleSystem ps = hitEffect.GetComponent<ParticleSystem>();
+                    if (ps != null)
+                    {
+                        ps.Clear();
+                        ps.Play();
+
+                        StartCoroutine(ReturnHitEffect(ps.main.duration, hitEffect, re_Type));
+                    }
+                    else
+                    {
+                        StartCoroutine(ReturnHitEffect(2f, hitEffect, re_Type));
+                    }
+                }
+                else
+                {
+                    //StartCoroutine(ReturnHitEffect(2f, hitEffect, re_Type));
+                    ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
                 }
             }
-        }
-
-
-        // 실제 총알 이동
-        transform.Translate(Vector3.forward * BulletSpeed * Time.deltaTime);
-
-        // 일정 시간이 지나면 풀로 반환
-        lifetime -= Time.deltaTime;
-        if (lifetime <= 0)
-        {
-            gunShooting.ReturnBulletToPool(this.gameObject);
+            else
+            {
+                ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
+            }
         }
     }
 
-    private void OnEnable()
+    private IEnumerator ReturnHitEffect(float delay,GameObject effect, EPoolObjectType re_Type)
     {
-        lifetime = BulletTime;
+        //Debug.Log(re_Type);
+        yield return new WaitForSeconds(delay);
+        ObjectPoolManager.ReturnObject(effect, re_Type);
+        ObjectPoolManager.ReturnObject(this.gameObject, EPoolObjectType.Bullet);
     }
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
 
-    private void ReturnToPool()
-    {
-        if (gunShooting != null)
-        {
-            gunShooting.ReturnBulletToPool(this.gameObject);
-        }
-    }
+
 }
